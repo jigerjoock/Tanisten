@@ -55,6 +55,20 @@ npm run build
 
 The production build is generated in `dist/`.
 
+For GitHub Pages project deployment under `/Tanisten/`:
+
+```bash
+npm run build:github
+```
+
+GitHub Pages deployment is automated through `.github/workflows/pages.yml`. The workflow runs on pushes to `main`, builds with the `/Tanisten/` base path, copies `dist/index.html` to `dist/404.html` for SPA fallback routing, and publishes the `dist` folder.
+
+After the workflow finishes, the site is available at:
+
+```txt
+https://jigerjoock.github.io/Tanisten/
+```
+
 ## Cloudflare Pages Deployment
 
 1. Push this project to a Git repository.
