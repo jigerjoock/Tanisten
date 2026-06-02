@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Manrope, "Segoe UI", sans-serif;
+  background-color: #08111f;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+    linear-gradient(160deg, #08111f 0%, #0b1220 56%, #111827 100%);
+  background-size: 56px 56px, 56px 56px, auto;
+  color: #f8fafc;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.section-pad {
+  @apply py-14 md:py-20;
+}
+
+.card-surface {
+  @apply rounded-lg border border-slate-800/90 bg-base-700/80 shadow-panel backdrop-blur-sm;
+}
+
+.eyebrow {
+  @apply text-xs font-semibold uppercase tracking-[0.16em] text-teal-300;
+}
+
+.field {
+  @apply mt-1 w-full rounded-md border border-slate-700 bg-base-800 px-3 py-2.5 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-teal-400;
+}
+
+.technical-band {
+  background-image:
+    linear-gradient(90deg, rgba(77, 163, 255, 0.08), transparent 34%, rgba(0, 169, 157, 0.08)),
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: auto, 100% 26px;
+}
