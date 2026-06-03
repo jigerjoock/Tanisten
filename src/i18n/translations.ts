@@ -177,7 +177,7 @@ export const translations: Record<Language, Translations> = {
     home: {
       heroHeadline: "Engineering & Automation for Technical Projects",
       heroSubheadline:
-        "Supporting engineering teams with mechanical design, technical documentation, aerospace and semiconductor engineering, and workflow automation.",
+        "Supporting engineering teams with mechanical design, CAD development, technical documentation, workflow automation and digital solutions.",
       servicesEyebrow: "Services",
       servicesTitle: "Engineering and automation support in two clear service groups",
       servicesDescription:
