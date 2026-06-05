@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services Catalog Review | Tanisten</title>
+    <style>
+      :root {
+        --bg: #0b1220;
+        --panel: #111827;
+        --active: #172033;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --border: rgba(51, 65, 85, 0.82);
+        --accent: #4da3ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Manrope, "Segoe UI", Arial, sans-serif;
+        background:
+          linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+          linear-gradient(160deg, #08111f 0%, var(--bg) 58%, #111827 100%);
+        background-size: 56px 56px, 56px 56px, auto;
+        color: var(--text);
+      }
+
+      .page {
+        width: min(1200px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      header {
+        border-bottom: 1px solid rgba(51, 65, 85, 0.72);
+        padding: 28px 0;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 800;
+      }
+
+      .mark {
+        color: white;
+        font-size: 24px;
+      }
+
+      .tagline {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      main {
+        padding-bottom: 76px;
+      }
+
+      .hero {
+        padding: 82px 0 52px;
+      }
+
+      .eyebrow,
+      .active-label {
+        margin: 0 0 14px;
+        color: #5eead4;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 900px;
+        margin-bottom: 20px;
+        font-size: clamp(40px, 7vw, 70px);
+        line-height: 0.98;
+        letter-spacing: -0.03em;
+      }
+
+      h2 {
+        max-width: 820px;
+        margin-bottom: 12px;
+        font-size: clamp(28px, 4vw, 38px);
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+      }
+
+      .lead,
+      .section-copy {
+        max-width: 780px;
+        color: #cbd5e1;
+        font-size: 17px;
+        line-height: 1.7;
+      }
+
+      .directions {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+        margin-top: 34px;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .direction-card {
+        position: relative;
+        min-height: 230px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: rgba(17, 24, 39, 0.82);
+        color: inherit;
+        cursor: pointer;
+        padding: 26px;
+        text-align: left;
+        transition: 220ms ease;
+      }
+
+      .direction-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: #475569;
+        transition: 220ms ease;
+      }
+
+      .direction-card:hover {
+        transform: translateY(-4px);
+        border-color: color-mix(in srgb, var(--accent), transparent 42%);
+        background: rgba(23, 32, 51, 0.78);
+      }
+
+      .direction-card.active {
+        border-color: color-mix(in srgb, var(--accent), transparent 42%);
+        background: color-mix(in srgb, var(--accent), transparent 90%);
+        box-shadow: 0 18px 55px color-mix(in srgb, var(--accent), transparent 90%);
+      }
+
+      .direction-card.active::before,
+      .direction-card:hover::before {
+        width: 112px;
+        background: var(--accent);
+      }
+
+      .direction-kicker {
+        color: color-mix(in srgb, var(--accent), white 12%);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .direction-card h3 {
+        margin: 26px 0 14px;
+        font-size: 28px;
+        line-height: 1.1;
+      }
+
+      .direction-card p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .empty {
+        margin-top: 28px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: rgba(17, 24, 39, 0.72);
+        box-shadow: 0 18px 55px rgba(2, 6, 23, 0.3);
+        padding: 42px;
+        text-align: center;
+      }
+
+      .detail {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: rgba(17, 24, 39, 0.82);
+        box-shadow: 0 18px 55px rgba(2, 6, 23, 0.3);
+        padding: 30px;
+      }
+
+      .product-panel {
+        margin-top: 28px;
+      }
+
+      .detail::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 112px;
+        height: 4px;
+        background: var(--accent);
+      }
+
+      .products {
+        display: flex;
+        gap: 16px;
+        margin-top: 28px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        cursor: grab;
+        user-select: none;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .products:active {
+        cursor: grabbing;
+      }
+
+      .products::-webkit-scrollbar {
+        display: none;
+      }
+
+      .product {
+        position: relative;
+        min-height: 300px;
+        width: 315px;
+        flex: 0 0 315px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: rgba(11, 18, 32, 0.78);
+        color: white;
+        cursor: pointer;
+        padding: 0;
+        text-align: left;
+        transition: 220ms ease;
+      }
+
+      .product::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 64px;
+        height: 4px;
+        background: #475569;
+      }
+
+      .product:hover {
+        transform: translateY(-4px);
+        border-color: color-mix(in srgb, var(--accent), transparent 42%);
+        background: rgba(23, 32, 51, 0.78);
+      }
+
+      .product.selected {
+        border-color: color-mix(in srgb, var(--accent), transparent 42%);
+        background: #172033;
+      }
+
+      .product.selected::before,
+      .product:hover::before {
+        background: var(--accent);
+      }
+
+      .product img {
+        display: block;
+        width: 100%;
+        height: 144px;
+        object-fit: cover;
+        opacity: 0.9;
+        transition: 180ms ease;
+        user-select: none;
+        pointer-events: none;
+      }
+
+      .product:hover img {
+        opacity: 1;
+      }
+
+      .product-body {
+        display: flex;
+        min-height: 156px;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 22px;
+      }
+
+      .product h4 {
+        margin-bottom: 10px;
+        font-size: 18px;
+        line-height: 1.15;
+      }
+
+      .product p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .detail {
+        margin-top: 28px;
+      }
+
+      .detail-head {
+        border-bottom: 1px solid rgba(51, 65, 85, 0.82);
+        padding-bottom: 28px;
+      }
+
+      .detail-head.digital {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 420px;
+        gap: 28px;
+        align-items: stretch;
+      }
+
+      .digital-visual {
+        position: relative;
+        min-height: 300px;
+        overflow: hidden;
+        border: 1px solid rgba(167, 139, 250, 0.28);
+        border-radius: 10px;
+        background: #111827;
+        box-shadow: 0 22px 70px rgba(139, 92, 246, 0.14);
+      }
+
+      .digital-visual img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.45;
+      }
+
+      .digital-visual::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(11, 18, 32, 0.45), rgba(11, 18, 32, 0.82), rgba(76, 29, 149, 0.76));
+      }
+
+      .digital-screen {
+        position: relative;
+        display: flex;
+        min-height: 300px;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 22px;
+      }
+
+      .digital-topbar,
+      .digital-cards,
+      .digital-bottom {
+        display: grid;
+        gap: 12px;
+      }
+
+      .digital-topbar {
+        grid-template-columns: 1fr auto;
+        align-items: center;
+      }
+
+      .digital-line {
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(196, 181, 253, 0.75);
+      }
+
+      .digital-dots {
+        display: flex;
+        gap: 7px;
+      }
+
+      .digital-dots span {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(196, 181, 253, 0.75);
+      }
+
+      .digital-window {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        padding: 16px;
+        backdrop-filter: blur(10px);
+      }
+
+      .digital-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 9px;
+        margin-top: 14px;
+      }
+
+      .digital-metrics span {
+        height: 54px;
+        border: 1px solid rgba(196, 181, 253, 0.22);
+        border-radius: 7px;
+        background: rgba(167, 139, 250, 0.12);
+      }
+
+      .detail-card.digital-card h4 {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .detail-card.digital-card h4::before {
+        content: "";
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        border: 1px solid rgba(167, 139, 250, 0.28);
+        border-radius: 7px;
+        background:
+          linear-gradient(90deg, transparent 46%, rgba(125, 211, 252, 0.22) 46%, rgba(125, 211, 252, 0.22) 54%, transparent 54%),
+          linear-gradient(0deg, transparent 46%, rgba(196, 181, 253, 0.22) 46%, rgba(196, 181, 253, 0.22) 54%, transparent 54%),
+          rgba(167, 139, 250, 0.1);
+      }
+
+      .detail h3 {
+        margin: 12px 0 14px;
+        font-size: clamp(30px, 4vw, 44px);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+      }
+
+      .section-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 28px;
+      }
+
+      .detail-card {
+        border: 1px solid rgba(51, 65, 85, 0.82);
+        border-radius: 10px;
+        background: rgba(11, 18, 32, 0.82);
+        padding: 20px;
+        transition: 190ms ease;
+      }
+
+      .detail-card:hover {
+        border-color: color-mix(in srgb, var(--accent), transparent 42%);
+        background: rgba(23, 32, 51, 0.78);
+      }
+
+      .detail-card h4 {
+        margin-bottom: 12px;
+        font-size: 18px;
+      }
+
+      .detail-card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .cta {
+        margin-top: 72px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background:
+          linear-gradient(90deg, rgba(77, 163, 255, 0.08), transparent 34%, rgba(0, 169, 157, 0.08)),
+          rgba(2, 6, 23, 0.58);
+        padding: 34px;
+      }
+
+      @media (max-width: 900px) {
+        .directions,
+        .section-grid,
+        .detail-head.digital {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="page brand">
+        <div class="mark">*</div>
+        <div>
+          <div>Tanisten</div>
+          <div class="tagline">Engineering &bull; Automation &bull; Digital Solutions</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">Services</p>
+        <h1>Engineering, automation and digital solutions catalog</h1>
+        <p class="lead">
+          Browse Tanisten service directions, select a product and review structured technical detail for engineering,
+          automation and digital work.
+        </p>
+      </section>
+
+      <section>
+        <p class="eyebrow">Service catalog</p>
+        <h2>Choose a service direction</h2>
+        <p class="section-copy">Choose one of the three service areas to see available products.</p>
+
+        <div class="directions" id="directions"></div>
+        <div id="catalogContent"></div>
+      </section>
+
+      <section class="cta">
+        <h2>Need this type of support?</h2>
+        <p class="section-copy">
+          Contact Tanisten with a short description of the current task, project phase and expected output.
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const sections = [
+        "Description",
+        "Typical Tasks",
+        "Deliverables",
+        "Methods & Standards",
+        "Software & Tools",
+        "Relevant Industries"
+      ];
+
+      const directions = [
+        {
+          id: "engineering",
+          title: "Engineering",
+          accent: "#4DA3FF",
+          description:
+            "Practical engineering support for product development, documentation and manufacturing projects.",
+          products: [
+            ["Product Development Support", "Support for product development, design updates and production preparation.", "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=720&q=80"],
+            ["Mechanical Design & CAD", "3D CAD models, assemblies, drawings and design updates.", "https://images.unsplash.com/photo-1581092335878-2d9ff86ca2bf?auto=format&fit=crop&w=720&q=80"],
+            ["Technical Documentation", "Structured documents, drawing packages and technical information.", "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=720&q=80"],
+            ["Design Changes & Product Updates", "Controlled product updates, CAD changes and drawing revisions.", "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=720&q=80"],
+            ["Supplier & Manufacturing Coordination", "Technical coordination for suppliers, production and manufacturing feedback.", "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=720&q=80"],
+            ["Engineering Contracting", "Temporary engineering capacity for defined project work packages.", "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=720&q=80"]
+          ]
+        },
+        {
+          id: "automation",
+          title: "Automation",
+          accent: "#00A99D",
+          description:
+            "Automation of engineering and business workflows using software, AI and process optimization.",
+          products: [
+            ["Workflow Automation", "Automation for repeated technical and business workflows.", "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=720&q=80"],
+            ["AI Assistants", "Practical assistants for internal knowledge, support and documentation.", "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=720&q=80"],
+            ["Reporting Automation", "Automated reports for recurring project and business data.", "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=720&q=80"],
+            ["Business Process Automation", "Automation for administrative and operational business processes.", "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=720&q=80"],
+            ["Custom Business Tools", "Internal tools for workflows, forms, dashboards and operations.", "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=720&q=80"],
+            ["Data Processing Solutions", "Structured handling of files, tables and repeated data tasks.", "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=720&q=80"]
+          ]
+        },
+        {
+          id: "digital",
+          title: "Digital Solutions",
+          accent: "#8B5CF6",
+          description:
+            "Business platforms, websites and internal tools that improve operations and customer interaction.",
+          products: [
+            ["Business Portals", "Portals for requests, documents, status tracking and workflows.", "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=720&q=80"],
+            ["Customer Platforms", "Customer-facing platforms for self-service and recurring interactions.", "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=720&q=80"],
+            ["Internal Company Tools", "Internal tools for forms, dashboards and administration.", "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=720&q=80"],
+            ["Booking & Scheduling Systems", "Booking workflows for appointments, services and training.", "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=720&q=80"],
+            ["Company Websites", "Professional websites and landing pages for technical companies.", "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=720&q=80"],
+            ["Dashboards & Reporting Systems", "Dashboards and reporting interfaces for operational data.", "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=720&q=80"]
+          ]
+        }
+      ];
+
+      let activeDirection = null;
+      let activeProduct = null;
+
+      const digitalDetails = {
+        "Business Portals": {
+          description:
+            "Centralized web portals for companies that need structured access to information, workflows, documents, users or operational data.",
+          sections: [
+            ["Typical Use Cases", ["Client portals", "Partner portals", "Service portals", "Document access portals", "Project communication portals", "Technical service request portals"]],
+            ["Deliverables", ["Web-based portal", "User login / access structure", "Admin interface", "Content or document management", "Forms and request workflows", "Role-based access concept"]],
+            ["Features", ["User authentication", "Role-based access", "Forms and submissions", "Document upload/download", "Status tracking", "Notifications", "Admin dashboard"]],
+            ["Methods & Technologies", ["React", "TypeScript", "REST APIs", "Database integration", "Cloud deployment", "Authentication workflows", "Responsive UI"]],
+            ["Business Value", ["Centralizes communication", "Reduces email chaos", "Gives clients structured access to information", "Improves transparency", "Saves administrative time"]],
+            ["Suitable For", ["Engineering companies", "Service businesses", "Training centers", "Small and mid-size companies", "Technical suppliers"]]
+          ]
+        },
+        "Customer Platforms": {
+          description:
+            "Digital platforms that allow customers to interact with a company, submit requests, track information or access services online.",
+          sections: [
+            ["Typical Use Cases", ["Customer account area", "Service request platform", "Customer onboarding system", "Support request platform", "Document submission platform"]],
+            ["Deliverables", ["Customer-facing web application", "Request forms", "Customer dashboard", "Admin dashboard", "Status tracking", "Notification concept"]],
+            ["Features", ["Customer login", "Request submission", "File upload", "Status overview", "Admin management", "Email notifications", "Responsive design"]],
+            ["Methods & Technologies", ["React", "TypeScript", "API integration", "Database workflows", "Authentication", "Form handling", "Cloud hosting"]],
+            ["Business Value", ["Makes services easier to access", "Reduces manual communication", "Improves customer experience", "Creates a professional digital interface", "Helps companies manage requests in one place"]],
+            ["Suitable For", ["Medical practices", "Service companies", "Training providers", "Technical companies", "Local businesses"]]
+          ]
+        },
+        "Internal Company Tools": {
+          description:
+            "Custom internal tools for teams that need to replace spreadsheets, repetitive manual work or fragmented workflows.",
+          sections: [
+            ["Typical Use Cases", ["Internal task management", "Small ERP-like tools", "Employee tools", "Document tracking", "Request management", "Internal knowledge tools", "Operational workflow tools"]],
+            ["Deliverables", ["Internal web application", "Admin interface", "Data forms", "Tables and filtering", "User roles", "Export functions", "Basic reporting"]],
+            ["Features", ["CRUD operations", "User management", "Data tables", "Search and filters", "File attachments", "Workflow status", "Export to Excel / CSV"]],
+            ["Methods & Technologies", ["React", "TypeScript", "Python / Node.js backend", "REST APIs", "PostgreSQL", "Authentication", "Cloud/VPS deployment"]],
+            ["Business Value", ["Replaces messy spreadsheets", "Structures internal workflows", "Reduces repetitive manual work", "Makes information easier to find", "Improves operational visibility"]],
+            ["Suitable For", ["Small companies", "Engineering teams", "Training centers", "Service businesses", "Operations teams"]]
+          ]
+        },
+        "Booking & Scheduling Systems": {
+          description:
+            "Booking and appointment systems for companies that need clients to book services, consultations, lessons or appointments online.",
+          sections: [
+            ["Typical Use Cases", ["Medical practice appointment booking", "Consultation booking", "Training course scheduling", "Service appointment booking", "Client request scheduling"]],
+            ["Deliverables", ["Booking interface", "Admin calendar", "Availability logic", "Confirmation workflow", "Email notifications", "Customer form", "Optional AI assistant integration"]],
+            ["Features", ["Date and time selection", "Booking form", "Admin overview", "Email confirmations", "Appointment status", "Basic customer data collection", "Optional chatbot guidance"]],
+            ["Methods & Technologies", ["React", "TypeScript", "Calendar integration", "Backend/API integration", "Email notifications", "Database storage", "Responsive UI"]],
+            ["Business Value", ["Reduces phone calls and manual scheduling", "Makes booking easier for customers", "Saves administrative time", "Gives companies better appointment visibility", "Improves customer experience"]],
+            ["Suitable For", ["Medical practices", "Training centers", "Consultants", "Service providers", "Local businesses"]]
+          ]
+        },
+        "Company Websites": {
+          description:
+            "Professional company websites and landing pages for technical companies, service providers and small businesses that need a clear online presence.",
+          sections: [
+            ["Typical Use Cases", ["Company website", "Service landing page", "Technical business website", "Portfolio website", "Bilingual website", "Website redesign"]],
+            ["Deliverables", ["Responsive website", "Clear service pages", "Contact form", "SEO-friendly structure", "Bilingual EN/DE setup if needed", "Deployment support", "Domain and hosting setup guidance"]],
+            ["Features", ["Modern responsive design", "Service sections", "Contact forms", "Multi-language structure", "SEO metadata", "Fast loading", "Cloud deployment"]],
+            ["Methods & Technologies", ["React", "TypeScript", "Tailwind CSS", "Vite", "Cloudflare Pages", "GitHub deployment", "Basic SEO"]],
+            ["Business Value", ["Creates professional online credibility", "Explains services clearly", "Supports client acquisition", "Gives partners a place to verify the company", "Works as a digital business card and sales tool"]],
+            ["Suitable For", ["Engineering consultants", "Service providers", "Small businesses", "Training centers", "Technical startups"]]
+          ]
+        },
+        "Dashboards & Reporting Systems": {
+          description:
+            "Dashboards and reporting systems that help companies view, track and understand business or technical data.",
+          sections: [
+            ["Typical Use Cases", ["Management dashboards", "Project status dashboards", "Training progress dashboards", "Sales or operations reporting", "Engineering data overview", "Automated report generation"]],
+            ["Deliverables", ["Dashboard interface", "Data tables", "Charts and KPIs", "Filters", "Export functions", "Reporting logic", "Automated report templates"]],
+            ["Features", ["KPI cards", "Charts", "Tables", "Filters", "Date ranges", "Export to Excel / CSV", "Automated report generation"]],
+            ["Methods & Technologies", ["React", "TypeScript", "Python data processing", "APIs", "Database integration", "Excel / CSV workflows", "Automation scripts"]],
+            ["Business Value", ["Makes data easier to understand", "Reduces manual reporting work", "Improves decision-making", "Saves time for managers and teams", "Creates transparency across operations"]],
+            ["Suitable For", ["Small and mid-size companies", "Training centers", "Engineering teams", "Service businesses", "Operations teams"]]
+          ]
+        }
+      };
+
+      const directionsEl = document.querySelector("#directions");
+      const contentEl = document.querySelector("#catalogContent");
+
+      function renderDirections() {
+        directionsEl.innerHTML = directions
+          .map(
+            (direction, index) => `
+              <button
+                class="direction-card ${activeDirection === index ? "active" : ""}"
+                data-direction="${index}"
+                style="--accent:${direction.accent}"
+                type="button"
+              >
+                <div class="direction-kicker">Service direction</div>
+                <h3>${direction.title}</h3>
+                <p>${direction.description}</p>
+              </button>
+            `
+          )
+          .join("");
+
+        directionsEl.querySelectorAll(".direction-card").forEach((button) => {
+          button.addEventListener("click", () => {
+            activeDirection = Number(button.getAttribute("data-direction"));
+            activeProduct = null;
+            render();
+          });
+        });
+      }
+
+      function renderContent() {
+        if (activeDirection === null) {
+          contentEl.innerHTML = `
+            <section class="empty">
+              <h2>Select a service direction to explore available solutions.</h2>
+              <p class="section-copy" style="margin: 0 auto;">Choose one of the three service areas to see available products.</p>
+            </section>
+          `;
+          return;
+        }
+
+        const direction = directions[activeDirection];
+        contentEl.innerHTML = `
+          <section class="product-panel" style="--accent:${direction.accent}">
+            <div class="products" id="productRow">
+              ${direction.products
+                .map(
+                  ([title, description, image], index) => `
+                    <button
+                      class="product ${activeProduct === index ? "selected" : ""}"
+                      data-product="${index}"
+                      type="button"
+                    >
+                      <img src="${image}" alt="" draggable="false" />
+                      <div class="product-body">
+                        <div>
+                          <h4>${title}</h4>
+                          <p>${description}</p>
+                        </div>
+                      </div>
+                    </button>
+                  `
+                )
+                .join("")}
+            </div>
+          </section>
+          ${renderDetail(direction)}
+        `;
+
+        const row = contentEl.querySelector("#productRow");
+        let momentumFrame = null;
+        const drag = {
+          isDragging: false,
+          startX: 0,
+          scrollLeft: 0,
+          moved: false,
+          pointerType: "",
+          lastScrollLeft: 0,
+          lastTime: 0,
+          velocity: 0
+        };
+
+        function stopMomentum() {
+          if (momentumFrame !== null) {
+            cancelAnimationFrame(momentumFrame);
+            momentumFrame = null;
+          }
+        }
+
+        function startMomentum() {
+          let velocity = drag.velocity;
+          function step() {
+            if (Math.abs(velocity) < 0.02) {
+              momentumFrame = null;
+              return;
+            }
+
+            row.scrollLeft += velocity * 16;
+            velocity *= 0.92;
+            momentumFrame = requestAnimationFrame(step);
+          }
+
+          momentumFrame = requestAnimationFrame(step);
+        }
+
+        row.addEventListener("pointerdown", (event) => {
+          if (event.pointerType === "mouse") {
+            stopMomentum();
+          }
+          drag.isDragging = true;
+          drag.startX = event.clientX;
+          drag.scrollLeft = row.scrollLeft;
+          drag.moved = false;
+          drag.pointerType = event.pointerType;
+          drag.lastScrollLeft = row.scrollLeft;
+          drag.lastTime = performance.now();
+          drag.velocity = 0;
+          if (event.pointerType === "mouse") {
+            row.setPointerCapture(event.pointerId);
+          }
+        });
+
+        row.addEventListener("pointermove", (event) => {
+          if (!drag.isDragging) return;
+          const delta = event.clientX - drag.startX;
+          if (Math.abs(delta) > 12) {
+            drag.moved = true;
+          }
+
+          if (drag.pointerType !== "mouse") {
+            return;
+          }
+
+          const nextScrollLeft = drag.scrollLeft - delta;
+          row.scrollLeft = nextScrollLeft;
+
+          const now = performance.now();
+          const elapsed = now - drag.lastTime;
+          if (elapsed > 0) {
+            drag.velocity = (nextScrollLeft - drag.lastScrollLeft) / elapsed;
+            drag.lastScrollLeft = nextScrollLeft;
+            drag.lastTime = now;
+          }
+        });
+
+        row.addEventListener("pointerup", (event) => {
+          const wasMoved = drag.moved;
+          const shouldContinue = drag.pointerType === "mouse" && drag.isDragging && drag.moved;
+          drag.isDragging = false;
+          if (shouldContinue) {
+            startMomentum();
+          }
+
+          if (wasMoved) {
+            drag.moved = false;
+            return;
+          }
+
+          const element = document.elementFromPoint(event.clientX, event.clientY);
+          const product = element?.closest("[data-product]");
+          if (product) {
+            activeProduct = Number(product.getAttribute("data-product"));
+            render();
+          }
+        });
+
+        row.addEventListener("pointerleave", () => {
+          const shouldContinue = drag.pointerType === "mouse" && drag.isDragging && drag.moved;
+          drag.isDragging = false;
+          if (shouldContinue) {
+            startMomentum();
+          }
+        });
+
+        row.addEventListener("pointercancel", () => {
+          drag.isDragging = false;
+        });
+      }
+
+      function renderDetail(direction) {
+        if (activeProduct === null) {
+          return `
+            <section class="empty">
+              <h2>Select a product to view technical details.</h2>
+              <p class="section-copy" style="margin: 0 auto;">Choose a solution from the product row above.</p>
+            </section>
+          `;
+        }
+
+        const [title, description, image] = direction.products[activeProduct];
+        const detail = direction.id === "digital" ? digitalDetails[title] : null;
+        const detailDescription = detail?.description ?? description;
+        const isDigital = direction.id === "digital";
+        const detailSections =
+          detail?.sections ??
+          sections.map((section) => [
+            section,
+            [
+              "Placeholder for product-specific content. This area can later describe the scope, expected input, outputs and practical implementation details."
+            ]
+          ]);
+
+        return `
+          <section class="detail" style="--accent:${direction.accent}">
+            <div class="detail-head ${isDigital ? "digital" : ""}">
+              <div>
+                <div class="active-label" style="color:${direction.accent}">${direction.title}</div>
+                <h3>${title}</h3>
+                <p class="section-copy">${detailDescription}</p>
+              </div>
+              ${
+                isDigital
+                  ? `
+                    <div class="digital-visual">
+                      <img src="${image}" alt="" />
+                      <div class="digital-screen">
+                        <div class="digital-topbar">
+                          <span class="digital-line"></span>
+                          <div class="digital-dots"><span></span><span></span><span></span></div>
+                        </div>
+                        <div class="digital-cards">
+                          <div class="digital-window">
+                            <span class="digital-line" style="display:block;width:90px;"></span>
+                            <div class="digital-metrics"><span></span><span></span><span></span></div>
+                          </div>
+                          <div class="digital-window">
+                            <span class="digital-line" style="display:block;width:130px;"></span>
+                          </div>
+                        </div>
+                        <div>
+                          <div class="active-label" style="color:#ddd6fe;">Digital interface</div>
+                          <strong>${title}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  `
+                  : ""
+              }
+            </div>
+            <div class="section-grid">
+              ${detailSections
+                .map(
+                  ([section, items], index) => `
+                    <article class="detail-card ${isDigital ? "digital-card" : ""}">
+                      <h4>${section}</h4>
+                      <p>${items.map((item) => `&bull; ${item}`).join("<br />")}</p>
+                    </article>
+                  `
+                )
+                .join("")}
+            </div>
+          </section>
+        `;
+      }
+
+      function render() {
+        renderDirections();
+        renderContent();
+      }
+
+      render();
+    </script>
+  </body>
+</html>

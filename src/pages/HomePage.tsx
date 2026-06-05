@@ -1,34 +1,19 @@
 import { Link } from "react-router-dom";
-import CardGrid from "../components/common/CardGrid";
 import CtaSection from "../components/common/CtaSection";
 import SectionHeading from "../components/common/SectionHeading";
+import WhyTanistenGrid from "../components/common/WhyTanistenGrid";
 import Container from "../components/layout/Container";
+import ServicesOverviewHover from "../components/servicesOverview/ServicesOverviewHover";
 import Seo from "../components/seo/Seo";
 import { useLanguage } from "../i18n/LanguageContext";
 
-function ServiceGroup({ title, items, accent }: { title: string; items: string[]; accent: "engineering" | "automation" }) {
-  const isEngineering = accent === "engineering";
-  const border = isEngineering ? "border-engineering-500/45" : "border-accent-500/45";
-  const text = isEngineering ? "text-engineering-300" : "text-teal-300";
-  const line = isEngineering ? "bg-engineering-500" : "bg-accent-500";
-
-  return (
-    <article className={`card-surface relative overflow-hidden p-6 ${border}`}>
-      <div className={`absolute left-0 top-0 h-1 w-20 ${line}`} />
-      <h3 className={`text-xl font-semibold ${text}`}>{title}</h3>
-      <ul className="mt-5 grid gap-3 text-sm text-slate-300">
-        {items.map((item) => (
-          <li key={item} className="border-l border-slate-700 pl-3">
-            {item}
-          </li>
-        ))}
-      </ul>
-    </article>
-  );
-}
-
 export default function HomePage() {
   const { t } = useLanguage();
+
+  const servicesOverviewProps = {
+    directions: t.home.serviceDirections,
+    projectsLabel: t.home.typicalProjectsLabel
+  };
 
   return (
     <>
@@ -67,24 +52,15 @@ export default function HomePage() {
             title={t.home.servicesTitle}
             description={t.home.servicesDescription}
           />
-          <div className="grid gap-5 lg:grid-cols-2">
-            <ServiceGroup title={t.home.engineeringGroupTitle} items={t.home.engineeringItems} accent="engineering" />
-            <ServiceGroup title={t.home.automationGroupTitle} items={t.home.automationItems} accent="automation" />
-          </div>
-        </Container>
-      </section>
 
-      <section className="section-pad border-y border-slate-800/80 bg-base-800/55">
-        <Container>
-          <SectionHeading eyebrow={t.home.industriesEyebrow} title={t.home.industriesTitle} />
-          <CardGrid items={t.cards.homeIndustries} cols="4" />
+          <ServicesOverviewHover {...servicesOverviewProps} />
         </Container>
       </section>
 
       <section className="section-pad">
         <Container>
-          <SectionHeading eyebrow={t.home.whyEyebrow} title={t.home.whyTitle} />
-          <CardGrid items={t.cards.whyTanisten} cols="3" />
+          <SectionHeading eyebrow={t.home.whyEyebrow} title={t.home.whyEyebrow} description={t.home.whyDescription} />
+          <WhyTanistenGrid items={t.cards.whyTanisten} />
         </Container>
       </section>
 

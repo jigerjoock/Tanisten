@@ -14,6 +14,7 @@ const colsMap = {
 const accentMap = {
   engineering: "bg-engineering-500/80",
   automation: "bg-accent-500/80",
+  digital: "bg-violet-400/80",
   neutral: "bg-slate-500/70"
 };
 

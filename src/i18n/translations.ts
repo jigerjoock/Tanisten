@@ -1,6 +1,16 @@
 import type { CardItem, DetailItem } from "../types/content";
+import type { ServiceCatalogContent } from "../types/serviceCatalog";
 
 export type Language = "en" | "de";
+export type ServiceDirectionAccent = "engineering" | "automation" | "digital";
+
+export interface ServiceDirection {
+  title: string;
+  accent: ServiceDirectionAccent;
+  description: string;
+  services: string[];
+  projects: string[];
+}
 
 interface Translations {
   brand: {
@@ -50,6 +60,8 @@ interface Translations {
     servicesEyebrow: string;
     servicesTitle: string;
     servicesDescription: string;
+    typicalProjectsLabel: string;
+    serviceDirections: ServiceDirection[];
     engineeringGroupTitle: string;
     automationGroupTitle: string;
     engineeringItems: string[];
@@ -58,6 +70,7 @@ interface Translations {
     industriesTitle: string;
     whyEyebrow: string;
     whyTitle: string;
+    whyDescription: string;
     contactTitle: string;
     contactText: string;
   };
@@ -69,6 +82,7 @@ interface Translations {
     automationTitle: string;
     contactTitle: string;
     contactText: string;
+    catalog: ServiceCatalogContent;
   };
   industries: {
     heroEyebrow: string;
@@ -179,9 +193,69 @@ export const translations: Record<Language, Translations> = {
       heroSubheadline:
         "Supporting engineering teams with mechanical design, CAD development, technical documentation, workflow automation and digital solutions.",
       servicesEyebrow: "Services",
-      servicesTitle: "Engineering and automation support in two clear service groups",
+      servicesTitle: "What We Do",
       servicesDescription:
-        "Tanisten focuses on practical technical work for engineering teams, technical suppliers and companies improving repetitive workflows.",
+        "Practical engineering, automation and digital solutions for technical businesses.",
+      typicalProjectsLabel: "Typical projects",
+      serviceDirections: [
+        {
+          title: "Engineering",
+          accent: "engineering",
+          description: "",
+          services: [
+            "Product Development Support",
+            "Mechanical Design & CAD",
+            "Technical Documentation",
+            "Supplier Coordination",
+            "Engineering Contracting"
+          ],
+          projects: [
+            "New product development support",
+            "Production-ready CAD models and drawings",
+            "Design changes for existing products",
+            "Manufacturing documentation packages",
+            "Supplier and production coordination"
+          ]
+        },
+        {
+          title: "Automation",
+          accent: "automation",
+          description: "",
+          services: [
+            "Workflow Automation",
+            "AI Assistants",
+            "Reporting Automation",
+            "Process Automation",
+            "Custom Business Tools"
+          ],
+          projects: [
+            "AI customer support assistants",
+            "Automated reporting systems",
+            "Internal knowledge assistants",
+            "Engineering workflow automation",
+            "Business process optimization"
+          ]
+        },
+        {
+          title: "Digital Solutions",
+          accent: "digital",
+          description: "",
+          services: [
+            "Business Portals",
+            "Company Websites",
+            "Customer Platforms",
+            "Booking Systems",
+            "Internal Company Tools"
+          ],
+          projects: [
+            "Company websites and landing pages",
+            "Medical practice booking systems",
+            "Customer self-service portals",
+            "Employee portals",
+            "Dashboards and reporting platforms"
+          ]
+        }
+      ],
       engineeringGroupTitle: "Engineering",
       automationGroupTitle: "Automation",
       engineeringItems: ["Mechanical Design", "CAD Development", "Technical Documentation", "Engineering Contracting"],
@@ -190,20 +264,689 @@ export const translations: Record<Language, Translations> = {
       industriesTitle: "Industry focus for technical work",
       whyEyebrow: "Why Tanisten",
       whyTitle: "A practical technical partner for engineering and automation work",
+      whyDescription: "Engineering expertise combined with automation and digital solutions.",
       contactTitle: "Discuss a technical project with Tanisten",
       contactText:
         "Send a short project description, current technical need and expected deliverables. We will respond with a practical next step."
     },
     services: {
       heroEyebrow: "Services",
-      heroTitle: "Engineering, automation and digital technical solutions",
+      heroTitle: "Engineering, automation and digital solutions catalog",
       heroSubtitle:
-        "Services are organized around three directions: engineering support, automation of repetitive workflows and practical digital tools for technical teams.",
+        "Browse Tanisten service categories, select a product and review structured technical detail for engineering, automation and digital work.",
       engineeringTitle: "Engineering",
       automationTitle: "Automation",
-      contactTitle: "Need support for an engineering or automation work package?",
+      contactTitle: "Need this type of support?",
       contactText:
-        "Share the scope, current workflow, tools in use and expected output. Tanisten can help define a clear technical work package."
+        "Contact Tanisten with a short description of the current task, project phase and expected output.",
+      catalog: {
+        heroEyebrow: "Services",
+        heroTitle: "Engineering, automation and digital solutions catalog",
+        heroSubtitle:
+          "Browse Tanisten service categories, select a product and review structured technical detail for engineering, automation and digital work.",
+        catalogEyebrow: "Service catalog",
+        catalogTitle: "Browse by category and product",
+        catalogDescription:
+          "The catalog keeps navigation and details visible at the same time. Select a product on the left to review the technical scope on the right.",
+        directionLabel: "Service direction",
+        navigationTitle: "Service navigation",
+        detailsTitle: "Selected service details",
+        selectTitle: "Select a service to view details.",
+        selectText: "Choose a product from the service navigation to open its technical detail panel.",
+        productSelectTitle: "Select a product to view technical details.",
+        contactLabel: "Contact Tanisten",
+        defaultProductId: "mechanical-design-cad",
+        categories: [
+          {
+            id: "engineering",
+            title: "Engineering",
+            description:
+              "Practical engineering support for product development, technical documentation and manufacturing projects.",
+            products: [
+              {
+                id: "product-development-support",
+                title: "Product Development Support",
+                description:
+                  "Support for technical teams during product development, design updates and production preparation.",
+                sections: {
+                  description: {
+                    title: "Description",
+                    items: ["Project-based support from early technical concepts to production-ready engineering information."]
+                  },
+                  typicalTasks: {
+                    title: "Typical Tasks",
+                    items: ["Early design support", "Product updates", "Design reviews", "Production readiness"]
+                  },
+                  deliverables: {
+                    title: "Deliverables",
+                    items: ["CAD packages", "Drawing updates", "Documentation packages", "Review notes"]
+                  },
+                  methods: {
+                    title: "Methods & Standards",
+                    badge: true,
+                    items: ["Structured engineering workflow", "Design review process", "DFM approach"]
+                  },
+                  tools: {
+                    title: "Software & Tools",
+                    badge: true,
+                    items: ["CATIA V5", "SolidWorks", "Siemens NX", "Technical documentation tools"]
+                  },
+                  industries: {
+                    title: "Relevant Industries",
+                    items: ["Aerospace", "Semiconductor Equipment", "Industrial Machinery"]
+                  }
+                },
+                cta: "Need product development support? Contact Tanisten."
+              },
+              {
+                id: "mechanical-design-cad",
+                title: "Mechanical Design & CAD",
+                description:
+                  "Mechanical design support for components, assemblies, layouts and production-ready engineering data.",
+                sections: {
+                  description: {
+                    title: "Description",
+                    items: [
+                      "Mechanical design and CAD execution for technical teams that need usable models, drawings and structured engineering data."
+                    ]
+                  },
+                  typicalTasks: {
+                    title: "Typical Tasks",
+                    items: [
+                      "Component design",
+                      "Assembly development",
+                      "Layout updates",
+                      "Interface definition",
+                      "Design modifications"
+                    ]
+                  },
+                  deliverables: {
+                    title: "Deliverables",
+                    items: [
+                      "3D CAD models",
+                      "Assembly structures",
+                      "Manufacturing drawings",
+                      "Technical documentation",
+                      "Supplier-ready technical data"
+                    ]
+                  },
+                  methods: {
+                    title: "Methods & Standards",
+                    badge: true,
+                    items: ["DIN", "ISO", "GD&T", "DFM", "Basic hand calculations"]
+                  },
+                  tools: {
+                    title: "Software & Tools",
+                    badge: true,
+                    items: ["CATIA V5", "SolidWorks", "Creo", "Siemens NX", "AutoCAD"]
+                  },
+                  industries: {
+                    title: "Relevant Industries",
+                    items: ["Aerospace", "Semiconductor Equipment", "Industrial Machinery", "Precision Mechanical Systems"]
+                  }
+                },
+                cta: "Need this type of support? Contact Tanisten."
+              },
+              {
+                id: "technical-documentation",
+                title: "Technical Documentation",
+                description:
+                  "Structured technical documents, drawing packages and engineering information for internal or supplier use.",
+                sections: {
+                  description: { title: "Description", items: ["Documentation support for engineering, manufacturing and technical review workflows."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Document structuring", "Drawing package updates", "Work instruction support", "Technical report preparation"] },
+                  deliverables: { title: "Deliverables", items: ["Technical documents", "Drawing lists", "Work instructions", "Review packages"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Controlled structure", "Engineering review", "Revision discipline"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Office tools", "CAD viewers", "Documentation systems"] },
+                  industries: { title: "Relevant Industries", items: ["Aerospace", "Semiconductor Equipment", "Industrial Machinery"] }
+                },
+                cta: "Need technical documentation support? Contact Tanisten."
+              },
+              {
+                id: "design-changes-product-updates",
+                title: "Design Changes & Product Updates",
+                description:
+                  "Support for existing products that require design updates, documentation changes or production feedback handling.",
+                sections: {
+                  description: { title: "Description", items: ["Engineering support for controlled updates to existing product data and documentation."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Change assessment", "CAD updates", "Drawing revisions", "Production issue follow-up"] },
+                  deliverables: { title: "Deliverables", items: ["Updated models", "Revised drawings", "Change notes", "Release-ready documentation"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Change control", "Design review", "Revision management"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["CATIA V5", "SolidWorks", "Siemens NX", "Excel"] },
+                  industries: { title: "Relevant Industries", items: ["Aerospace", "Industrial Machinery", "Precision Mechanical Systems"] }
+                },
+                cta: "Need design change support? Contact Tanisten."
+              },
+              {
+                id: "supplier-manufacturing-coordination",
+                title: "Supplier & Manufacturing Coordination",
+                description:
+                  "Technical coordination support between engineering, suppliers and manufacturing teams.",
+                sections: {
+                  description: { title: "Description", items: ["Practical support for clarifying technical questions and preparing supplier-ready information."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Supplier question handling", "Manufacturing feedback review", "Technical clarification", "Documentation follow-up"] },
+                  deliverables: { title: "Deliverables", items: ["Supplier data packages", "Clarification notes", "Updated drawings", "Action lists"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["DFM", "Technical review", "Interface control"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["CAD tools", "PDF markup", "Office tools"] },
+                  industries: { title: "Relevant Industries", items: ["Semiconductor Equipment", "Industrial Machinery", "Aerospace"] }
+                },
+                cta: "Need supplier coordination support? Contact Tanisten."
+              },
+              {
+                id: "engineering-contracting",
+                title: "Engineering Contracting",
+                description:
+                  "Temporary and project-based engineering capacity for overloaded technical teams.",
+                sections: {
+                  description: { title: "Description", items: ["Flexible engineering execution for defined work packages, project phases or temporary capacity needs."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["CAD support", "Documentation support", "Engineering change support", "Production support"] },
+                  deliverables: { title: "Deliverables", items: ["Defined work packages", "CAD and documentation output", "Review updates", "Technical handover"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Remote cooperation", "Project-based execution", "Clear deliverables"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Customer toolchain", "CAD systems", "Documentation tools"] },
+                  industries: { title: "Relevant Industries", items: ["Engineering consultancies", "Aerospace suppliers", "Industrial companies"] }
+                },
+                cta: "Need temporary engineering capacity? Contact Tanisten."
+              }
+            ]
+          },
+          {
+            id: "automation",
+            title: "Automation",
+            description:
+              "Automation of engineering and business workflows through AI, software and process optimization.",
+            products: [
+              {
+                id: "workflow-automation",
+                title: "Workflow Automation",
+                description: "Automation for repetitive technical and business workflows that slow down daily operations.",
+                sections: {
+                  description: { title: "Description", items: ["Workflow analysis and practical automation for repeated tasks, reports and handovers."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Workflow mapping", "Task automation", "Data transfer automation", "Template generation"] },
+                  deliverables: { title: "Deliverables", items: ["Automation scripts", "Workflow documentation", "Tested process steps", "User notes"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Process mapping", "Error handling", "User review"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Python", "APIs", "Excel", "Web tools"] },
+                  industries: { title: "Relevant Industries", items: ["Engineering teams", "Small businesses", "Industrial companies"] }
+                },
+                cta: "Need workflow automation? Contact Tanisten."
+              },
+              {
+                id: "ai-assistants",
+                title: "AI Assistants",
+                description: "Practical AI assistants for internal knowledge, customer support and documentation workflows.",
+                sections: {
+                  description: { title: "Description", items: ["Controlled AI support for recurring questions, internal knowledge and structured document work."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Knowledge assistant setup", "Prompt workflow design", "Document search support", "Response quality review"] },
+                  deliverables: { title: "Deliverables", items: ["AI assistant prototype", "Knowledge structure", "Usage instructions", "Review checklist"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Human review", "Source control", "Practical AI use"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["OpenAI API", "Vector search", "Web UI", "Python"] },
+                  industries: { title: "Relevant Industries", items: ["Customer support", "Engineering education", "Technical documentation"] }
+                },
+                cta: "Need an internal AI assistant? Contact Tanisten."
+              },
+              {
+                id: "reporting-automation",
+                title: "Reporting Automation",
+                description: "Automated reports for recurring project, engineering, operational or business data.",
+                sections: {
+                  description: { title: "Description", items: ["Automation of repeated reporting tasks using structured data, templates and review steps."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Data collection", "Report generation", "Dashboard preparation", "Recurring exports"] },
+                  deliverables: { title: "Deliverables", items: ["Report templates", "Automation scripts", "Dashboards", "Documentation"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Data validation", "Template control", "Scheduled workflow"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Python", "Excel", "CSV", "Power BI"] },
+                  industries: { title: "Relevant Industries", items: ["Engineering teams", "Operations", "Business administration"] }
+                },
+                cta: "Need automated reporting? Contact Tanisten."
+              },
+              {
+                id: "business-process-automation",
+                title: "Business Process Automation",
+                description: "Automation of repeated administrative, customer-facing or internal business processes.",
+                sections: {
+                  description: { title: "Description", items: ["Practical automation for repeatable business processes with clear inputs, rules and outputs."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Process mapping", "Form automation", "Notification workflows", "Data routing"] },
+                  deliverables: { title: "Deliverables", items: ["Automated workflow", "Process documentation", "Admin interface", "Testing notes"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Lean workflow", "Rule-based logic", "User testing"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Web apps", "APIs", "Databases", "Python"] },
+                  industries: { title: "Relevant Industries", items: ["Small businesses", "Service companies", "Training centers"] }
+                },
+                cta: "Need business process automation? Contact Tanisten."
+              },
+              {
+                id: "custom-business-tools",
+                title: "Custom Business Tools",
+                description: "Small internal tools for teams that need practical software without a large IT project.",
+                sections: {
+                  description: { title: "Description", items: ["Focused tools for internal teams, operational workflows, customer requests or technical administration."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Tool specification", "Form and dashboard design", "User workflow setup", "Deployment support"] },
+                  deliverables: { title: "Deliverables", items: ["Internal web tool", "Admin workflow", "User notes", "Deployment package"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["MVP scope", "User workflow", "Iterative review"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "TypeScript", "Python", "Databases"] },
+                  industries: { title: "Relevant Industries", items: ["Technical companies", "Service providers", "Education and training"] }
+                },
+                cta: "Need a custom business tool? Contact Tanisten."
+              },
+              {
+                id: "data-processing-solutions",
+                title: "Data Processing Solutions",
+                description: "Structured handling of files, tables, technical data and repeated data preparation tasks.",
+                sections: {
+                  description: { title: "Description", items: ["Tools for cleaning, transforming, checking and preparing technical or business data."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["File processing", "Data cleanup", "Format conversion", "Validation checks"] },
+                  deliverables: { title: "Deliverables", items: ["Processing scripts", "Cleaned datasets", "Validation reports", "User instructions"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Data validation", "Repeatable scripts", "Error logging"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Python", "Pandas", "Excel", "CSV", "JSON"] },
+                  industries: { title: "Relevant Industries", items: ["Engineering", "Operations", "Business reporting"] }
+                },
+                cta: "Need data processing support? Contact Tanisten."
+              }
+            ]
+          },
+          {
+            id: "digital",
+            title: "Digital Solutions",
+            description:
+              "Digital products and platforms that help companies improve operations, communication and customer interaction.",
+            products: [
+              {
+                id: "business-portals",
+                title: "Business Portals",
+                description: "Internal or customer-facing portals for requests, documents, status tracking and workflows.",
+                detailSections: [
+                  {
+                    title: "Description",
+                    items: [
+                      "Centralized web portals for companies that need structured access to information, workflows, documents, users or operational data."
+                    ]
+                  },
+                  {
+                    title: "Typical Use Cases",
+                    items: [
+                      "Client portals",
+                      "Partner portals",
+                      "Service portals",
+                      "Document access portals",
+                      "Project communication portals",
+                      "Technical service request portals"
+                    ]
+                  },
+                  {
+                    title: "Deliverables",
+                    items: [
+                      "Web-based portal",
+                      "User login / access structure",
+                      "Admin interface",
+                      "Content or document management",
+                      "Forms and request workflows",
+                      "Role-based access concept"
+                    ]
+                  },
+                  {
+                    title: "Features",
+                    items: [
+                      "User authentication",
+                      "Role-based access",
+                      "Forms and submissions",
+                      "Document upload/download",
+                      "Status tracking",
+                      "Notifications",
+                      "Admin dashboard"
+                    ]
+                  },
+                  {
+                    title: "Methods & Technologies",
+                    badge: true,
+                    items: [
+                      "React",
+                      "TypeScript",
+                      "REST APIs",
+                      "Database integration",
+                      "Cloud deployment",
+                      "Authentication workflows",
+                      "Responsive UI"
+                    ]
+                  },
+                  {
+                    title: "Business Value",
+                    items: [
+                      "Centralizes communication",
+                      "Reduces email chaos",
+                      "Gives clients structured access to information",
+                      "Improves transparency",
+                      "Saves administrative time"
+                    ]
+                  },
+                  {
+                    title: "Suitable For",
+                    items: [
+                      "Engineering companies",
+                      "Service businesses",
+                      "Training centers",
+                      "Small and mid-size companies",
+                      "Technical suppliers"
+                    ]
+                  }
+                ],
+                sections: {
+                  description: { title: "Description", items: ["Practical portals for business workflows that need structure, visibility and controlled access."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Portal structure", "User flows", "Document areas", "Request tracking"] },
+                  deliverables: { title: "Deliverables", items: ["Web portal", "Admin area", "User roles", "Deployment notes"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Responsive design", "Access control", "Workflow mapping"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "TypeScript", "Databases", "Cloud hosting"] },
+                  industries: { title: "Relevant Industries", items: ["Technical services", "Training centers", "Industrial suppliers"] }
+                },
+                cta: "Need a structured business portal? Contact Tanisten."
+              },
+              {
+                id: "customer-platforms",
+                title: "Customer Platforms",
+                description: "Customer-facing platforms for self-service, requests, documents and recurring interactions.",
+                detailSections: [
+                  {
+                    title: "Description",
+                    items: [
+                      "Digital platforms that allow customers to interact with a company, submit requests, track information or access services online."
+                    ]
+                  },
+                  {
+                    title: "Typical Use Cases",
+                    items: [
+                      "Customer account area",
+                      "Service request platform",
+                      "Customer onboarding system",
+                      "Support request platform",
+                      "Document submission platform"
+                    ]
+                  },
+                  {
+                    title: "Deliverables",
+                    items: [
+                      "Customer-facing web application",
+                      "Request forms",
+                      "Customer dashboard",
+                      "Admin dashboard",
+                      "Status tracking",
+                      "Notification concept"
+                    ]
+                  },
+                  {
+                    title: "Features",
+                    items: [
+                      "Customer login",
+                      "Request submission",
+                      "File upload",
+                      "Status overview",
+                      "Admin management",
+                      "Email notifications",
+                      "Responsive design"
+                    ]
+                  },
+                  {
+                    title: "Methods & Technologies",
+                    badge: true,
+                    items: ["React", "TypeScript", "API integration", "Database workflows", "Authentication", "Form handling", "Cloud hosting"]
+                  },
+                  {
+                    title: "Business Value",
+                    items: [
+                      "Makes services easier to access",
+                      "Reduces manual communication",
+                      "Improves customer experience",
+                      "Creates a professional digital interface",
+                      "Helps companies manage requests in one place"
+                    ]
+                  },
+                  {
+                    title: "Suitable For",
+                    items: ["Medical practices", "Service companies", "Training providers", "Technical companies", "Local businesses"]
+                  }
+                ],
+                sections: {
+                  description: { title: "Description", items: ["Digital customer areas that reduce manual communication and make repeated services easier to manage."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Customer login flow", "Request forms", "Document sharing", "Status visibility"] },
+                  deliverables: { title: "Deliverables", items: ["Customer platform", "Admin view", "Notification workflow", "Deployment setup"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["User-centered workflow", "Data privacy awareness", "Responsive UI"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "APIs", "Databases", "Cloudflare Pages"] },
+                  industries: { title: "Relevant Industries", items: ["Service companies", "Medical practices", "Training providers"] }
+                },
+                cta: "Want customers to interact with your business online? Contact Tanisten."
+              },
+              {
+                id: "internal-company-tools",
+                title: "Internal Company Tools",
+                description: "Internal tools for forms, dashboards, reports, operational tracking and admin workflows.",
+                detailSections: [
+                  {
+                    title: "Description",
+                    items: [
+                      "Custom internal tools for teams that need to replace spreadsheets, repetitive manual work or fragmented workflows."
+                    ]
+                  },
+                  {
+                    title: "Typical Use Cases",
+                    items: [
+                      "Internal task management",
+                      "Small ERP-like tools",
+                      "Employee tools",
+                      "Document tracking",
+                      "Request management",
+                      "Internal knowledge tools",
+                      "Operational workflow tools"
+                    ]
+                  },
+                  {
+                    title: "Deliverables",
+                    items: ["Internal web application", "Admin interface", "Data forms", "Tables and filtering", "User roles", "Export functions", "Basic reporting"]
+                  },
+                  {
+                    title: "Features",
+                    items: ["CRUD operations", "User management", "Data tables", "Search and filters", "File attachments", "Workflow status", "Export to Excel / CSV"]
+                  },
+                  {
+                    title: "Methods & Technologies",
+                    badge: true,
+                    items: ["React", "TypeScript", "Python / Node.js backend", "REST APIs", "PostgreSQL", "Authentication", "Cloud/VPS deployment"]
+                  },
+                  {
+                    title: "Business Value",
+                    items: [
+                      "Replaces messy spreadsheets",
+                      "Structures internal workflows",
+                      "Reduces repetitive manual work",
+                      "Makes information easier to find",
+                      "Improves operational visibility"
+                    ]
+                  },
+                  {
+                    title: "Suitable For",
+                    items: ["Small companies", "Engineering teams", "Training centers", "Service businesses", "Operations teams"]
+                  }
+                ],
+                sections: {
+                  description: { title: "Description", items: ["Lightweight internal applications for teams that need a practical tool instead of manual spreadsheets."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Form workflows", "Dashboards", "Admin screens", "Data tracking"] },
+                  deliverables: { title: "Deliverables", items: ["Internal web app", "Data model", "User instructions", "Deployment package"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["MVP scope", "Role-based workflow", "Iterative review"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "TypeScript", "Python", "Databases"] },
+                  industries: { title: "Relevant Industries", items: ["Small businesses", "Engineering teams", "Operations"] }
+                },
+                cta: "Need a custom internal tool for your team? Contact Tanisten."
+              },
+              {
+                id: "booking-scheduling-systems",
+                title: "Booking & Scheduling Systems",
+                description: "Booking and scheduling workflows for appointments, training, services or operational resources.",
+                detailSections: [
+                  {
+                    title: "Description",
+                    items: [
+                      "Booking and appointment systems for companies that need clients to book services, consultations, lessons or appointments online."
+                    ]
+                  },
+                  {
+                    title: "Typical Use Cases",
+                    items: [
+                      "Medical practice appointment booking",
+                      "Consultation booking",
+                      "Training course scheduling",
+                      "Service appointment booking",
+                      "Client request scheduling"
+                    ]
+                  },
+                  {
+                    title: "Deliverables",
+                    items: ["Booking interface", "Admin calendar", "Availability logic", "Confirmation workflow", "Email notifications", "Customer form", "Optional AI assistant integration"]
+                  },
+                  {
+                    title: "Features",
+                    items: ["Date and time selection", "Booking form", "Admin overview", "Email confirmations", "Appointment status", "Basic customer data collection", "Optional chatbot guidance"]
+                  },
+                  {
+                    title: "Methods & Technologies",
+                    badge: true,
+                    items: ["React", "TypeScript", "Calendar integration", "Backend/API integration", "Email notifications", "Database storage", "Responsive UI"]
+                  },
+                  {
+                    title: "Business Value",
+                    items: [
+                      "Reduces phone calls and manual scheduling",
+                      "Makes booking easier for customers",
+                      "Saves administrative time",
+                      "Gives companies better appointment visibility",
+                      "Improves customer experience"
+                    ]
+                  },
+                  {
+                    title: "Suitable For",
+                    items: ["Medical practices", "Training centers", "Consultants", "Service providers", "Local businesses"]
+                  }
+                ],
+                sections: {
+                  description: { title: "Description", items: ["Scheduling systems for teams that need structured booking, availability and customer communication."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Booking flow", "Availability rules", "Customer notifications", "Admin overview"] },
+                  deliverables: { title: "Deliverables", items: ["Booking interface", "Admin calendar", "Notification setup", "Deployment notes"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Responsive UI", "Workflow validation", "Clear booking rules"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "Calendar APIs", "Databases", "Email services"] },
+                  industries: { title: "Relevant Industries", items: ["Medical practices", "Training centers", "Service providers"] }
+                },
+                cta: "Need an online booking system? Contact Tanisten."
+              },
+              {
+                id: "company-websites",
+                title: "Company Websites",
+                description: "Professional websites and landing pages for technical companies and service providers.",
+                detailSections: [
+                  {
+                    title: "Description",
+                    items: [
+                      "Professional company websites and landing pages for technical companies, service providers and small businesses that need a clear online presence."
+                    ]
+                  },
+                  {
+                    title: "Typical Use Cases",
+                    items: ["Company website", "Service landing page", "Technical business website", "Portfolio website", "Bilingual website", "Website redesign"]
+                  },
+                  {
+                    title: "Deliverables",
+                    items: ["Responsive website", "Clear service pages", "Contact form", "SEO-friendly structure", "Bilingual EN/DE setup if needed", "Deployment support", "Domain and hosting setup guidance"]
+                  },
+                  {
+                    title: "Features",
+                    items: ["Modern responsive design", "Service sections", "Contact forms", "Multi-language structure", "SEO metadata", "Fast loading", "Cloud deployment"]
+                  },
+                  {
+                    title: "Methods & Technologies",
+                    badge: true,
+                    items: ["React", "TypeScript", "Tailwind CSS", "Vite", "Cloudflare Pages", "GitHub deployment", "Basic SEO"]
+                  },
+                  {
+                    title: "Business Value",
+                    items: [
+                      "Creates professional online credibility",
+                      "Explains services clearly",
+                      "Supports client acquisition",
+                      "Gives partners a place to verify the company",
+                      "Works as a digital business card and sales tool"
+                    ]
+                  },
+                  {
+                    title: "Suitable For",
+                    items: ["Engineering consultants", "Service providers", "Small businesses", "Training centers", "Technical startups"]
+                  }
+                ],
+                sections: {
+                  description: { title: "Description", items: ["Credible websites for companies that need clear service positioning and direct client outreach."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Website structure", "Copy organization", "Responsive layout", "Deployment setup"] },
+                  deliverables: { title: "Deliverables", items: ["Company website", "SEO metadata", "Contact flow", "Deployment instructions"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Responsive design", "SEO basics", "Performance awareness"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "Vite", "Tailwind CSS", "Cloudflare Pages"] },
+                  industries: { title: "Relevant Industries", items: ["Engineering companies", "Consultancies", "Small businesses"] }
+                },
+                cta: "Need a professional company website? Contact Tanisten."
+              },
+              {
+                id: "dashboards-reporting-systems",
+                title: "Dashboards & Reporting Systems",
+                description: "Dashboards and reporting interfaces for operational, customer or technical data.",
+                detailSections: [
+                  {
+                    title: "Description",
+                    items: [
+                      "Dashboards and reporting systems that help companies view, track and understand business or technical data."
+                    ]
+                  },
+                  {
+                    title: "Typical Use Cases",
+                    items: [
+                      "Management dashboards",
+                      "Project status dashboards",
+                      "Training progress dashboards",
+                      "Sales or operations reporting",
+                      "Engineering data overview",
+                      "Automated report generation"
+                    ]
+                  },
+                  {
+                    title: "Deliverables",
+                    items: ["Dashboard interface", "Data tables", "Charts and KPIs", "Filters", "Export functions", "Reporting logic", "Automated report templates"]
+                  },
+                  {
+                    title: "Features",
+                    items: ["KPI cards", "Charts", "Tables", "Filters", "Date ranges", "Export to Excel / CSV", "Automated report generation"]
+                  },
+                  {
+                    title: "Methods & Technologies",
+                    badge: true,
+                    items: ["React", "TypeScript", "Python data processing", "APIs", "Database integration", "Excel / CSV workflows", "Automation scripts"]
+                  },
+                  {
+                    title: "Business Value",
+                    items: [
+                      "Makes data easier to understand",
+                      "Reduces manual reporting work",
+                      "Improves decision-making",
+                      "Saves time for managers and teams",
+                      "Creates transparency across operations"
+                    ]
+                  },
+                  {
+                    title: "Suitable For",
+                    items: ["Small and mid-size companies", "Training centers", "Engineering teams", "Service businesses", "Operations teams"]
+                  }
+                ],
+                sections: {
+                  description: { title: "Description", items: ["Visual reporting systems that turn recurring data into clear operational views."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["KPI structure", "Data visualization", "Filtering", "Report export"] },
+                  deliverables: { title: "Deliverables", items: ["Dashboard UI", "Data connection", "Report views", "User notes"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Data validation", "Dashboard UX", "Iterative review"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "Chart libraries", "APIs", "Databases"] },
+                  industries: { title: "Relevant Industries", items: ["Operations", "Technical services", "Business reporting"] }
+                },
+                cta: "Need dashboards or automated reporting? Contact Tanisten."
+              }
+            ]
+          }
+        ]
+      }
     },
     industries: {
       heroEyebrow: "Industries",
@@ -270,11 +1013,35 @@ export const translations: Record<Language, Translations> = {
         { title: "Engineering Education & Training", description: "Digital learning tools, technical assistants and structured training workflows." }
       ],
       whyTanisten: [
-        { title: "Practical engineering experience", description: "Work is grounded in real mechanical, aviation and documentation tasks." },
-        { title: "Aerospace and semiconductor background", description: "Experience with aircraft structures, interiors and precision semiconductor equipment." },
-        { title: "Engineering plus automation", description: "Mechanical and technical work can be connected with scripts, tools and internal applications." },
-        { title: "Flexible remote cooperation", description: "Project-based support with clear inputs, reviews, open points and handover." },
-        { title: "Clear technical communication", description: "Structured communication for engineers, suppliers and technical decision-makers." }
+        {
+          title: "10+ Years Experience",
+          description: "Experience across aerospace, semiconductor and industrial engineering projects.",
+          accent: "engineering"
+        },
+        {
+          title: "Aerospace & Semiconductor",
+          description:
+            "Experience supporting complex technical products, engineering documentation and project execution.",
+          accent: "neutral"
+        },
+        {
+          title: "Engineering + Automation",
+          description:
+            "Combining mechanical engineering expertise with workflow automation, AI assistants and business tools.",
+          accent: "automation"
+        },
+        {
+          title: "Digital Solutions",
+          description:
+            "Practical business portals, websites, internal tools and customer-facing digital platforms.",
+          accent: "digital"
+        },
+        {
+          title: "Flexible Project Support",
+          description:
+            "Additional engineering and technical capacity for project-based work and growing teams.",
+          accent: "neutral"
+        }
       ],
       engineeringServices: [
         { title: "Mechanical Design & CAD", description: "Component design, assemblies, layouts, CAD models, drawings and design updates.", accent: "engineering" },
@@ -372,9 +1139,69 @@ export const translations: Record<Language, Translations> = {
       heroSubheadline:
         "Tanisten unterstützt Engineering-Teams bei mechanischer Konstruktion, technischer Dokumentation, Luft- und Raumfahrttechnik, Halbleitertechnik und der Automatisierung technischer Workflows.",
       servicesEyebrow: "Leistungen",
-      servicesTitle: "Engineering- und Automatisierungsunterstützung in zwei klaren Leistungsgruppen",
+      servicesTitle: "Was wir leisten",
       servicesDescription:
-        "Tanisten konzentriert sich auf praktische technische Arbeit für Engineering-Teams, technische Zulieferer und Unternehmen, die wiederholbare Workflows verbessern möchten.",
+        "Praktische Engineering-, Automatisierungs- und digitale Lösungen für technische Unternehmen.",
+      typicalProjectsLabel: "Typische Projekte",
+      serviceDirections: [
+        {
+          title: "Engineering",
+          accent: "engineering",
+          description: "",
+          services: [
+            "Unterstützung in der Produktentwicklung",
+            "Mechanische Konstruktion & CAD",
+            "Technische Dokumentation",
+            "Lieferantenkoordination",
+            "Engineering Contracting"
+          ],
+          projects: [
+            "Unterstützung bei der Entwicklung neuer Produkte",
+            "Produktionsreife CAD-Modelle und Zeichnungen",
+            "Konstruktionsänderungen bestehender Produkte",
+            "Fertigungsdokumentation",
+            "Koordination mit Lieferanten und Produktion"
+          ]
+        },
+        {
+          title: "Automatisierung",
+          accent: "automation",
+          description: "",
+          services: [
+            "Workflow-Automatisierung",
+            "KI-Assistenten",
+            "Reporting-Automatisierung",
+            "Prozessautomatisierung",
+            "Individuelle Business-Tools"
+          ],
+          projects: [
+            "KI-Assistenten für Kundenservice",
+            "Automatisierte Reporting-Systeme",
+            "Interne Wissensassistenten",
+            "Automatisierung technischer Workflows",
+            "Optimierung von Geschäftsprozessen"
+          ]
+        },
+        {
+          title: "Digitale Lösungen",
+          accent: "digital",
+          description: "",
+          services: [
+            "Business-Portale",
+            "Unternehmenswebsites",
+            "Kundenplattformen",
+            "Buchungssysteme",
+            "Interne Unternehmens-Tools",
+          ],
+          projects: [
+            "Unternehmenswebsites und Landingpages",
+            "Termin- und Buchungssysteme für Arztpraxen",
+            "Kundenportale",
+            "Mitarbeiterportale",
+            "Dashboards und Reporting-Plattformen"
+          ]
+        }
+      ],
       engineeringGroupTitle: "Engineering",
       automationGroupTitle: "Automatisierung",
       engineeringItems: ["Mechanische Konstruktion", "CAD-Entwicklung", "Technische Dokumentation", "Engineering Contracting"],
@@ -383,20 +1210,518 @@ export const translations: Record<Language, Translations> = {
       industriesTitle: "Branchenfokus für technische Arbeit",
       whyEyebrow: "Warum Tanisten",
       whyTitle: "Ein praktischer technischer Partner für Engineering und Automatisierung",
+      whyDescription: "Engineering-Kompetenz kombiniert mit Automatisierung und digitalen Lösungen.",
       contactTitle: "Besprechen Sie ein technisches Projekt mit Tanisten",
       contactText:
         "Senden Sie eine kurze Projektbeschreibung, den aktuellen technischen Bedarf und die erwarteten Ergebnisse. Wir antworten mit einem praktikablen nächsten Schritt."
     },
     services: {
       heroEyebrow: "Leistungen",
-      heroTitle: "Engineering, Automatisierung und digitale technische Lösungen",
+      heroTitle: "Katalog für Engineering, Automatisierung und digitale Lösungen",
       heroSubtitle:
-        "Die Leistungen sind um drei Richtungen strukturiert: Engineering-Unterstützung, Automatisierung wiederholbarer Workflows und praktische digitale Tools für technische Teams.",
+        "Durchsuchen Sie Leistungsbereiche, wählen Sie ein Produkt und prüfen Sie strukturierte technische Details für Engineering-, Automatisierungs- und Digitalprojekte.",
       engineeringTitle: "Engineering",
       automationTitle: "Automatisierung",
-      contactTitle: "Benötigen Sie Unterstützung für ein Engineering- oder Automatisierungspaket?",
+      contactTitle: "Benötigen Sie diese Art von Unterstützung?",
       contactText:
-        "Teilen Sie Umfang, aktuellen Workflow, eingesetzte Tools und erwartete Ergebnisse. Tanisten kann helfen, ein klares technisches Arbeitspaket zu definieren."
+        "Kontaktieren Sie Tanisten mit einer kurzen Beschreibung der aktuellen Aufgabe, Projektphase und erwarteten Ergebnisse.",
+      catalog: {
+        heroEyebrow: "Leistungen",
+        heroTitle: "Katalog für Engineering, Automatisierung und digitale Lösungen",
+        heroSubtitle:
+          "Durchsuchen Sie Leistungsbereiche, wählen Sie ein Produkt und prüfen Sie strukturierte technische Details für Engineering-, Automatisierungs- und Digitalprojekte.",
+        catalogEyebrow: "Leistungskatalog",
+        catalogTitle: "Nach Kategorie und Produkt navigieren",
+        catalogDescription:
+          "Der Katalog zeigt Navigation und Details gleichzeitig. Wählen Sie links ein Produkt aus, um rechts den technischen Umfang zu prüfen.",
+        directionLabel: "Leistungsbereich",
+        navigationTitle: "Service-Navigation",
+        detailsTitle: "Ausgewählte Leistungsdetails",
+        selectTitle: "Wählen Sie eine Leistung aus, um Details anzuzeigen.",
+        selectText: "Wählen Sie ein Produkt aus der Service-Navigation, um das technische Detailpanel zu öffnen.",
+        productSelectTitle: "Wählen Sie ein Produkt aus, um technische Details anzuzeigen.",
+        contactLabel: "Tanisten kontaktieren",
+        defaultProductId: "mechanical-design-cad",
+        categories: [
+          {
+            id: "engineering",
+            title: "Engineering",
+            description:
+              "Praktische Engineering-Unterstützung für Produktentwicklung, technische Dokumentation und Fertigungsprojekte.",
+            products: [
+              {
+                id: "product-development-support",
+                title: "Unterstützung in der Produktentwicklung",
+                description:
+                  "Unterstützung technischer Teams während Produktentwicklung, Produktanpassungen und Produktionsvorbereitung.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Projektbezogene Unterstützung von frühen Konzepten bis zu produktionsreifen Engineering-Informationen."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Frühe Konstruktionsunterstützung", "Produktanpassungen", "Design Reviews", "Produktionsvorbereitung"] },
+                  deliverables: { title: "Deliverables", items: ["CAD-Pakete", "Zeichnungsupdates", "Dokumentationspakete", "Review-Notizen"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Engineering-Workflow", "Design Review", "DFM"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["CATIA V5", "SolidWorks", "Siemens NX", "Dokumentationstools"] },
+                  industries: { title: "Relevante Branchen", items: ["Luftfahrt", "Halbleiterausrüstung", "Industriemaschinen"] }
+                },
+                cta: "Benötigen Sie Unterstützung in der Produktentwicklung? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "mechanical-design-cad",
+                title: "Mechanische Konstruktion & CAD",
+                description:
+                  "Mechanische Konstruktionsunterstützung für Komponenten, Baugruppen, Layouts und produktionsreife Engineering-Daten.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Mechanische Konstruktion und CAD-Umsetzung für nutzbare Modelle, Zeichnungen und strukturierte Engineering-Daten."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Komponentenkonstruktion", "Baugruppenentwicklung", "Layout-Updates", "Schnittstellendefinition", "Konstruktionsanpassungen"] },
+                  deliverables: { title: "Deliverables", items: ["3D-CAD-Modelle", "Baugruppenstrukturen", "Fertigungszeichnungen", "Technische Dokumentation", "Lieferantenfähige technische Daten"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["DIN", "ISO", "GD&T", "DFM", "Grundlegende Handrechnungen"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["CATIA V5", "SolidWorks", "Creo", "Siemens NX", "AutoCAD"] },
+                  industries: { title: "Relevante Branchen", items: ["Luftfahrt", "Halbleiterausrüstung", "Industriemaschinen", "Präzise mechanische Systeme"] }
+                },
+                cta: "Benötigen Sie diese Art von Unterstützung? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "technical-documentation",
+                title: "Technische Dokumentation",
+                description:
+                  "Strukturierte technische Dokumente, Zeichnungspakete und Engineering-Informationen.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Dokumentationsunterstützung für Engineering-, Fertigungs- und Review-Workflows."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Dokumentstrukturierung", "Zeichnungspaket-Updates", "Arbeitsanweisungen", "Technische Berichte"] },
+                  deliverables: { title: "Deliverables", items: ["Technische Dokumente", "Zeichnungslisten", "Arbeitsanweisungen", "Review-Pakete"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Kontrollierte Struktur", "Engineering Review", "Revisionsdisziplin"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Office-Tools", "CAD-Viewer", "Dokumentationssysteme"] },
+                  industries: { title: "Relevante Branchen", items: ["Luftfahrt", "Halbleiterausrüstung", "Industriemaschinen"] }
+                },
+                cta: "Benötigen Sie technische Dokumentation? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "design-changes-product-updates",
+                title: "Konstruktionsänderungen & Produktanpassungen",
+                description: "Unterstützung für bestehende Produkte mit Designänderungen und Dokumentationsupdates.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Kontrollierte Änderungen an bestehenden Produktdaten und Dokumentationen."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Änderungsbewertung", "CAD-Updates", "Zeichnungsrevisionen", "Produktionsrückfragen"] },
+                  deliverables: { title: "Deliverables", items: ["Aktualisierte Modelle", "Revidierte Zeichnungen", "Änderungsnotizen", "Freigabefähige Dokumentation"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Change Control", "Design Review", "Revisionsmanagement"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["CATIA V5", "SolidWorks", "Siemens NX", "Excel"] },
+                  industries: { title: "Relevante Branchen", items: ["Luftfahrt", "Industriemaschinen", "Präzise mechanische Systeme"] }
+                },
+                cta: "Benötigen Sie Unterstützung bei Produktänderungen? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "supplier-manufacturing-coordination",
+                title: "Lieferanten- & Fertigungskoordination",
+                description: "Technische Koordination zwischen Engineering, Lieferanten und Fertigungsteams.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Unterstützung bei technischen Klärungen und lieferantenfähigen Informationen."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Lieferantenfragen", "Fertigungsfeedback", "Technische Klärungen", "Dokumentationsnachverfolgung"] },
+                  deliverables: { title: "Deliverables", items: ["Lieferantendatenpakete", "Klärungsnotizen", "Aktualisierte Zeichnungen", "Aktionslisten"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["DFM", "Technisches Review", "Schnittstellenkontrolle"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["CAD-Tools", "PDF-Markup", "Office-Tools"] },
+                  industries: { title: "Relevante Branchen", items: ["Halbleiterausrüstung", "Industriemaschinen", "Luftfahrt"] }
+                },
+                cta: "Benötigen Sie Lieferantenkoordination? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "engineering-contracting",
+                title: "Engineering Contracting",
+                description: "Temporäre und projektbasierte Engineering-Kapazität für ausgelastete technische Teams.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Flexible Engineering-Umsetzung für definierte Arbeitspakete, Projektphasen oder temporären Kapazitätsbedarf."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["CAD-Unterstützung", "Dokumentationsunterstützung", "Änderungsunterstützung", "Produktionssupport"] },
+                  deliverables: { title: "Deliverables", items: ["Definierte Arbeitspakete", "CAD- und Dokumentationsergebnisse", "Review-Updates", "Technische Übergabe"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Remote-Zusammenarbeit", "Projektbasierte Umsetzung", "Klare Deliverables"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Kundentoolchain", "CAD-Systeme", "Dokumentationstools"] },
+                  industries: { title: "Relevante Branchen", items: ["Engineering-Beratungen", "Luftfahrtzulieferer", "Industrieunternehmen"] }
+                },
+                cta: "Benötigen Sie temporäre Engineering-Kapazität? Kontaktieren Sie Tanisten."
+              }
+            ]
+          },
+          {
+            id: "automation",
+            title: "Automatisierung",
+            description:
+              "Automatisierung technischer und geschäftlicher Abläufe durch KI, Software und Prozessoptimierung.",
+            products: [
+              {
+                id: "workflow-automation",
+                title: "Workflow-Automatisierung",
+                description: "Automatisierung wiederholbarer technischer und geschäftlicher Workflows.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Workflow-Analyse und praktische Automatisierung wiederholter Aufgaben, Reports und Übergaben."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Workflow-Mapping", "Aufgabenautomatisierung", "Datentransfer", "Template-Erstellung"] },
+                  deliverables: { title: "Deliverables", items: ["Automatisierungsskripte", "Workflow-Dokumentation", "Getestete Prozessschritte", "Nutzerhinweise"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Prozessmapping", "Fehlerbehandlung", "User Review"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Python", "APIs", "Excel", "Web-Tools"] },
+                  industries: { title: "Relevante Branchen", items: ["Engineering-Teams", "Kleine Unternehmen", "Industrieunternehmen"] }
+                },
+                cta: "Benötigen Sie Workflow-Automatisierung? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "ai-assistants",
+                title: "KI-Assistenten",
+                description: "Praktische KI-Assistenten für internes Wissen, Kundenservice und Dokumentationsworkflows.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Kontrollierte KI-Unterstützung für wiederkehrende Fragen, internes Wissen und strukturierte Dokumentenarbeit."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Wissensassistent", "Prompt-Workflow", "Dokumentensuche", "Qualitätsreview"] },
+                  deliverables: { title: "Deliverables", items: ["KI-Assistent-Prototyp", "Wissensstruktur", "Nutzungsanleitung", "Review-Checkliste"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Human Review", "Quellenkontrolle", "Praktischer KI-Einsatz"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["OpenAI API", "Vector Search", "Web UI", "Python"] },
+                  industries: { title: "Relevante Branchen", items: ["Kundenservice", "Engineering-Ausbildung", "Technische Dokumentation"] }
+                },
+                cta: "Benötigen Sie einen internen KI-Assistenten? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "reporting-automation",
+                title: "Reporting-Automatisierung",
+                description: "Automatisierte Reports für wiederkehrende Projekt-, Engineering-, Betriebs- oder Geschäftsdaten.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Automatisierung wiederholter Reporting-Aufgaben mit strukturierten Daten, Templates und Review-Schritten."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Datensammlung", "Report-Erstellung", "Dashboard-Vorbereitung", "Regelmäßige Exporte"] },
+                  deliverables: { title: "Deliverables", items: ["Report-Templates", "Automatisierungsskripte", "Dashboards", "Dokumentation"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Datenvalidierung", "Template-Kontrolle", "Geplanter Workflow"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Python", "Excel", "CSV", "Power BI"] },
+                  industries: { title: "Relevante Branchen", items: ["Engineering-Teams", "Operations", "Business Administration"] }
+                },
+                cta: "Benötigen Sie automatisiertes Reporting? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "business-process-automation",
+                title: "Geschäftsprozessautomatisierung",
+                description: "Automatisierung wiederholbarer administrativer, kundenbezogener oder interner Geschäftsprozesse.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Praktische Automatisierung für wiederholbare Geschäftsprozesse mit klaren Eingaben, Regeln und Ergebnissen."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Prozessmapping", "Formularautomatisierung", "Benachrichtigungen", "Datenrouting"] },
+                  deliverables: { title: "Deliverables", items: ["Automatisierter Workflow", "Prozessdokumentation", "Admin-Interface", "Testnotizen"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Lean Workflow", "Regelbasierte Logik", "User Testing"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Web Apps", "APIs", "Datenbanken", "Python"] },
+                  industries: { title: "Relevante Branchen", items: ["Kleine Unternehmen", "Dienstleister", "Trainingszentren"] }
+                },
+                cta: "Benötigen Sie Prozessautomatisierung? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "custom-business-tools",
+                title: "Individuelle Business-Tools",
+                description: "Kleine interne Tools für Teams, die praktische Software ohne großes IT-Projekt benötigen.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Fokussierte Tools für interne Teams, operative Workflows, Kundenanfragen oder technische Administration."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Tool-Spezifikation", "Formulare und Dashboards", "User Workflow", "Deployment-Support"] },
+                  deliverables: { title: "Deliverables", items: ["Internes Web-Tool", "Admin-Workflow", "Nutzerhinweise", "Deployment-Paket"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["MVP-Scope", "User Workflow", "Iteratives Review"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "TypeScript", "Python", "Datenbanken"] },
+                  industries: { title: "Relevante Branchen", items: ["Technische Unternehmen", "Dienstleister", "Ausbildung und Training"] }
+                },
+                cta: "Benötigen Sie ein individuelles Business-Tool? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "data-processing-solutions",
+                title: "Datenverarbeitungslösungen",
+                description: "Strukturierte Verarbeitung von Dateien, Tabellen, technischen Daten und wiederkehrenden Datenaufgaben.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Tools zum Bereinigen, Transformieren, Prüfen und Vorbereiten technischer oder geschäftlicher Daten."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Dateiverarbeitung", "Datenbereinigung", "Formatkonvertierung", "Validierungschecks"] },
+                  deliverables: { title: "Deliverables", items: ["Processing-Skripte", "Bereinigte Datensätze", "Validierungsberichte", "Nutzeranleitung"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Datenvalidierung", "Wiederholbare Skripte", "Error Logging"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Python", "Pandas", "Excel", "CSV", "JSON"] },
+                  industries: { title: "Relevante Branchen", items: ["Engineering", "Operations", "Business Reporting"] }
+                },
+                cta: "Benötigen Sie Datenverarbeitung? Kontaktieren Sie Tanisten."
+              }
+            ]
+          },
+          {
+            id: "digital",
+            title: "Digitale Lösungen",
+            description:
+              "Digitale Produkte und Plattformen zur Verbesserung von Geschäftsprozessen, Kommunikation und Kundeninteraktion.",
+            products: [
+              {
+                id: "business-portals",
+                title: "Business-Portale",
+                description: "Interne oder kundenorientierte Portale für Anfragen, Dokumente, Statusverfolgung und Workflows.",
+                detailSections: [
+                  {
+                    title: "Beschreibung",
+                    items: [
+                      "Zentrale Web-Portale für Unternehmen, die strukturierten Zugriff auf Informationen, Workflows, Dokumente, Nutzer oder operative Daten benötigen."
+                    ]
+                  },
+                  {
+                    title: "Typische Anwendungsfälle",
+                    items: ["Kundenportale", "Partnerportale", "Service-Portale", "Dokumentenportale", "Projektkommunikationsportale", "Portale für technische Serviceanfragen"]
+                  },
+                  {
+                    title: "Deliverables",
+                    items: ["Webbasiertes Portal", "Benutzerlogin / Zugriffsstruktur", "Admin-Oberfläche", "Dokumenten- oder Content-Verwaltung", "Formulare und Anfrageprozesse", "Rollenbasiertes Zugriffskonzept"]
+                  },
+                  {
+                    title: "Features",
+                    items: ["Benutzer-Authentifizierung", "Rollenbasierter Zugriff", "Formulare und Einsendungen", "Dokumenten-Upload/Download", "Statusverfolgung", "Benachrichtigungen", "Admin-Dashboard"]
+                  },
+                  {
+                    title: "Methoden & Technologien",
+                    badge: true,
+                    items: ["React", "TypeScript", "REST APIs", "Datenbankintegration", "Cloud-Deployment", "Authentifizierungs-Workflows", "Responsive UI"]
+                  },
+                  {
+                    title: "Business Value",
+                    items: ["Zentralisiert Kommunikation", "Reduziert E-Mail-Chaos", "Gibt Kunden strukturierten Zugriff auf Informationen", "Verbessert Transparenz", "Spart administrative Zeit"]
+                  },
+                  {
+                    title: "Geeignet für",
+                    items: ["Engineering-Unternehmen", "Dienstleistungsunternehmen", "Bildungsträger", "Kleine und mittelständische Unternehmen", "Technische Zulieferer"]
+                  }
+                ],
+                sections: {
+                  description: { title: "Beschreibung", items: ["Praktische Portale für Geschäftsworkflows, die Struktur, Sichtbarkeit und kontrollierten Zugriff benötigen."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Portalstruktur", "User Flows", "Dokumentenbereiche", "Anfrageverfolgung"] },
+                  deliverables: { title: "Deliverables", items: ["Webportal", "Admin-Bereich", "User-Rollen", "Deployment-Hinweise"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Responsive Design", "Access Control", "Workflow Mapping"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "TypeScript", "Datenbanken", "Cloud Hosting"] },
+                  industries: { title: "Relevante Branchen", items: ["Technische Dienstleistungen", "Trainingszentren", "Industriezulieferer"] }
+                },
+                cta: "Benötigen Sie ein strukturiertes Business-Portal? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "customer-platforms",
+                title: "Kundenplattformen",
+                description: "Kundenorientierte Plattformen für Self-Service, Anfragen, Dokumente und wiederkehrende Interaktionen.",
+                detailSections: [
+                  {
+                    title: "Beschreibung",
+                    items: [
+                      "Digitale Plattformen, über die Kunden mit einem Unternehmen interagieren, Anfragen stellen, Informationen verfolgen oder Services online nutzen können."
+                    ]
+                  },
+                  {
+                    title: "Typische Anwendungsfälle",
+                    items: ["Kundenbereich", "Serviceanfrage-Plattform", "Kunden-Onboarding-System", "Supportanfrage-Plattform", "Plattform für Dokumenteneinreichung"]
+                  },
+                  {
+                    title: "Deliverables",
+                    items: ["Kundenorientierte Webanwendung", "Anfrageformulare", "Kunden-Dashboard", "Admin-Dashboard", "Statusverfolgung", "Benachrichtigungskonzept"]
+                  },
+                  {
+                    title: "Features",
+                    items: ["Kundenlogin", "Anfrageübermittlung", "Datei-Upload", "Statusübersicht", "Admin-Verwaltung", "E-Mail-Benachrichtigungen", "Responsive Design"]
+                  },
+                  {
+                    title: "Methoden & Technologien",
+                    badge: true,
+                    items: ["React", "TypeScript", "API-Integration", "Datenbank-Workflows", "Authentifizierung", "Formularverarbeitung", "Cloud-Hosting"]
+                  },
+                  {
+                    title: "Business Value",
+                    items: ["Macht Services leichter zugänglich", "Reduziert manuelle Kommunikation", "Verbessert die Kundenerfahrung", "Schafft eine professionelle digitale Schnittstelle", "Hilft Unternehmen, Anfragen zentral zu verwalten"]
+                  },
+                  {
+                    title: "Geeignet für",
+                    items: ["Arztpraxen", "Dienstleistungsunternehmen", "Bildungsträger", "Technische Unternehmen", "Lokale Unternehmen"]
+                  }
+                ],
+                sections: {
+                  description: { title: "Beschreibung", items: ["Digitale Kundenbereiche, die manuelle Kommunikation reduzieren und wiederkehrende Services leichter steuerbar machen."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Kundenlogin", "Anfrageformulare", "Dokumentenfreigabe", "Statusanzeige"] },
+                  deliverables: { title: "Deliverables", items: ["Kundenplattform", "Admin-Ansicht", "Benachrichtigungsworkflow", "Deployment-Setup"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["User-centered Workflow", "Datenschutzbewusstsein", "Responsive UI"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "APIs", "Datenbanken", "Cloudflare Pages"] },
+                  industries: { title: "Relevante Branchen", items: ["Dienstleister", "Arztpraxen", "Trainingsanbieter"] }
+                },
+                cta: "Möchten Sie Kunden online besser einbinden? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "internal-company-tools",
+                title: "Interne Unternehmens-Tools",
+                description: "Interne Tools für Formulare, Dashboards, Reports, operative Verfolgung und Admin-Workflows.",
+                detailSections: [
+                  {
+                    title: "Beschreibung",
+                    items: [
+                      "Individuelle interne Tools für Teams, die Tabellen, manuelle Routinearbeit oder unstrukturierte Abläufe ersetzen möchten."
+                    ]
+                  },
+                  {
+                    title: "Typische Anwendungsfälle",
+                    items: ["Internes Aufgabenmanagement", "Kleine ERP-ähnliche Tools", "Mitarbeiter-Tools", "Dokumentenverfolgung", "Anfragemanagement", "Interne Wissens-Tools", "Operative Workflow-Tools"]
+                  },
+                  {
+                    title: "Deliverables",
+                    items: ["Interne Webanwendung", "Admin-Oberfläche", "Datenformulare", "Tabellen und Filter", "Benutzerrollen", "Exportfunktionen", "Einfaches Reporting"]
+                  },
+                  {
+                    title: "Features",
+                    items: ["CRUD-Funktionen", "Benutzerverwaltung", "Datentabellen", "Suche und Filter", "Datei-Anhänge", "Workflow-Status", "Export nach Excel / CSV"]
+                  },
+                  {
+                    title: "Methoden & Technologien",
+                    badge: true,
+                    items: ["React", "TypeScript", "Python / Node.js Backend", "REST APIs", "PostgreSQL", "Authentifizierung", "Cloud/VPS-Deployment"]
+                  },
+                  {
+                    title: "Business Value",
+                    items: ["Ersetzt unübersichtliche Tabellen", "Strukturiert interne Abläufe", "Reduziert manuelle Routinearbeit", "Macht Informationen leichter auffindbar", "Verbessert operative Transparenz"]
+                  },
+                  {
+                    title: "Geeignet für",
+                    items: ["Kleine Unternehmen", "Engineering-Teams", "Bildungsträger", "Dienstleistungsunternehmen", "Operations-Teams"]
+                  }
+                ],
+                sections: {
+                  description: { title: "Beschreibung", items: ["Schlanke interne Anwendungen für Teams, die ein praktisches Tool statt manueller Tabellen benötigen."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Formularworkflows", "Dashboards", "Admin-Screens", "Datentracking"] },
+                  deliverables: { title: "Deliverables", items: ["Interne Web-App", "Datenmodell", "Nutzerhinweise", "Deployment-Paket"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["MVP-Scope", "Rollenbasierter Workflow", "Iteratives Review"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "TypeScript", "Python", "Datenbanken"] },
+                  industries: { title: "Relevante Branchen", items: ["Kleine Unternehmen", "Engineering-Teams", "Operations"] }
+                },
+                cta: "Benötigen Sie ein internes Tool für Ihr Team? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "booking-scheduling-systems",
+                title: "Buchungs- und Terminlösungen",
+                description: "Buchungs- und Terminworkflows für Termine, Trainings, Services oder operative Ressourcen.",
+                detailSections: [
+                  {
+                    title: "Beschreibung",
+                    items: [
+                      "Buchungs- und Terminsysteme für Unternehmen, bei denen Kunden Leistungen, Beratungen, Kurse oder Termine online buchen sollen."
+                    ]
+                  },
+                  {
+                    title: "Typische Anwendungsfälle",
+                    items: ["Terminbuchung für Arztpraxen", "Beratungsbuchungen", "Kurs- und Trainingsplanung", "Servicetermine", "Terminplanung für Kundenanfragen"]
+                  },
+                  {
+                    title: "Deliverables",
+                    items: ["Buchungsoberfläche", "Admin-Kalender", "Verfügbarkeitslogik", "Bestätigungsprozess", "E-Mail-Benachrichtigungen", "Kundenformular", "Optionale KI-Assistenten-Integration"]
+                  },
+                  {
+                    title: "Features",
+                    items: ["Datum- und Zeitauswahl", "Buchungsformular", "Admin-Übersicht", "E-Mail-Bestätigungen", "Terminstatus", "Einfache Kundendatenerfassung", "Optionale Chatbot-Unterstützung"]
+                  },
+                  {
+                    title: "Methoden & Technologien",
+                    badge: true,
+                    items: ["React", "TypeScript", "Kalenderintegration", "Backend/API-Integration", "E-Mail-Benachrichtigungen", "Datenbankspeicherung", "Responsive UI"]
+                  },
+                  {
+                    title: "Business Value",
+                    items: ["Reduziert Telefonate und manuelle Terminplanung", "Macht Buchungen für Kunden einfacher", "Spart administrative Zeit", "Gibt Unternehmen bessere Terminübersicht", "Verbessert die Kundenerfahrung"]
+                  },
+                  {
+                    title: "Geeignet für",
+                    items: ["Arztpraxen", "Bildungsträger", "Berater", "Dienstleister", "Lokale Unternehmen"]
+                  }
+                ],
+                sections: {
+                  description: { title: "Beschreibung", items: ["Terminlösungen für Teams, die strukturierte Buchung, Verfügbarkeit und Kundenkommunikation benötigen."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Buchungsflow", "Verfügbarkeitsregeln", "Kundenbenachrichtigungen", "Admin-Übersicht"] },
+                  deliverables: { title: "Deliverables", items: ["Buchungsinterface", "Admin-Kalender", "Benachrichtigungssetup", "Deployment-Hinweise"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Responsive UI", "Workflow-Validierung", "Klare Buchungsregeln"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "Calendar APIs", "Datenbanken", "E-Mail-Services"] },
+                  industries: { title: "Relevante Branchen", items: ["Arztpraxen", "Trainingszentren", "Dienstleister"] }
+                },
+                cta: "Benötigen Sie ein Online-Buchungssystem? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "company-websites",
+                title: "Unternehmenswebsites",
+                description: "Professionelle Websites und Landingpages für technische Unternehmen und Dienstleister.",
+                detailSections: [
+                  {
+                    title: "Beschreibung",
+                    items: [
+                      "Professionelle Unternehmenswebsites und Landingpages für technische Unternehmen, Dienstleister und kleine Firmen, die einen klaren Online-Auftritt benötigen."
+                    ]
+                  },
+                  {
+                    title: "Typische Anwendungsfälle",
+                    items: ["Unternehmenswebsite", "Service-Landingpage", "Website für technische Unternehmen", "Portfolio-Website", "Zweisprachige Website", "Website-Redesign"]
+                  },
+                  {
+                    title: "Deliverables",
+                    items: ["Responsive Website", "Klare Leistungsseiten", "Kontaktformular", "SEO-freundliche Struktur", "Zweisprachige EN/DE-Struktur falls erforderlich", "Unterstützung beim Deployment", "Unterstützung bei Domain und Hosting"]
+                  },
+                  {
+                    title: "Features",
+                    items: ["Modernes responsives Design", "Leistungsbereiche", "Kontaktformulare", "Mehrsprachige Struktur", "SEO-Metadaten", "Schnelle Ladezeiten", "Cloud-Deployment"]
+                  },
+                  {
+                    title: "Methoden & Technologien",
+                    badge: true,
+                    items: ["React", "TypeScript", "Tailwind CSS", "Vite", "Cloudflare Pages", "GitHub Deployment", "Basic SEO"]
+                  },
+                  {
+                    title: "Business Value",
+                    items: ["Schafft professionelle Online-Glaubwürdigkeit", "Erklärt Leistungen klar", "Unterstützt Kundengewinnung", "Gibt Partnern eine Stelle zur Verifizierung", "Funktioniert als digitale Visitenkarte und Verkaufstool"]
+                  },
+                  {
+                    title: "Geeignet für",
+                    items: ["Engineering-Berater", "Dienstleister", "Kleine Unternehmen", "Bildungsträger", "Technische Startups"]
+                  }
+                ],
+                sections: {
+                  description: { title: "Beschreibung", items: ["Glaubwürdige Websites für Unternehmen, die klare Leistungspositionierung und direkte Kundenansprache benötigen."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Website-Struktur", "Copy-Struktur", "Responsive Layout", "Deployment-Setup"] },
+                  deliverables: { title: "Deliverables", items: ["Unternehmenswebsite", "SEO-Metadaten", "Kontaktflow", "Deployment-Anleitung"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Responsive Design", "SEO Basics", "Performance Awareness"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "Vite", "Tailwind CSS", "Cloudflare Pages"] },
+                  industries: { title: "Relevante Branchen", items: ["Engineering-Unternehmen", "Beratungen", "Kleine Unternehmen"] }
+                },
+                cta: "Benötigen Sie eine professionelle Unternehmenswebsite? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "dashboards-reporting-systems",
+                title: "Dashboards & Reporting-Systeme",
+                description: "Dashboards und Reporting-Interfaces für operative, kundenbezogene oder technische Daten.",
+                detailSections: [
+                  {
+                    title: "Beschreibung",
+                    items: [
+                      "Dashboards und Reporting-Systeme, mit denen Unternehmen geschäftliche oder technische Daten anzeigen, verfolgen und besser verstehen können."
+                    ]
+                  },
+                  {
+                    title: "Typische Anwendungsfälle",
+                    items: ["Management-Dashboards", "Projektstatus-Dashboards", "Trainingsfortschritt-Dashboards", "Vertriebs- oder Operations-Reporting", "Engineering-Datenübersichten", "Automatisierte Berichtserstellung"]
+                  },
+                  {
+                    title: "Deliverables",
+                    items: ["Dashboard-Oberfläche", "Datentabellen", "Diagramme und KPIs", "Filter", "Exportfunktionen", "Reporting-Logik", "Automatisierte Berichtsvorlagen"]
+                  },
+                  {
+                    title: "Features",
+                    items: ["KPI-Karten", "Diagramme", "Tabellen", "Filter", "Datumsbereiche", "Export nach Excel / CSV", "Automatisierte Berichtserstellung"]
+                  },
+                  {
+                    title: "Methoden & Technologien",
+                    badge: true,
+                    items: ["React", "TypeScript", "Python-Datenverarbeitung", "APIs", "Datenbankintegration", "Excel / CSV Workflows", "Automatisierungsskripte"]
+                  },
+                  {
+                    title: "Business Value",
+                    items: ["Macht Daten leichter verständlich", "Reduziert manuelle Reporting-Arbeit", "Verbessert Entscheidungen", "Spart Zeit für Management und Teams", "Schafft Transparenz in Abläufen"]
+                  },
+                  {
+                    title: "Geeignet für",
+                    items: ["Kleine und mittelständische Unternehmen", "Bildungsträger", "Engineering-Teams", "Dienstleistungsunternehmen", "Operations-Teams"]
+                  }
+                ],
+                sections: {
+                  description: { title: "Beschreibung", items: ["Visuelle Reportingsysteme, die wiederkehrende Daten in klare operative Ansichten übersetzen."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["KPI-Struktur", "Datenvisualisierung", "Filterung", "Report-Export"] },
+                  deliverables: { title: "Deliverables", items: ["Dashboard UI", "Datenanbindung", "Report-Ansichten", "Nutzerhinweise"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Datenvalidierung", "Dashboard UX", "Iteratives Review"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "Chart Libraries", "APIs", "Datenbanken"] },
+                  industries: { title: "Relevante Branchen", items: ["Operations", "Technische Dienstleistungen", "Business Reporting"] }
+                },
+                cta: "Benötigen Sie Dashboards oder automatisiertes Reporting? Kontaktieren Sie Tanisten."
+              }
+            ]
+          }
+        ]
+      }
     },
     industries: {
       heroEyebrow: "Branchen",
@@ -463,11 +1788,35 @@ export const translations: Record<Language, Translations> = {
         { title: "Engineering-Ausbildung & Training", description: "Digitale Lernwerkzeuge, technische Assistenten und strukturierte Trainings-Workflows." }
       ],
       whyTanisten: [
-        { title: "Praktische Engineering-Erfahrung", description: "Die Arbeit basiert auf realen mechanischen, luftfahrttechnischen und dokumentationsbezogenen Aufgaben." },
-        { title: "Aerospace- und Halbleiter-Hintergrund", description: "Erfahrung mit Flugzeugstrukturen, Innenausstattung und präziser Halbleiterausrüstung." },
-        { title: "Engineering plus Automatisierung", description: "Mechanische und technische Arbeit kann mit Skripten, Tools und internen Anwendungen verbunden werden." },
-        { title: "Flexible Remote-Zusammenarbeit", description: "Projektbasierte Unterstützung mit klaren Inputs, Reviews, offenen Punkten und Übergabe." },
-        { title: "Klare technische Kommunikation", description: "Strukturierte Kommunikation für Engineering-Teams, Zulieferer und technische Entscheider." }
+        {
+          title: "10+ Jahre Erfahrung",
+          description: "Erfahrung in Luftfahrt-, Halbleiter- und Industrieprojekten.",
+          accent: "engineering"
+        },
+        {
+          title: "Luftfahrt & Halbleiter",
+          description:
+            "Erfahrung mit komplexen technischen Produkten, technischer Dokumentation und Projektunterstützung.",
+          accent: "neutral"
+        },
+        {
+          title: "Engineering + Automatisierung",
+          description:
+            "Kombination aus mechanischer Konstruktion, Workflow-Automatisierung, KI-Assistenten und Business-Tools.",
+          accent: "automation"
+        },
+        {
+          title: "Digitale Lösungen",
+          description:
+            "Praktische Business-Portale, Websites, interne Tools und digitale Kundenplattformen.",
+          accent: "digital"
+        },
+        {
+          title: "Flexible Projektunterstützung",
+          description:
+            "Zusätzliche technische Kapazität für projektbezogene Aufgaben und wachsende Teams.",
+          accent: "neutral"
+        }
       ],
       engineeringServices: [
         { title: "Mechanische Konstruktion & CAD", description: "Komponentenkonstruktion, Baugruppen, Layouts, CAD-Modelle, Zeichnungen und Designupdates.", accent: "engineering" },

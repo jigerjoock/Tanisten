@@ -6,7 +6,7 @@ export interface LinkItem {
 export interface CardItem {
   title: string;
   description: string;
-  accent?: "engineering" | "automation" | "neutral";
+  accent?: "engineering" | "automation" | "digital" | "neutral";
 }
 
 export interface DetailItem {
