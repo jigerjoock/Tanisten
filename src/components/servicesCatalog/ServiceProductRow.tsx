@@ -170,11 +170,15 @@ export default function ServiceProductRow({ category, selectedProductId, onSelec
                 src={serviceProductImages[product.id] ?? fallbackServiceImage}
                 alt=""
                 draggable={false}
+                loading="lazy"
+                decoding="async"
                 className="h-36 w-full object-cover opacity-90 transition duration-300 group-hover:opacity-100"
               />
               <div className="flex flex-1 flex-col justify-between p-5">
                 <div>
-                  <h4 className="text-lg font-semibold leading-tight text-white">{product.title}</h4>
+                  <h4 className="min-w-0 break-words text-lg font-semibold leading-tight text-white [overflow-wrap:anywhere] [hyphens:auto]">
+                    {product.title}
+                  </h4>
                   <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-slate-400">{product.description}</p>
                 </div>
                 <span className={`mt-5 h-2 w-2 rounded-full ${isSelected ? accent.line : "bg-slate-600 group-hover:bg-slate-400"}`} />

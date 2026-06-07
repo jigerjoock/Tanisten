@@ -388,6 +388,76 @@ export const translations: Record<Language, Translations> = {
                 cta: "Need this type of support? Contact Tanisten."
               },
               {
+                id: "aerospace-structural-design-support",
+                title: "Aerospace & Structural Design Support",
+                description:
+                  "Engineering support for aircraft structures, interiors, brackets, panels and structural documentation tasks.",
+                sections: {
+                  description: {
+                    title: "Description",
+                    items: ["Project-based support for aerospace and aircraft interior work where structured CAD data, design updates and technical documentation are required."]
+                  },
+                  typicalTasks: {
+                    title: "Typical Tasks",
+                    items: ["Bracket and panel design support", "Aircraft interior layouts", "Structural detail updates", "Interface checks", "Drawing package preparation"]
+                  },
+                  deliverables: {
+                    title: "Deliverables",
+                    items: ["3D CAD models", "2D drawings", "Assembly and installation data", "Design update notes", "Technical review packages"]
+                  },
+                  methods: {
+                    title: "Methods & Standards",
+                    badge: true,
+                    items: ["Aerospace documentation discipline", "Interface control", "Design review", "Basic structural reasoning"]
+                  },
+                  tools: {
+                    title: "Software & Tools",
+                    badge: true,
+                    items: ["CATIA V5", "Siemens NX", "CAD viewers", "Office tools"]
+                  },
+                  industries: {
+                    title: "Relevant Industries",
+                    items: ["Aircraft structures", "Aircraft interiors", "Aerospace suppliers", "Engineering consultancies"]
+                  }
+                },
+                cta: "Need aerospace engineering support? Contact Tanisten."
+              },
+              {
+                id: "semiconductor-equipment-engineering",
+                title: "Special Machinery & Semiconductor Equipment",
+                description:
+                  "Mechanical design support for special-purpose machinery, precision equipment modules, documentation and production updates.",
+                sections: {
+                  description: {
+                    title: "Description",
+                    items: ["Project-based support as a mechanical designer within existing engineering teams working on special-purpose machinery, precision modules and semiconductor equipment-related systems."]
+                  },
+                  typicalTasks: {
+                    title: "Typical Tasks",
+                    items: ["CAD design support", "Machine module updates", "Fixture and bracket details", "Interface clarification", "Production feedback handling"]
+                  },
+                  deliverables: {
+                    title: "Deliverables",
+                    items: ["CAD models and assemblies", "Manufacturing drawings", "BOM and documentation updates", "Supplier clarification notes", "Production support notes"]
+                  },
+                  methods: {
+                    title: "Methods & Standards",
+                    badge: true,
+                    items: ["Sondermaschinenbau mindset", "DFM", "Clean documentation", "Interface management", "Revision control"]
+                  },
+                  tools: {
+                    title: "Software & Tools",
+                    badge: true,
+                    items: ["SolidWorks", "Siemens NX", "CATIA V5", "Excel", "Documentation tools"]
+                  },
+                  industries: {
+                    title: "Relevant Industries",
+                    items: ["Semiconductor equipment", "Precision mechanical systems", "Industrial machinery", "Technical suppliers"]
+                  }
+                },
+                cta: "Need support for precision machinery or semiconductor equipment work? Contact Tanisten."
+              },
+              {
                 id: "technical-documentation",
                 title: "Technical Documentation",
                 description:
@@ -453,89 +523,103 @@ export const translations: Record<Language, Translations> = {
             id: "automation",
             title: "Automation",
             description:
-              "Automation of engineering and business workflows through AI, software and process optimization.",
+              "Practical automation for repetitive engineering, documentation, reporting and business workflows using software, Python tools and controlled AI support.",
             products: [
+              {
+                id: "automation-audit-workflow-cleanup",
+                title: "Automation Audit & Workflow Cleanup",
+                description: "Review existing manual and digital workflows, remove friction and define practical automation steps.",
+                sections: {
+                  description: { title: "Description", items: ["Structured review of existing workflows, tools, spreadsheets, documents and handovers to identify where automation can create practical value without unnecessary complexity."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Workflow audit", "Tool and process review", "Manual step mapping", "Automation opportunity list", "Implementation roadmap"] },
+                  deliverables: { title: "Deliverables", items: ["Workflow audit summary", "Automation opportunity map", "Prioritized action list", "Recommended tool stack", "Implementation roadmap"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Process mapping", "ROI prioritization", "Risk review", "Human-in-the-loop design", "Documentation"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Python", "n8n / Make", "APIs", "Excel", "Google Sheets", "Web tools"] },
+                  industries: { title: "Relevant Industries", items: ["Small and mid-size companies", "Engineering teams", "Operations", "Technical service businesses"] }
+                },
+                cta: "Need an automation audit? Contact Tanisten."
+              },
               {
                 id: "workflow-automation",
                 title: "Workflow Automation",
-                description: "Automation for repetitive technical and business workflows that slow down daily operations.",
+                description: "Controlled digital workflows for repeated manual steps, file handling, handovers and approvals.",
                 sections: {
-                  description: { title: "Description", items: ["Workflow analysis and practical automation for repeated tasks, reports and handovers."] },
-                  typicalTasks: { title: "Typical Tasks", items: ["Workflow mapping", "Task automation", "Data transfer automation", "Template generation"] },
-                  deliverables: { title: "Deliverables", items: ["Automation scripts", "Workflow documentation", "Tested process steps", "User notes"] },
-                  methods: { title: "Methods & Standards", badge: true, items: ["Process mapping", "Error handling", "User review"] },
-                  tools: { title: "Software & Tools", badge: true, items: ["Python", "APIs", "Excel", "Web tools"] },
-                  industries: { title: "Relevant Industries", items: ["Engineering teams", "Small businesses", "Industrial companies"] }
+                  description: { title: "Description", items: ["Analysis and automation of recurring work steps where data, documents, forms or approvals move through the same process repeatedly."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Workflow mapping", "Manual step reduction", "File and data transfer automation", "Template generation", "Approval and handover flows"] },
+                  deliverables: { title: "Deliverables", items: ["Automation scripts or tools", "Workflow documentation", "Tested process steps", "User instructions", "Exception handling notes"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Process mapping", "Rule-based logic", "Error handling", "User review", "Iterative validation"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Python", "APIs", "Excel", "CSV", "Web tools"] },
+                  industries: { title: "Relevant Industries", items: ["Engineering teams", "Operations", "Technical administration", "Small and mid-size companies"] }
                 },
                 cta: "Need workflow automation? Contact Tanisten."
               },
               {
                 id: "ai-assistants",
                 title: "AI Assistants",
-                description: "Practical AI assistants for internal knowledge, customer support and documentation workflows.",
+                description: "Internal assistants for knowledge lookup, documentation support and recurring support questions.",
                 sections: {
-                  description: { title: "Description", items: ["Controlled AI support for recurring questions, internal knowledge and structured document work."] },
-                  typicalTasks: { title: "Typical Tasks", items: ["Knowledge assistant setup", "Prompt workflow design", "Document search support", "Response quality review"] },
-                  deliverables: { title: "Deliverables", items: ["AI assistant prototype", "Knowledge structure", "Usage instructions", "Review checklist"] },
-                  methods: { title: "Methods & Standards", badge: true, items: ["Human review", "Source control", "Practical AI use"] },
-                  tools: { title: "Software & Tools", badge: true, items: ["OpenAI API", "Vector search", "Web UI", "Python"] },
-                  industries: { title: "Relevant Industries", items: ["Customer support", "Engineering education", "Technical documentation"] }
+                  description: { title: "Description", items: ["Practical AI support for recurring questions, internal knowledge, structured document work and training workflows."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Knowledge assistant setup", "Document search support", "Prompt workflow design", "Answer review process", "Internal usage guidance"] },
+                  deliverables: { title: "Deliverables", items: ["AI assistant prototype", "Knowledge structure", "Prompt and workflow setup", "Usage instructions", "Review checklist"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Human review", "Source-based answers", "Controlled scope", "Practical AI use", "Privacy-aware setup"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["OpenAI API", "Vector search", "Python", "Web UI", "APIs"] },
+                  industries: { title: "Relevant Industries", items: ["Customer support", "Engineering education", "Technical documentation", "Internal operations"] }
                 },
                 cta: "Need an internal AI assistant? Contact Tanisten."
               },
               {
                 id: "reporting-automation",
                 title: "Reporting Automation",
-                description: "Automated reports for recurring project, engineering, operational or business data.",
+                description: "Automated recurring reports from spreadsheets, CSV files, databases or operational tools.",
                 sections: {
-                  description: { title: "Description", items: ["Automation of repeated reporting tasks using structured data, templates and review steps."] },
-                  typicalTasks: { title: "Typical Tasks", items: ["Data collection", "Report generation", "Dashboard preparation", "Recurring exports"] },
-                  deliverables: { title: "Deliverables", items: ["Report templates", "Automation scripts", "Dashboards", "Documentation"] },
-                  methods: { title: "Methods & Standards", badge: true, items: ["Data validation", "Template control", "Scheduled workflow"] },
-                  tools: { title: "Software & Tools", badge: true, items: ["Python", "Excel", "CSV", "Power BI"] },
-                  industries: { title: "Relevant Industries", items: ["Engineering teams", "Operations", "Business administration"] }
+                  description: { title: "Description", items: ["Automation of repeated reporting tasks using structured data, templates, validation checks and controlled exports."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Data collection", "Report generation", "Dashboard preparation", "Recurring exports", "Email or file output"] },
+                  deliverables: { title: "Deliverables", items: ["Report templates", "Automation scripts", "Dashboards", "Export workflows", "Documentation"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Data validation", "Template control", "Scheduled workflow", "Review checkpoints"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Python", "Excel", "CSV", "Power BI", "APIs"] },
+                  industries: { title: "Relevant Industries", items: ["Engineering teams", "Operations", "Business administration", "Training centers"] }
                 },
                 cta: "Need automated reporting? Contact Tanisten."
               },
               {
                 id: "business-process-automation",
                 title: "Business Process Automation",
-                description: "Automation of repeated administrative, customer-facing or internal business processes.",
+                description: "Automation for request handling, notifications, approvals and data routing across teams.",
                 sections: {
-                  description: { title: "Description", items: ["Practical automation for repeatable business processes with clear inputs, rules and outputs."] },
-                  typicalTasks: { title: "Typical Tasks", items: ["Process mapping", "Form automation", "Notification workflows", "Data routing"] },
-                  deliverables: { title: "Deliverables", items: ["Automated workflow", "Process documentation", "Admin interface", "Testing notes"] },
-                  methods: { title: "Methods & Standards", badge: true, items: ["Lean workflow", "Rule-based logic", "User testing"] },
-                  tools: { title: "Software & Tools", badge: true, items: ["Web apps", "APIs", "Databases", "Python"] },
-                  industries: { title: "Relevant Industries", items: ["Small businesses", "Service companies", "Training centers"] }
+                  description: { title: "Description", items: ["Practical automation for repeatable business processes with clear inputs, rules, responsibilities and outputs."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Process mapping", "Form automation", "Notification workflows", "Data routing", "Approval logic"] },
+                  deliverables: { title: "Deliverables", items: ["Automated workflow", "Process documentation", "Admin interface", "Testing notes", "Handover instructions"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Lean workflow", "Rule-based logic", "User testing", "Role definition"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Web apps", "APIs", "Databases", "Python", "Email workflows"] },
+                  industries: { title: "Relevant Industries", items: ["Small businesses", "Service companies", "Training centers", "Technical operations"] }
                 },
                 cta: "Need business process automation? Contact Tanisten."
               },
               {
                 id: "custom-business-tools",
                 title: "Custom Business Tools",
-                description: "Small internal tools for teams that need practical software without a large IT project.",
+                description: "Lightweight internal tools that connect forms, rules, data and user actions in one workflow.",
                 sections: {
-                  description: { title: "Description", items: ["Focused tools for internal teams, operational workflows, customer requests or technical administration."] },
-                  typicalTasks: { title: "Typical Tasks", items: ["Tool specification", "Form and dashboard design", "User workflow setup", "Deployment support"] },
-                  deliverables: { title: "Deliverables", items: ["Internal web tool", "Admin workflow", "User notes", "Deployment package"] },
-                  methods: { title: "Methods & Standards", badge: true, items: ["MVP scope", "User workflow", "Iterative review"] },
-                  tools: { title: "Software & Tools", badge: true, items: ["React", "TypeScript", "Python", "Databases"] },
-                  industries: { title: "Relevant Industries", items: ["Technical companies", "Service providers", "Education and training"] }
+                  description: { title: "Description", items: ["Focused tools for internal teams, operational workflows, customer requests or technical administration without a large software project."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["Tool specification", "Form and dashboard design", "User workflow setup", "Access structure", "Deployment support"] },
+                  deliverables: { title: "Deliverables", items: ["Internal web tool", "Admin workflow", "User notes", "Deployment package", "Basic documentation"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["MVP scope", "User workflow", "Iterative review", "Practical deployment"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "TypeScript", "Python", "Databases", "Cloud hosting"] },
+                  industries: { title: "Relevant Industries", items: ["Technical companies", "Service providers", "Education and training", "Operations teams"] }
                 },
                 cta: "Need a custom business tool? Contact Tanisten."
               },
               {
                 id: "data-processing-solutions",
                 title: "Data Processing Solutions",
-                description: "Structured handling of files, tables, technical data and repeated data preparation tasks.",
+                description: "Clean, convert, validate and prepare repeated datasets, exports and technical files.",
                 sections: {
-                  description: { title: "Description", items: ["Tools for cleaning, transforming, checking and preparing technical or business data."] },
-                  typicalTasks: { title: "Typical Tasks", items: ["File processing", "Data cleanup", "Format conversion", "Validation checks"] },
-                  deliverables: { title: "Deliverables", items: ["Processing scripts", "Cleaned datasets", "Validation reports", "User instructions"] },
-                  methods: { title: "Methods & Standards", badge: true, items: ["Data validation", "Repeatable scripts", "Error logging"] },
+                  description: { title: "Description", items: ["Tools for cleaning, transforming, checking and preparing technical or business data that appears in repeated formats."] },
+                  typicalTasks: { title: "Typical Tasks", items: ["File processing", "Data cleanup", "Format conversion", "Validation checks", "Batch processing"] },
+                  deliverables: { title: "Deliverables", items: ["Processing scripts", "Cleaned datasets", "Validation reports", "User instructions", "Repeatable workflow"] },
+                  methods: { title: "Methods & Standards", badge: true, items: ["Data validation", "Repeatable scripts", "Error logging", "Traceable outputs"] },
                   tools: { title: "Software & Tools", badge: true, items: ["Python", "Pandas", "Excel", "CSV", "JSON"] },
-                  industries: { title: "Relevant Industries", items: ["Engineering", "Operations", "Business reporting"] }
+                  industries: { title: "Relevant Industries", items: ["Engineering", "Operations", "Business reporting", "Technical administration"] }
                 },
                 cta: "Need data processing support? Contact Tanisten."
               }
@@ -966,7 +1050,7 @@ export const translations: Record<Language, Translations> = {
         "Tanisten is a technical consulting initiative for companies that need engineering support, automation and digital technical solutions.",
       backgroundTitle: "Real technical experience behind the company",
       backgroundText1:
-        "Tanisten combines mechanical and aviation engineering background with practical experience in aircraft structures and interiors, semiconductor equipment development, high-precision mechanical systems, CAD, technical documentation and engineering automation.",
+        "Tanisten combines mechanical and aviation engineering background with practical experience in aircraft structures and interiors, special-purpose machinery, semiconductor equipment environments, high-precision mechanical systems, CAD, technical documentation and engineering automation.",
       backgroundText2:
         "The company is also built around practical digital work: AI assistants, Python tools, websites, internal web applications and server setup. The background includes Germany and international engineering education and project environments.",
       experienceTitle: "Experience areas",
@@ -1008,7 +1092,7 @@ export const translations: Record<Language, Translations> = {
     cards: {
       homeIndustries: [
         { title: "Aerospace", description: "Support for aircraft structures, interiors, documentation and technical workflows." },
-        { title: "Semiconductor Equipment", description: "Engineering support for precision equipment, modules and production updates." },
+        { title: "Special Machinery & Semiconductor Equipment", description: "Mechanical design support for precision modules, equipment updates and production documentation." },
         { title: "Industrial Machinery", description: "CAD, documentation and automation support for machine builders and suppliers." },
         { title: "Engineering Education & Training", description: "Digital learning tools, technical assistants and structured training workflows." }
       ],
@@ -1063,7 +1147,7 @@ export const translations: Record<Language, Translations> = {
       industries: [
         { title: "Aerospace & Aircraft Structures", description: "Engineering support for structures, brackets, panels, fittings and documentation." },
         { title: "Aircraft Interiors", description: "Support for interior systems, installation details, CAD updates and technical records." },
-        { title: "Semiconductor Equipment", description: "Support for precision modules, equipment updates, tooling and production documentation." },
+        { title: "Special Machinery & Semiconductor Equipment", description: "Support for precision modules, equipment updates, tooling and production documentation." },
         { title: "Precision Mechanical Systems", description: "Work for systems where interfaces, tolerances and documentation quality matter." },
         { title: "Industrial Machinery", description: "Technical support for machine builders, suppliers and production-related updates." },
         { title: "Engineering Education", description: "Digital tools and training workflows for technical education and internal learning." }
@@ -1071,7 +1155,7 @@ export const translations: Record<Language, Translations> = {
       experience: [
         { title: "Mechanical and aviation engineering background", description: "Experience base across engineering education and technical project environments." },
         { title: "Aircraft structures and interiors", description: "Practical work connected to structural and interior engineering contexts." },
-        { title: "Semiconductor equipment development", description: "Experience with high-precision equipment and technical documentation requirements." },
+        { title: "Special machinery and semiconductor equipment", description: "Experience as a mechanical designer in precision equipment environments with CAD and technical documentation requirements." },
         { title: "CAD and technical documentation", description: "CAD execution, drawings, structured technical content and engineering change support." },
         { title: "Engineering automation", description: "Automation of technical workflows using practical scripts and internal tools." },
         { title: "AI, Python, websites and servers", description: "AI assistants, Python tools, websites, web applications and server setup." }
@@ -1280,6 +1364,36 @@ export const translations: Record<Language, Translations> = {
                 cta: "Benötigen Sie diese Art von Unterstützung? Kontaktieren Sie Tanisten."
               },
               {
+                id: "aerospace-structural-design-support",
+                title: "Aerospace & Struktur-Support",
+                description:
+                  "Engineering-Unterstützung für Flugzeugstrukturen, Kabineninterieur, Halterungen, Paneele und technische Dokumentation.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Projektbezogene Unterstützung für Luftfahrt- und Kabineninterieur-Aufgaben, bei denen strukturierte CAD-Daten, Konstruktionsanpassungen und technische Dokumentation benötigt werden."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Support für Halterungen und Paneele", "Kabineninterieur-Layouts", "Strukturelle Detailanpassungen", "Schnittstellenprüfung", "Zeichnungspaket-Vorbereitung"] },
+                  deliverables: { title: "Deliverables", items: ["3D-CAD-Modelle", "2D-Zeichnungen", "Baugruppen- und Einbaudaten", "Änderungsnotizen", "Technische Review-Pakete"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Luftfahrt-Dokumentationsdisziplin", "Schnittstellenkontrolle", "Design Review", "Grundlegendes Strukturverständnis"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["CATIA V5", "Siemens NX", "CAD-Viewer", "Office-Tools"] },
+                  industries: { title: "Relevante Branchen", items: ["Flugzeugstrukturen", "Aircraft Interiors", "Luftfahrtzulieferer", "Engineering-Beratungen"] }
+                },
+                cta: "Benötigen Sie Aerospace Engineering Support? Kontaktieren Sie Tanisten."
+              },
+              {
+                id: "semiconductor-equipment-engineering",
+                title: "Sondermaschinenbau & Halbleiteranlagen",
+                description:
+                  "Mechanische Konstruktionsunterstützung für Sondermaschinenbau, Präzisionsmodule, Dokumentation und Produktionsupdates.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Projektbezogene Unterstützung als Konstrukteur in bestehenden Engineering-Teams für Sondermaschinenbau, Präzisionsmodule und Systeme im Umfeld von Halbleiterausrüstung."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["CAD-Konstruktionssupport", "Updates an Maschinenmodulen", "Vorrichtungs- und Halterungsdetails", "Schnittstellenklärung", "Bearbeitung von Produktionsfeedback"] },
+                  deliverables: { title: "Deliverables", items: ["CAD-Modelle und Baugruppen", "Fertigungszeichnungen", "BOM- und Dokumentationsupdates", "Lieferantenklärungsnotizen", "Produktionssupport-Notizen"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Sondermaschinenbau-Denkweise", "DFM", "Saubere Dokumentation", "Schnittstellenmanagement", "Revisionskontrolle"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["SolidWorks", "Siemens NX", "CATIA V5", "Excel", "Dokumentationstools"] },
+                  industries: { title: "Relevante Branchen", items: ["Sondermaschinenbau", "Halbleiterausrüstung", "Präzise mechanische Systeme", "Industriemaschinen"] }
+                },
+                cta: "Benötigen Sie Konstruktionssupport für Sondermaschinenbau oder Halbleiterausrüstung? Kontaktieren Sie Tanisten."
+              },
+              {
                 id: "technical-documentation",
                 title: "Technische Dokumentation",
                 description:
@@ -1342,89 +1456,103 @@ export const translations: Record<Language, Translations> = {
             id: "automation",
             title: "Automatisierung",
             description:
-              "Automatisierung technischer und geschäftlicher Abläufe durch KI, Software und Prozessoptimierung.",
+              "Praktische Automatisierung wiederkehrender Engineering-, Dokumentations-, Reporting- und Geschäftsworkflows mit Software, Python-Tools und kontrollierter KI-Unterstützung.",
             products: [
+              {
+                id: "automation-audit-workflow-cleanup",
+                title: "Workflow-Audit & Cleanup",
+                description: "Analyse bestehender manueller und digitaler Workflows, Reduzierung von Reibung und Definition praktischer Automatisierungsschritte.",
+                sections: {
+                  description: { title: "Beschreibung", items: ["Strukturierte Analyse bestehender Workflows, Tools, Tabellen, Dokumente und Uebergaben, um sinnvolle Automatisierungspotenziale ohne unnoetige Komplexitaet zu identifizieren."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Workflow-Audit", "Tool- und Prozessanalyse", "Mapping manueller Schritte", "Liste von Automatisierungspotenzialen", "Umsetzungs-Roadmap"] },
+                  deliverables: { title: "Deliverables", items: ["Workflow-Audit-Zusammenfassung", "Automation Opportunity Map", "Priorisierte Massnahmenliste", "Empfohlener Tool-Stack", "Umsetzungs-Roadmap"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Prozessmapping", "ROI-Priorisierung", "Risikopruefung", "Human-in-the-loop Design", "Dokumentation"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Python", "n8n / Make", "APIs", "Excel", "Google Sheets", "Web-Tools"] },
+                  industries: { title: "Relevante Branchen", items: ["Kleine und mittelstaendische Unternehmen", "Engineering-Teams", "Operations", "Technische Dienstleister"] }
+                },
+                cta: "Benötigen Sie ein Automatisierungs-Audit? Kontaktieren Sie Tanisten."
+              },
               {
                 id: "workflow-automation",
                 title: "Workflow-Automatisierung",
-                description: "Automatisierung wiederholbarer technischer und geschäftlicher Workflows.",
+                description: "Kontrollierte digitale Workflows für wiederkehrende manuelle Schritte, Dateien, Übergaben und Freigaben.",
                 sections: {
-                  description: { title: "Beschreibung", items: ["Workflow-Analyse und praktische Automatisierung wiederholter Aufgaben, Reports und Übergaben."] },
-                  typicalTasks: { title: "Typische Aufgaben", items: ["Workflow-Mapping", "Aufgabenautomatisierung", "Datentransfer", "Template-Erstellung"] },
-                  deliverables: { title: "Deliverables", items: ["Automatisierungsskripte", "Workflow-Dokumentation", "Getestete Prozessschritte", "Nutzerhinweise"] },
-                  methods: { title: "Methoden & Standards", badge: true, items: ["Prozessmapping", "Fehlerbehandlung", "User Review"] },
-                  tools: { title: "Software & Tools", badge: true, items: ["Python", "APIs", "Excel", "Web-Tools"] },
-                  industries: { title: "Relevante Branchen", items: ["Engineering-Teams", "Kleine Unternehmen", "Industrieunternehmen"] }
+                  description: { title: "Beschreibung", items: ["Analyse und Automatisierung wiederkehrender Arbeitsschritte, bei denen Daten, Dokumente, Formulare oder Freigaben regelmäßig denselben Prozess durchlaufen."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Workflow-Mapping", "Reduzierung manueller Schritte", "Datei- und Datentransfer", "Template-Erstellung", "Freigabe- und Übergabeprozesse"] },
+                  deliverables: { title: "Deliverables", items: ["Automatisierungsskripte oder Tools", "Workflow-Dokumentation", "Getestete Prozessschritte", "Nutzerhinweise", "Hinweise zur Fehlerbehandlung"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Prozessmapping", "Regelbasierte Logik", "Fehlerbehandlung", "User Review", "Iterative Validierung"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Python", "APIs", "Excel", "CSV", "Web-Tools"] },
+                  industries: { title: "Relevante Branchen", items: ["Engineering-Teams", "Operations", "Technische Administration", "Kleine und mittelständische Unternehmen"] }
                 },
                 cta: "Benötigen Sie Workflow-Automatisierung? Kontaktieren Sie Tanisten."
               },
               {
                 id: "ai-assistants",
                 title: "KI-Assistenten",
-                description: "Praktische KI-Assistenten für internes Wissen, Kundenservice und Dokumentationsworkflows.",
+                description: "Interne Assistenten für Wissenssuche, Dokumentationsunterstützung und wiederkehrende Supportfragen.",
                 sections: {
-                  description: { title: "Beschreibung", items: ["Kontrollierte KI-Unterstützung für wiederkehrende Fragen, internes Wissen und strukturierte Dokumentenarbeit."] },
-                  typicalTasks: { title: "Typische Aufgaben", items: ["Wissensassistent", "Prompt-Workflow", "Dokumentensuche", "Qualitätsreview"] },
-                  deliverables: { title: "Deliverables", items: ["KI-Assistent-Prototyp", "Wissensstruktur", "Nutzungsanleitung", "Review-Checkliste"] },
-                  methods: { title: "Methoden & Standards", badge: true, items: ["Human Review", "Quellenkontrolle", "Praktischer KI-Einsatz"] },
-                  tools: { title: "Software & Tools", badge: true, items: ["OpenAI API", "Vector Search", "Web UI", "Python"] },
-                  industries: { title: "Relevante Branchen", items: ["Kundenservice", "Engineering-Ausbildung", "Technische Dokumentation"] }
+                  description: { title: "Beschreibung", items: ["Praktische KI-Unterstützung für wiederkehrende Fragen, internes Wissen, strukturierte Dokumentenarbeit und Trainingsworkflows."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Wissensassistent-Setup", "Dokumentensuche", "Prompt-Workflow-Design", "Antwort-Review-Prozess", "Interne Nutzungshinweise"] },
+                  deliverables: { title: "Deliverables", items: ["KI-Assistent-Prototyp", "Wissensstruktur", "Prompt- und Workflow-Setup", "Nutzungsanleitung", "Review-Checkliste"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Human Review", "Quellenbasierte Antworten", "Kontrollierter Umfang", "Praktischer KI-Einsatz", "Datenschutzbewusstes Setup"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["OpenAI API", "Vector Search", "Python", "Web UI", "APIs"] },
+                  industries: { title: "Relevante Branchen", items: ["Kundenservice", "Engineering-Ausbildung", "Technische Dokumentation", "Interne Operations"] }
                 },
                 cta: "Benötigen Sie einen internen KI-Assistenten? Kontaktieren Sie Tanisten."
               },
               {
                 id: "reporting-automation",
                 title: "Reporting-Automatisierung",
-                description: "Automatisierte Reports für wiederkehrende Projekt-, Engineering-, Betriebs- oder Geschäftsdaten.",
+                description: "Automatisierte wiederkehrende Reports aus Tabellen, CSV-Dateien, Datenbanken oder operativen Tools.",
                 sections: {
-                  description: { title: "Beschreibung", items: ["Automatisierung wiederholter Reporting-Aufgaben mit strukturierten Daten, Templates und Review-Schritten."] },
-                  typicalTasks: { title: "Typische Aufgaben", items: ["Datensammlung", "Report-Erstellung", "Dashboard-Vorbereitung", "Regelmäßige Exporte"] },
-                  deliverables: { title: "Deliverables", items: ["Report-Templates", "Automatisierungsskripte", "Dashboards", "Dokumentation"] },
-                  methods: { title: "Methoden & Standards", badge: true, items: ["Datenvalidierung", "Template-Kontrolle", "Geplanter Workflow"] },
-                  tools: { title: "Software & Tools", badge: true, items: ["Python", "Excel", "CSV", "Power BI"] },
-                  industries: { title: "Relevante Branchen", items: ["Engineering-Teams", "Operations", "Business Administration"] }
+                  description: { title: "Beschreibung", items: ["Automatisierung wiederholter Reporting-Aufgaben mit strukturierten Daten, Templates, Validierungschecks und kontrollierten Exporten."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Datensammlung", "Report-Erstellung", "Dashboard-Vorbereitung", "Regelmäßige Exporte", "E-Mail- oder Dateiausgabe"] },
+                  deliverables: { title: "Deliverables", items: ["Report-Templates", "Automatisierungsskripte", "Dashboards", "Export-Workflows", "Dokumentation"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Datenvalidierung", "Template-Kontrolle", "Geplanter Workflow", "Review-Punkte"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Python", "Excel", "CSV", "Power BI", "APIs"] },
+                  industries: { title: "Relevante Branchen", items: ["Engineering-Teams", "Operations", "Business Administration", "Trainingszentren"] }
                 },
                 cta: "Benötigen Sie automatisiertes Reporting? Kontaktieren Sie Tanisten."
               },
               {
                 id: "business-process-automation",
-                title: "Geschäftsprozessautomatisierung",
-                description: "Automatisierung wiederholbarer administrativer, kundenbezogener oder interner Geschäftsprozesse.",
+                title: "Prozessautomatisierung",
+                description: "Automatisierung für Anfragebearbeitung, Benachrichtigungen, Freigaben und Datenrouting zwischen Teams.",
                 sections: {
-                  description: { title: "Beschreibung", items: ["Praktische Automatisierung für wiederholbare Geschäftsprozesse mit klaren Eingaben, Regeln und Ergebnissen."] },
-                  typicalTasks: { title: "Typische Aufgaben", items: ["Prozessmapping", "Formularautomatisierung", "Benachrichtigungen", "Datenrouting"] },
-                  deliverables: { title: "Deliverables", items: ["Automatisierter Workflow", "Prozessdokumentation", "Admin-Interface", "Testnotizen"] },
-                  methods: { title: "Methoden & Standards", badge: true, items: ["Lean Workflow", "Regelbasierte Logik", "User Testing"] },
-                  tools: { title: "Software & Tools", badge: true, items: ["Web Apps", "APIs", "Datenbanken", "Python"] },
-                  industries: { title: "Relevante Branchen", items: ["Kleine Unternehmen", "Dienstleister", "Trainingszentren"] }
+                  description: { title: "Beschreibung", items: ["Praktische Automatisierung wiederholbarer Geschäftsprozesse mit klaren Eingaben, Regeln, Verantwortlichkeiten und Ergebnissen."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Prozessmapping", "Formularautomatisierung", "Benachrichtigungsworkflows", "Datenrouting", "Freigabelogik"] },
+                  deliverables: { title: "Deliverables", items: ["Automatisierter Workflow", "Prozessdokumentation", "Admin-Interface", "Testnotizen", "Übergabehinweise"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Lean Workflow", "Regelbasierte Logik", "User Testing", "Rollendefinition"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["Web Apps", "APIs", "Datenbanken", "Python", "E-Mail-Workflows"] },
+                  industries: { title: "Relevante Branchen", items: ["Kleine Unternehmen", "Dienstleister", "Trainingszentren", "Technische Operations"] }
                 },
                 cta: "Benötigen Sie Prozessautomatisierung? Kontaktieren Sie Tanisten."
               },
               {
                 id: "custom-business-tools",
                 title: "Individuelle Business-Tools",
-                description: "Kleine interne Tools für Teams, die praktische Software ohne großes IT-Projekt benötigen.",
+                description: "Leichte interne Tools, die Formulare, Regeln, Daten und Nutzeraktionen in einem Workflow verbinden.",
                 sections: {
-                  description: { title: "Beschreibung", items: ["Fokussierte Tools für interne Teams, operative Workflows, Kundenanfragen oder technische Administration."] },
-                  typicalTasks: { title: "Typische Aufgaben", items: ["Tool-Spezifikation", "Formulare und Dashboards", "User Workflow", "Deployment-Support"] },
-                  deliverables: { title: "Deliverables", items: ["Internes Web-Tool", "Admin-Workflow", "Nutzerhinweise", "Deployment-Paket"] },
-                  methods: { title: "Methoden & Standards", badge: true, items: ["MVP-Scope", "User Workflow", "Iteratives Review"] },
-                  tools: { title: "Software & Tools", badge: true, items: ["React", "TypeScript", "Python", "Datenbanken"] },
-                  industries: { title: "Relevante Branchen", items: ["Technische Unternehmen", "Dienstleister", "Ausbildung und Training"] }
+                  description: { title: "Beschreibung", items: ["Fokussierte Tools für interne Teams, operative Workflows, Kundenanfragen oder technische Administration ohne großes Softwareprojekt."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Tool-Spezifikation", "Formular- und Dashboard-Design", "User Workflow Setup", "Zugriffsstruktur", "Deployment-Support"] },
+                  deliverables: { title: "Deliverables", items: ["Internes Web-Tool", "Admin-Workflow", "Nutzerhinweise", "Deployment-Paket", "Grundlegende Dokumentation"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["MVP-Scope", "User Workflow", "Iteratives Review", "Praktisches Deployment"] },
+                  tools: { title: "Software & Tools", badge: true, items: ["React", "TypeScript", "Python", "Datenbanken", "Cloud Hosting"] },
+                  industries: { title: "Relevante Branchen", items: ["Technische Unternehmen", "Dienstleister", "Ausbildung und Training", "Operations-Teams"] }
                 },
                 cta: "Benötigen Sie ein individuelles Business-Tool? Kontaktieren Sie Tanisten."
               },
               {
                 id: "data-processing-solutions",
                 title: "Datenverarbeitungslösungen",
-                description: "Strukturierte Verarbeitung von Dateien, Tabellen, technischen Daten und wiederkehrenden Datenaufgaben.",
+                description: "Bereinigung, Konvertierung, Validierung und Vorbereitung wiederkehrender Datensätze, Exporte und technischer Dateien.",
                 sections: {
-                  description: { title: "Beschreibung", items: ["Tools zum Bereinigen, Transformieren, Prüfen und Vorbereiten technischer oder geschäftlicher Daten."] },
-                  typicalTasks: { title: "Typische Aufgaben", items: ["Dateiverarbeitung", "Datenbereinigung", "Formatkonvertierung", "Validierungschecks"] },
-                  deliverables: { title: "Deliverables", items: ["Processing-Skripte", "Bereinigte Datensätze", "Validierungsberichte", "Nutzeranleitung"] },
-                  methods: { title: "Methoden & Standards", badge: true, items: ["Datenvalidierung", "Wiederholbare Skripte", "Error Logging"] },
+                  description: { title: "Beschreibung", items: ["Tools zum Bereinigen, Transformieren, Prüfen und Vorbereiten technischer oder geschäftlicher Daten, die wiederholt in ähnlichen Formaten auftreten."] },
+                  typicalTasks: { title: "Typische Aufgaben", items: ["Dateiverarbeitung", "Datenbereinigung", "Formatkonvertierung", "Validierungschecks", "Batch-Verarbeitung"] },
+                  deliverables: { title: "Deliverables", items: ["Processing-Skripte", "Bereinigte Datensätze", "Validierungsberichte", "Nutzeranleitung", "Wiederholbarer Workflow"] },
+                  methods: { title: "Methoden & Standards", badge: true, items: ["Datenvalidierung", "Wiederholbare Skripte", "Error Logging", "Nachvollziehbare Outputs"] },
                   tools: { title: "Software & Tools", badge: true, items: ["Python", "Pandas", "Excel", "CSV", "JSON"] },
-                  industries: { title: "Relevante Branchen", items: ["Engineering", "Operations", "Business Reporting"] }
+                  industries: { title: "Relevante Branchen", items: ["Engineering", "Operations", "Business Reporting", "Technische Administration"] }
                 },
                 cta: "Benötigen Sie Datenverarbeitung? Kontaktieren Sie Tanisten."
               }
@@ -1783,7 +1911,7 @@ export const translations: Record<Language, Translations> = {
     cards: {
       homeIndustries: [
         { title: "Luft- und Raumfahrt", description: "Unterstützung für Strukturen, Innenausstattung, Dokumentation und technische Workflows." },
-        { title: "Halbleiterausrüstung", description: "Engineering-Unterstützung für Präzisionsausrüstung, Module und Produktionsupdates." },
+        { title: "Sondermaschinenbau & Halbleiterausrüstung", description: "Konstruktionsunterstützung für Präzisionsmodule, Ausrüstungsupdates und Produktionsdokumentation." },
         { title: "Industriemaschinen", description: "CAD-, Dokumentations- und Automatisierungsunterstützung für Maschinenbauer und Zulieferer." },
         { title: "Engineering-Ausbildung & Training", description: "Digitale Lernwerkzeuge, technische Assistenten und strukturierte Trainings-Workflows." }
       ],
@@ -1838,7 +1966,7 @@ export const translations: Record<Language, Translations> = {
       industries: [
         { title: "Luft- und Raumfahrt & Flugzeugstrukturen", description: "Engineering-Unterstützung für Strukturen, Halterungen, Panels, Fittings und Dokumentation." },
         { title: "Flugzeuginterieurs", description: "Unterstützung für Innenraumsysteme, Einbaudetails, CAD-Updates und technische Unterlagen." },
-        { title: "Halbleiterausrüstung", description: "Unterstützung für Präzisionsmodule, Ausrüstungsupdates, Tooling und Produktionsdokumentation." },
+        { title: "Sondermaschinenbau & Halbleiterausrüstung", description: "Unterstützung für Präzisionsmodule, Ausrüstungsupdates, Tooling und Produktionsdokumentation." },
         { title: "Präzise mechanische Systeme", description: "Arbeit für Systeme, bei denen Schnittstellen, Toleranzen und Dokumentationsqualität wichtig sind." },
         { title: "Industriemaschinen", description: "Technische Unterstützung für Maschinenbauer, Zulieferer und produktionsnahe Updates." },
         { title: "Engineering-Ausbildung", description: "Digitale Tools und Trainings-Workflows für technische Ausbildung und internes Lernen." }
@@ -1846,7 +1974,7 @@ export const translations: Record<Language, Translations> = {
       experience: [
         { title: "Maschinenbau- und Luftfahrttechnik-Hintergrund", description: "Erfahrungsbasis aus Engineering-Ausbildung und technischen Projektumgebungen." },
         { title: "Flugzeugstrukturen und Innenausstattung", description: "Praktische Arbeit im Kontext struktureller und innenraumbezogener Engineering-Aufgaben." },
-        { title: "Entwicklung von Halbleiterausrüstung", description: "Erfahrung mit hochpräziser Ausrüstung und Anforderungen an technische Dokumentation." },
+        { title: "Sondermaschinenbau und Halbleiterausrüstung", description: "Erfahrung als Konstrukteur in Präzisionsanlagen-Umgebungen mit CAD- und Dokumentationsanforderungen." },
         { title: "CAD und technische Dokumentation", description: "CAD-Umsetzung, Zeichnungen, strukturierte technische Inhalte und Änderungsunterstützung." },
         { title: "Engineering-Automatisierung", description: "Automatisierung technischer Workflows mit praktischen Skripten und internen Tools." },
         { title: "AI, Python, Websites und Server", description: "AI-Assistenten, Python-Tools, Websites, Webanwendungen und Server-Setup." }
