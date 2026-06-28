@@ -8,7 +8,7 @@ import Container from "./Container";
 const navItems = [
   { key: "home", to: "/" },
   { key: "services", to: "/services" },
-  { key: "industries", to: "/industries" },
+  { key: "industries", to: "/clients" },
   { key: "about", to: "/about" }
 ] as const;
 

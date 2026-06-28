@@ -10,6 +10,10 @@ export interface ServiceProduct {
   id: string;
   title: string;
   description: string;
+  cardTitle?: string;
+  cardDescription?: string;
+  catalogOrder?: number;
+  catalogHidden?: boolean;
   detailSections?: ServiceDetailSection[];
   sections: {
     description: ServiceDetailSection;
@@ -43,6 +47,7 @@ export interface ServiceCatalogContent {
   selectText: string;
   productSelectTitle: string;
   contactLabel: string;
+  learnMoreLabel: string;
   defaultProductId: string;
   categories: ServiceCategory[];
 }

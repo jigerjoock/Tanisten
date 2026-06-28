@@ -11,6 +11,9 @@ interface ServiceProductRowProps {
 
 export default function ServiceProductRow({ category, selectedProductId, onSelectProduct }: ServiceProductRowProps) {
   const accent = serviceAccentStyles[category.id];
+  const visibleProducts = category.products
+    .filter((product) => !product.catalogHidden)
+    .sort((first, second) => (first.catalogOrder ?? 100) - (second.catalogOrder ?? 100));
   const scrollRef = useRef<HTMLDivElement>(null);
   const momentumRef = useRef<number | null>(null);
   const dragState = useRef({
@@ -146,8 +149,10 @@ export default function ServiceProductRow({ category, selectedProductId, onSelec
         className="flex cursor-grab select-none gap-5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden active:cursor-grabbing"
         style={{ WebkitOverflowScrolling: "touch" }}
       >
-        {category.products.map((product) => {
+        {visibleProducts.map((product) => {
           const isSelected = product.id === selectedProductId;
+          const cardTitle = product.cardTitle ?? product.title;
+          const cardDescription = product.cardDescription ?? product.description;
 
           return (
             <button
@@ -177,9 +182,9 @@ export default function ServiceProductRow({ category, selectedProductId, onSelec
               <div className="flex flex-1 flex-col justify-between p-5">
                 <div>
                   <h4 className="min-w-0 break-words text-lg font-semibold leading-tight text-white [overflow-wrap:anywhere] [hyphens:auto]">
-                    {product.title}
+                    {cardTitle}
                   </h4>
-                  <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-slate-400">{product.description}</p>
+                  <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-slate-400">{cardDescription}</p>
                 </div>
                 <span className={`mt-5 h-2 w-2 rounded-full ${isSelected ? accent.line : "bg-slate-600 group-hover:bg-slate-400"}`} />
               </div>

@@ -153,7 +153,7 @@ export const translations: Record<Language, Translations> = {
     nav: {
       home: "Home",
       services: "Services",
-      industries: "Industries",
+      industries: "Clients",
       about: "About",
       contact: "Contact"
     },
@@ -178,9 +178,9 @@ export const translations: Record<Language, Translations> = {
       servicesTitle: "Services | Tanisten",
       servicesDescription:
         "Engineering and automation services from Tanisten: CAD, documentation, engineering contracting, workflow automation, Python tools and internal web applications.",
-      industriesTitle: "Industries | Tanisten",
+      industriesTitle: "Clients | Tanisten",
       industriesDescription:
-        "Tanisten supports aerospace, semiconductor equipment, industrial machinery, precision mechanical systems, engineering education and technical documentation.",
+        "Organizations Tanisten supports through engineering, automation and digital solutions.",
       aboutTitle: "About | Tanisten",
       aboutDescription:
         "Tanisten is a technical consulting initiative built on practical engineering and automation experience.",
@@ -295,19 +295,23 @@ export const translations: Record<Language, Translations> = {
         selectText: "Choose a product from the service navigation to open its technical detail panel.",
         productSelectTitle: "Select a product to view technical details.",
         contactLabel: "Contact Tanisten",
+        learnMoreLabel: "Learn More",
         defaultProductId: "mechanical-design-cad",
         categories: [
           {
             id: "engineering",
             title: "Engineering",
             description:
-              "Practical engineering support for product development, technical documentation and manufacturing projects.",
+              "Design, documentation and engineering support for technical products.",
             products: [
               {
                 id: "product-development-support",
                 title: "Product Development Support",
                 description:
                   "Support for technical teams during product development, design updates and production preparation.",
+                cardTitle: "Product Development",
+                cardDescription: "Support for developing, improving and preparing technical products.",
+                catalogOrder: 1,
                 sections: {
                   description: {
                     title: "Description",
@@ -343,6 +347,9 @@ export const translations: Record<Language, Translations> = {
                 title: "Mechanical Design & CAD",
                 description:
                   "Mechanical design support for components, assemblies, layouts and production-ready engineering data.",
+                cardTitle: "Mechanical Design",
+                cardDescription: "Mechanical design support for components, assemblies and CAD data.",
+                catalogOrder: 2,
                 sections: {
                   description: {
                     title: "Description",
@@ -392,6 +399,7 @@ export const translations: Record<Language, Translations> = {
                 title: "Aerospace & Structural Design Support",
                 description:
                   "Engineering support for aircraft structures, interiors, brackets, panels and structural documentation tasks.",
+                catalogHidden: true,
                 sections: {
                   description: {
                     title: "Description",
@@ -427,6 +435,7 @@ export const translations: Record<Language, Translations> = {
                 title: "Special Machinery & Semiconductor Equipment",
                 description:
                   "Mechanical design support for special-purpose machinery, precision equipment modules, documentation and production updates.",
+                catalogHidden: true,
                 sections: {
                   description: {
                     title: "Description",
@@ -462,6 +471,9 @@ export const translations: Record<Language, Translations> = {
                 title: "Technical Documentation",
                 description:
                   "Structured technical documents, drawing packages and engineering information for internal or supplier use.",
+                cardTitle: "Technical Documentation",
+                cardDescription: "Clear technical documents, drawing packages and engineering information.",
+                catalogOrder: 3,
                 sections: {
                   description: { title: "Description", items: ["Documentation support for engineering, manufacturing and technical review workflows."] },
                   typicalTasks: { title: "Typical Tasks", items: ["Document structuring", "Drawing package updates", "Work instruction support", "Technical report preparation"] },
@@ -477,6 +489,9 @@ export const translations: Record<Language, Translations> = {
                 title: "Design Changes & Product Updates",
                 description:
                   "Support for existing products that require design updates, documentation changes or production feedback handling.",
+                cardTitle: "Design Updates & Improvements",
+                cardDescription: "Improve existing products, drawings and documentation after feedback.",
+                catalogOrder: 6,
                 sections: {
                   description: { title: "Description", items: ["Engineering support for controlled updates to existing product data and documentation."] },
                   typicalTasks: { title: "Typical Tasks", items: ["Change assessment", "CAD updates", "Drawing revisions", "Production issue follow-up"] },
@@ -492,6 +507,9 @@ export const translations: Record<Language, Translations> = {
                 title: "Supplier & Manufacturing Coordination",
                 description:
                   "Technical coordination support between engineering, suppliers and manufacturing teams.",
+                cardTitle: "Manufacturing & Supplier Support",
+                cardDescription: "Support communication between engineering, suppliers and production.",
+                catalogOrder: 5,
                 sections: {
                   description: { title: "Description", items: ["Practical support for clarifying technical questions and preparing supplier-ready information."] },
                   typicalTasks: { title: "Typical Tasks", items: ["Supplier question handling", "Manufacturing feedback review", "Technical clarification", "Documentation follow-up"] },
@@ -507,6 +525,9 @@ export const translations: Record<Language, Translations> = {
                 title: "Engineering Contracting",
                 description:
                   "Temporary and project-based engineering capacity for overloaded technical teams.",
+                cardTitle: "Engineering Support",
+                cardDescription: "Additional engineering capacity for projects, teams and work packages.",
+                catalogOrder: 4,
                 sections: {
                   description: { title: "Description", items: ["Flexible engineering execution for defined work packages, project phases or temporary capacity needs."] },
                   typicalTasks: { title: "Typical Tasks", items: ["CAD support", "Documentation support", "Engineering change support", "Production support"] },
@@ -523,12 +544,13 @@ export const translations: Record<Language, Translations> = {
             id: "automation",
             title: "Automation",
             description:
-              "Practical automation for repetitive engineering, documentation, reporting and business workflows using software, Python tools and controlled AI support.",
+              "Save time, reduce manual work and connect your business.",
             products: [
               {
                 id: "automation-audit-workflow-cleanup",
                 title: "Automation Audit & Workflow Cleanup",
                 description: "Review existing manual and digital workflows, remove friction and define practical automation steps.",
+                catalogHidden: true,
                 sections: {
                   description: { title: "Description", items: ["Structured review of existing workflows, tools, spreadsheets, documents and handovers to identify where automation can create practical value without unnecessary complexity."] },
                   typicalTasks: { title: "Typical Tasks", items: ["Workflow audit", "Tool and process review", "Manual step mapping", "Automation opportunity list", "Implementation roadmap"] },
@@ -543,6 +565,9 @@ export const translations: Record<Language, Translations> = {
                 id: "workflow-automation",
                 title: "Workflow Automation",
                 description: "Controlled digital workflows for repeated manual steps, file handling, handovers and approvals.",
+                cardTitle: "Daily Work Automation",
+                cardDescription: "Automate repetitive daily tasks and reduce manual work.",
+                catalogOrder: 1,
                 sections: {
                   description: { title: "Description", items: ["Analysis and automation of recurring work steps where data, documents, forms or approvals move through the same process repeatedly."] },
                   typicalTasks: { title: "Typical Tasks", items: ["Workflow mapping", "Manual step reduction", "File and data transfer automation", "Template generation", "Approval and handover flows"] },
@@ -557,6 +582,9 @@ export const translations: Record<Language, Translations> = {
                 id: "ai-assistants",
                 title: "AI Assistants",
                 description: "Internal assistants for knowledge lookup, documentation support and recurring support questions.",
+                cardTitle: "Company AI Assistant",
+                cardDescription: "An AI assistant trained on your company's knowledge, documents and processes.",
+                catalogOrder: 2,
                 sections: {
                   description: { title: "Description", items: ["Practical AI support for recurring questions, internal knowledge, structured document work and training workflows."] },
                   typicalTasks: { title: "Typical Tasks", items: ["Knowledge assistant setup", "Document search support", "Prompt workflow design", "Answer review process", "Internal usage guidance"] },
@@ -571,6 +599,9 @@ export const translations: Record<Language, Translations> = {
                 id: "reporting-automation",
                 title: "Reporting Automation",
                 description: "Automated recurring reports from spreadsheets, CSV files, databases or operational tools.",
+                cardTitle: "Business Reports & Dashboards",
+                cardDescription: "Turn business data into clear reports and real-time insights.",
+                catalogOrder: 3,
                 sections: {
                   description: { title: "Description", items: ["Automation of repeated reporting tasks using structured data, templates, validation checks and controlled exports."] },
                   typicalTasks: { title: "Typical Tasks", items: ["Data collection", "Report generation", "Dashboard preparation", "Recurring exports", "Email or file output"] },
@@ -585,6 +616,9 @@ export const translations: Record<Language, Translations> = {
                 id: "business-process-automation",
                 title: "Business Process Automation",
                 description: "Automation for request handling, notifications, approvals and data routing across teams.",
+                cardTitle: "Connect Your Business Systems",
+                cardDescription: "Connect your software, automate data flow and eliminate manual transfers.",
+                catalogOrder: 4,
                 sections: {
                   description: { title: "Description", items: ["Practical automation for repeatable business processes with clear inputs, rules, responsibilities and outputs."] },
                   typicalTasks: { title: "Typical Tasks", items: ["Process mapping", "Form automation", "Notification workflows", "Data routing", "Approval logic"] },
@@ -599,6 +633,9 @@ export const translations: Record<Language, Translations> = {
                 id: "custom-business-tools",
                 title: "Custom Business Tools",
                 description: "Lightweight internal tools that connect forms, rules, data and user actions in one workflow.",
+                cardTitle: "Custom Business Tools",
+                cardDescription: "Tailor-made software built around your unique business processes.",
+                catalogOrder: 5,
                 sections: {
                   description: { title: "Description", items: ["Focused tools for internal teams, operational workflows, customer requests or technical administration without a large software project."] },
                   typicalTasks: { title: "Typical Tasks", items: ["Tool specification", "Form and dashboard design", "User workflow setup", "Access structure", "Deployment support"] },
@@ -613,6 +650,7 @@ export const translations: Record<Language, Translations> = {
                 id: "data-processing-solutions",
                 title: "Data Processing Solutions",
                 description: "Clean, convert, validate and prepare repeated datasets, exports and technical files.",
+                catalogHidden: true,
                 sections: {
                   description: { title: "Description", items: ["Tools for cleaning, transforming, checking and preparing technical or business data that appears in repeated formats."] },
                   typicalTasks: { title: "Typical Tasks", items: ["File processing", "Data cleanup", "Format conversion", "Validation checks", "Batch processing"] },
@@ -629,12 +667,15 @@ export const translations: Record<Language, Translations> = {
             id: "digital",
             title: "Digital Solutions",
             description:
-              "Digital products and platforms that help companies improve operations, communication and customer interaction.",
+              "Create modern digital products that improve customer experience, internal collaboration and business operations.",
             products: [
               {
                 id: "business-portals",
                 title: "Business Portals",
                 description: "Internal or customer-facing portals for requests, documents, status tracking and workflows.",
+                cardTitle: "Custom Business Software",
+                cardDescription: "Tailor-made software solutions designed around your company's unique processes and goals.",
+                catalogOrder: 5,
                 detailSections: [
                   {
                     title: "Description",
@@ -724,6 +765,9 @@ export const translations: Record<Language, Translations> = {
                 id: "customer-platforms",
                 title: "Customer Platforms",
                 description: "Customer-facing platforms for self-service, requests, documents and recurring interactions.",
+                cardTitle: "Customer Portals",
+                cardDescription: "Secure online spaces where customers can access information, documents, project status and communicate with your business.",
+                catalogOrder: 1,
                 detailSections: [
                   {
                     title: "Description",
@@ -798,6 +842,9 @@ export const translations: Record<Language, Translations> = {
                 id: "internal-company-tools",
                 title: "Internal Company Tools",
                 description: "Internal tools for forms, dashboards, reports, operational tracking and admin workflows.",
+                cardTitle: "Internal Business Tools",
+                cardDescription: "Custom internal software that helps your team work faster, stay organized and manage daily operations.",
+                catalogOrder: 2,
                 detailSections: [
                   {
                     title: "Description",
@@ -859,6 +906,9 @@ export const translations: Record<Language, Translations> = {
                 id: "booking-scheduling-systems",
                 title: "Booking & Scheduling Systems",
                 description: "Booking and scheduling workflows for appointments, training, services or operational resources.",
+                cardTitle: "Booking Systems",
+                cardDescription: "Simple and efficient online booking solutions for appointments, consultations and business services.",
+                catalogOrder: 3,
                 detailSections: [
                   {
                     title: "Description",
@@ -918,6 +968,7 @@ export const translations: Record<Language, Translations> = {
                 id: "company-websites",
                 title: "Company Websites",
                 description: "Professional websites and landing pages for technical companies and service providers.",
+                catalogHidden: true,
                 detailSections: [
                   {
                     title: "Description",
@@ -971,6 +1022,9 @@ export const translations: Record<Language, Translations> = {
                 id: "dashboards-reporting-systems",
                 title: "Dashboards & Reporting Systems",
                 description: "Dashboards and reporting interfaces for operational, customer or technical data.",
+                cardTitle: "Business Dashboards",
+                cardDescription: "Interactive dashboards that transform business data into clear insights for better decision-making.",
+                catalogOrder: 4,
                 detailSections: [
                   {
                     title: "Description",
@@ -1183,7 +1237,7 @@ export const translations: Record<Language, Translations> = {
     nav: {
       home: "Start",
       services: "Leistungen",
-      industries: "Branchen",
+      industries: "Kunden",
       about: "Über uns",
       contact: "Kontakt"
     },
@@ -1208,9 +1262,9 @@ export const translations: Record<Language, Translations> = {
       servicesTitle: "Leistungen | Tanisten",
       servicesDescription:
         "Engineering- und Automatisierungsleistungen von Tanisten: CAD, Dokumentation, Engineering Contracting, Workflow-Automatisierung, Python-Tools und interne Webanwendungen.",
-      industriesTitle: "Branchen | Tanisten",
+      industriesTitle: "Kunden | Tanisten",
       industriesDescription:
-        "Tanisten unterstützt Luft- und Raumfahrt, Halbleiterausrüstung, Industriemaschinen, Präzisionssysteme, Engineering-Ausbildung und technische Dokumentation.",
+        "Organisationen, die Tanisten mit Engineering, Automatisierung und digitalen Lösungen unterstützt.",
       aboutTitle: "Über uns | Tanisten",
       aboutDescription:
         "Tanisten ist eine technische Consulting-Initiative auf Basis praktischer Engineering- und Automatisierungserfahrung.",
@@ -1325,19 +1379,23 @@ export const translations: Record<Language, Translations> = {
         selectText: "Wählen Sie ein Produkt aus der Service-Navigation, um das technische Detailpanel zu öffnen.",
         productSelectTitle: "Wählen Sie ein Produkt aus, um technische Details anzuzeigen.",
         contactLabel: "Tanisten kontaktieren",
+        learnMoreLabel: "Mehr erfahren",
         defaultProductId: "mechanical-design-cad",
         categories: [
           {
             id: "engineering",
             title: "Engineering",
             description:
-              "Praktische Engineering-Unterstützung für Produktentwicklung, technische Dokumentation und Fertigungsprojekte.",
+              "Konstruktion, Dokumentation und Engineering-Unterstützung für technische Produkte.",
             products: [
               {
                 id: "product-development-support",
                 title: "Unterstützung in der Produktentwicklung",
                 description:
                   "Unterstützung technischer Teams während Produktentwicklung, Produktanpassungen und Produktionsvorbereitung.",
+                cardTitle: "Produktentwicklung",
+                cardDescription: "Unterstützung bei Entwicklung, Verbesserung und Vorbereitung technischer Produkte.",
+                catalogOrder: 1,
                 sections: {
                   description: { title: "Beschreibung", items: ["Projektbezogene Unterstützung von frühen Konzepten bis zu produktionsreifen Engineering-Informationen."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Frühe Konstruktionsunterstützung", "Produktanpassungen", "Design Reviews", "Produktionsvorbereitung"] },
@@ -1353,6 +1411,9 @@ export const translations: Record<Language, Translations> = {
                 title: "Mechanische Konstruktion & CAD",
                 description:
                   "Mechanische Konstruktionsunterstützung für Komponenten, Baugruppen, Layouts und produktionsreife Engineering-Daten.",
+                cardTitle: "Mechanische Konstruktion",
+                cardDescription: "Konstruktionsunterstützung für Komponenten, Baugruppen und CAD-Daten.",
+                catalogOrder: 2,
                 sections: {
                   description: { title: "Beschreibung", items: ["Mechanische Konstruktion und CAD-Umsetzung für nutzbare Modelle, Zeichnungen und strukturierte Engineering-Daten."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Komponentenkonstruktion", "Baugruppenentwicklung", "Layout-Updates", "Schnittstellendefinition", "Konstruktionsanpassungen"] },
@@ -1368,6 +1429,7 @@ export const translations: Record<Language, Translations> = {
                 title: "Aerospace & Struktur-Support",
                 description:
                   "Engineering-Unterstützung für Flugzeugstrukturen, Kabineninterieur, Halterungen, Paneele und technische Dokumentation.",
+                catalogHidden: true,
                 sections: {
                   description: { title: "Beschreibung", items: ["Projektbezogene Unterstützung für Luftfahrt- und Kabineninterieur-Aufgaben, bei denen strukturierte CAD-Daten, Konstruktionsanpassungen und technische Dokumentation benötigt werden."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Support für Halterungen und Paneele", "Kabineninterieur-Layouts", "Strukturelle Detailanpassungen", "Schnittstellenprüfung", "Zeichnungspaket-Vorbereitung"] },
@@ -1383,6 +1445,7 @@ export const translations: Record<Language, Translations> = {
                 title: "Sondermaschinenbau & Halbleiteranlagen",
                 description:
                   "Mechanische Konstruktionsunterstützung für Sondermaschinenbau, Präzisionsmodule, Dokumentation und Produktionsupdates.",
+                catalogHidden: true,
                 sections: {
                   description: { title: "Beschreibung", items: ["Projektbezogene Unterstützung als Konstrukteur in bestehenden Engineering-Teams für Sondermaschinenbau, Präzisionsmodule und Systeme im Umfeld von Halbleiterausrüstung."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["CAD-Konstruktionssupport", "Updates an Maschinenmodulen", "Vorrichtungs- und Halterungsdetails", "Schnittstellenklärung", "Bearbeitung von Produktionsfeedback"] },
@@ -1398,6 +1461,9 @@ export const translations: Record<Language, Translations> = {
                 title: "Technische Dokumentation",
                 description:
                   "Strukturierte technische Dokumente, Zeichnungspakete und Engineering-Informationen.",
+                cardTitle: "Technische Dokumentation",
+                cardDescription: "Klare technische Dokumente, Zeichnungspakete und Engineering-Informationen.",
+                catalogOrder: 3,
                 sections: {
                   description: { title: "Beschreibung", items: ["Dokumentationsunterstützung für Engineering-, Fertigungs- und Review-Workflows."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Dokumentstrukturierung", "Zeichnungspaket-Updates", "Arbeitsanweisungen", "Technische Berichte"] },
@@ -1412,6 +1478,9 @@ export const translations: Record<Language, Translations> = {
                 id: "design-changes-product-updates",
                 title: "Konstruktionsänderungen & Produktanpassungen",
                 description: "Unterstützung für bestehende Produkte mit Designänderungen und Dokumentationsupdates.",
+                cardTitle: "Design-Updates & Verbesserungen",
+                cardDescription: "Bestehende Produkte, Zeichnungen und Dokumentation nach Feedback verbessern.",
+                catalogOrder: 6,
                 sections: {
                   description: { title: "Beschreibung", items: ["Kontrollierte Änderungen an bestehenden Produktdaten und Dokumentationen."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Änderungsbewertung", "CAD-Updates", "Zeichnungsrevisionen", "Produktionsrückfragen"] },
@@ -1426,6 +1495,9 @@ export const translations: Record<Language, Translations> = {
                 id: "supplier-manufacturing-coordination",
                 title: "Lieferanten- & Fertigungskoordination",
                 description: "Technische Koordination zwischen Engineering, Lieferanten und Fertigungsteams.",
+                cardTitle: "Fertigungs- & Lieferantensupport",
+                cardDescription: "Kommunikation zwischen Engineering, Lieferanten und Produktion unterstützen.",
+                catalogOrder: 5,
                 sections: {
                   description: { title: "Beschreibung", items: ["Unterstützung bei technischen Klärungen und lieferantenfähigen Informationen."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Lieferantenfragen", "Fertigungsfeedback", "Technische Klärungen", "Dokumentationsnachverfolgung"] },
@@ -1440,6 +1512,9 @@ export const translations: Record<Language, Translations> = {
                 id: "engineering-contracting",
                 title: "Engineering Contracting",
                 description: "Temporäre und projektbasierte Engineering-Kapazität für ausgelastete technische Teams.",
+                cardTitle: "Engineering Support",
+                cardDescription: "Zusätzliche Engineering-Kapazität für Projekte, Teams und Arbeitspakete.",
+                catalogOrder: 4,
                 sections: {
                   description: { title: "Beschreibung", items: ["Flexible Engineering-Umsetzung für definierte Arbeitspakete, Projektphasen oder temporären Kapazitätsbedarf."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["CAD-Unterstützung", "Dokumentationsunterstützung", "Änderungsunterstützung", "Produktionssupport"] },
@@ -1456,12 +1531,13 @@ export const translations: Record<Language, Translations> = {
             id: "automation",
             title: "Automatisierung",
             description:
-              "Praktische Automatisierung wiederkehrender Engineering-, Dokumentations-, Reporting- und Geschäftsworkflows mit Software, Python-Tools und kontrollierter KI-Unterstützung.",
+              "Zeit sparen, manuelle Arbeit reduzieren und Geschäftsprozesse verbinden.",
             products: [
               {
                 id: "automation-audit-workflow-cleanup",
                 title: "Workflow-Audit & Cleanup",
                 description: "Analyse bestehender manueller und digitaler Workflows, Reduzierung von Reibung und Definition praktischer Automatisierungsschritte.",
+                catalogHidden: true,
                 sections: {
                   description: { title: "Beschreibung", items: ["Strukturierte Analyse bestehender Workflows, Tools, Tabellen, Dokumente und Uebergaben, um sinnvolle Automatisierungspotenziale ohne unnoetige Komplexitaet zu identifizieren."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Workflow-Audit", "Tool- und Prozessanalyse", "Mapping manueller Schritte", "Liste von Automatisierungspotenzialen", "Umsetzungs-Roadmap"] },
@@ -1476,6 +1552,9 @@ export const translations: Record<Language, Translations> = {
                 id: "workflow-automation",
                 title: "Workflow-Automatisierung",
                 description: "Kontrollierte digitale Workflows für wiederkehrende manuelle Schritte, Dateien, Übergaben und Freigaben.",
+                cardTitle: "Automatisierung der täglichen Arbeit",
+                cardDescription: "Wiederkehrende tägliche Aufgaben automatisieren und manuelle Arbeit reduzieren.",
+                catalogOrder: 1,
                 sections: {
                   description: { title: "Beschreibung", items: ["Analyse und Automatisierung wiederkehrender Arbeitsschritte, bei denen Daten, Dokumente, Formulare oder Freigaben regelmäßig denselben Prozess durchlaufen."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Workflow-Mapping", "Reduzierung manueller Schritte", "Datei- und Datentransfer", "Template-Erstellung", "Freigabe- und Übergabeprozesse"] },
@@ -1490,6 +1569,9 @@ export const translations: Record<Language, Translations> = {
                 id: "ai-assistants",
                 title: "KI-Assistenten",
                 description: "Interne Assistenten für Wissenssuche, Dokumentationsunterstützung und wiederkehrende Supportfragen.",
+                cardTitle: "Unternehmens-KI-Assistent",
+                cardDescription: "Ein KI-Assistent, trainiert auf Wissen, Dokumenten und Prozessen Ihres Unternehmens.",
+                catalogOrder: 2,
                 sections: {
                   description: { title: "Beschreibung", items: ["Praktische KI-Unterstützung für wiederkehrende Fragen, internes Wissen, strukturierte Dokumentenarbeit und Trainingsworkflows."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Wissensassistent-Setup", "Dokumentensuche", "Prompt-Workflow-Design", "Antwort-Review-Prozess", "Interne Nutzungshinweise"] },
@@ -1504,6 +1586,9 @@ export const translations: Record<Language, Translations> = {
                 id: "reporting-automation",
                 title: "Reporting-Automatisierung",
                 description: "Automatisierte wiederkehrende Reports aus Tabellen, CSV-Dateien, Datenbanken oder operativen Tools.",
+                cardTitle: "Business Reports & Dashboards",
+                cardDescription: "Geschäftsdaten in klare Reports und aktuelle Einblicke verwandeln.",
+                catalogOrder: 3,
                 sections: {
                   description: { title: "Beschreibung", items: ["Automatisierung wiederholter Reporting-Aufgaben mit strukturierten Daten, Templates, Validierungschecks und kontrollierten Exporten."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Datensammlung", "Report-Erstellung", "Dashboard-Vorbereitung", "Regelmäßige Exporte", "E-Mail- oder Dateiausgabe"] },
@@ -1518,6 +1603,9 @@ export const translations: Record<Language, Translations> = {
                 id: "business-process-automation",
                 title: "Prozessautomatisierung",
                 description: "Automatisierung für Anfragebearbeitung, Benachrichtigungen, Freigaben und Datenrouting zwischen Teams.",
+                cardTitle: "Geschäftssysteme verbinden",
+                cardDescription: "Software verbinden, Datenflüsse automatisieren und manuelle Übertragungen vermeiden.",
+                catalogOrder: 4,
                 sections: {
                   description: { title: "Beschreibung", items: ["Praktische Automatisierung wiederholbarer Geschäftsprozesse mit klaren Eingaben, Regeln, Verantwortlichkeiten und Ergebnissen."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Prozessmapping", "Formularautomatisierung", "Benachrichtigungsworkflows", "Datenrouting", "Freigabelogik"] },
@@ -1532,6 +1620,9 @@ export const translations: Record<Language, Translations> = {
                 id: "custom-business-tools",
                 title: "Individuelle Business-Tools",
                 description: "Leichte interne Tools, die Formulare, Regeln, Daten und Nutzeraktionen in einem Workflow verbinden.",
+                cardTitle: "Individuelle Business-Tools",
+                cardDescription: "Maßgeschneiderte Software für einzigartige Geschäftsprozesse.",
+                catalogOrder: 5,
                 sections: {
                   description: { title: "Beschreibung", items: ["Fokussierte Tools für interne Teams, operative Workflows, Kundenanfragen oder technische Administration ohne großes Softwareprojekt."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Tool-Spezifikation", "Formular- und Dashboard-Design", "User Workflow Setup", "Zugriffsstruktur", "Deployment-Support"] },
@@ -1546,6 +1637,7 @@ export const translations: Record<Language, Translations> = {
                 id: "data-processing-solutions",
                 title: "Datenverarbeitungslösungen",
                 description: "Bereinigung, Konvertierung, Validierung und Vorbereitung wiederkehrender Datensätze, Exporte und technischer Dateien.",
+                catalogHidden: true,
                 sections: {
                   description: { title: "Beschreibung", items: ["Tools zum Bereinigen, Transformieren, Prüfen und Vorbereiten technischer oder geschäftlicher Daten, die wiederholt in ähnlichen Formaten auftreten."] },
                   typicalTasks: { title: "Typische Aufgaben", items: ["Dateiverarbeitung", "Datenbereinigung", "Formatkonvertierung", "Validierungschecks", "Batch-Verarbeitung"] },
@@ -1562,12 +1654,15 @@ export const translations: Record<Language, Translations> = {
             id: "digital",
             title: "Digitale Lösungen",
             description:
-              "Digitale Produkte und Plattformen zur Verbesserung von Geschäftsprozessen, Kommunikation und Kundeninteraktion.",
+              "Moderne digitale Produkte, die Kundenerfahrung, interne Zusammenarbeit und Geschäftsabläufe verbessern.",
             products: [
               {
                 id: "business-portals",
                 title: "Business-Portale",
                 description: "Interne oder kundenorientierte Portale für Anfragen, Dokumente, Statusverfolgung und Workflows.",
+                cardTitle: "Individuelle Business-Software",
+                cardDescription: "Maßgeschneiderte Softwarelösungen für individuelle Prozesse und Ziele Ihres Unternehmens.",
+                catalogOrder: 5,
                 detailSections: [
                   {
                     title: "Beschreibung",
@@ -1615,6 +1710,9 @@ export const translations: Record<Language, Translations> = {
                 id: "customer-platforms",
                 title: "Kundenplattformen",
                 description: "Kundenorientierte Plattformen für Self-Service, Anfragen, Dokumente und wiederkehrende Interaktionen.",
+                cardTitle: "Kundenportale",
+                cardDescription: "Sichere Online-Bereiche, in denen Kunden Informationen, Dokumente und Projektstatus abrufen und mit Ihrem Unternehmen kommunizieren können.",
+                catalogOrder: 1,
                 detailSections: [
                   {
                     title: "Beschreibung",
@@ -1662,6 +1760,9 @@ export const translations: Record<Language, Translations> = {
                 id: "internal-company-tools",
                 title: "Interne Unternehmens-Tools",
                 description: "Interne Tools für Formulare, Dashboards, Reports, operative Verfolgung und Admin-Workflows.",
+                cardTitle: "Interne Business-Tools",
+                cardDescription: "Individuelle interne Software, mit der Ihr Team schneller, organisierter und effizienter arbeitet.",
+                catalogOrder: 2,
                 detailSections: [
                   {
                     title: "Beschreibung",
@@ -1709,6 +1810,9 @@ export const translations: Record<Language, Translations> = {
                 id: "booking-scheduling-systems",
                 title: "Buchungs- und Terminlösungen",
                 description: "Buchungs- und Terminworkflows für Termine, Trainings, Services oder operative Ressourcen.",
+                cardTitle: "Buchungssysteme",
+                cardDescription: "Einfache und effiziente Online-Buchungslösungen für Termine, Beratungen und Dienstleistungen.",
+                catalogOrder: 3,
                 detailSections: [
                   {
                     title: "Beschreibung",
@@ -1756,6 +1860,7 @@ export const translations: Record<Language, Translations> = {
                 id: "company-websites",
                 title: "Unternehmenswebsites",
                 description: "Professionelle Websites und Landingpages für technische Unternehmen und Dienstleister.",
+                catalogHidden: true,
                 detailSections: [
                   {
                     title: "Beschreibung",
@@ -1803,6 +1908,9 @@ export const translations: Record<Language, Translations> = {
                 id: "dashboards-reporting-systems",
                 title: "Dashboards & Reporting-Systeme",
                 description: "Dashboards und Reporting-Interfaces für operative, kundenbezogene oder technische Daten.",
+                cardTitle: "Business Dashboards",
+                cardDescription: "Interaktive Dashboards, die Geschäftsdaten in klare Einblicke für bessere Entscheidungen verwandeln.",
+                catalogOrder: 4,
                 detailSections: [
                   {
                     title: "Beschreibung",

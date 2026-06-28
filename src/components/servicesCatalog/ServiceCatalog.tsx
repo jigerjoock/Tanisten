@@ -80,6 +80,7 @@ export default function ServiceCatalog({ content }: ServiceCatalogProps) {
           detailsTitle={content.detailsTitle}
           selectTitle={content.productSelectTitle}
           selectText={content.selectText}
+          learnMoreLabel={content.learnMoreLabel}
         />
       ) : null}
     </div>
