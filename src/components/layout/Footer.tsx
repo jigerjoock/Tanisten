@@ -21,9 +21,9 @@ export default function Footer() {
           <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">{t.brand.tagline}</p>
           <p className="mt-3 text-sm leading-relaxed text-slate-400">{t.footer.text}</p>
           <div className="mt-5 space-y-1 text-sm text-slate-300">
-            <p>{t.brand.location}</p>
+            <p>{t.common.germany} / {t.common.worldwide}</p>
             <p>{t.brand.email}</p>
-            <p>{t.brand.phone}</p>
+            <p>{t.brand.phoneGermany}</p>
           </div>
         </div>
 

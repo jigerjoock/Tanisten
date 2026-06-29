@@ -17,8 +17,11 @@ interface Translations {
     name: string;
     tagline: string;
     email: string;
-    phone: string;
-    location: string;
+    phoneGermany: string;
+    phoneWorldwide: string;
+    locationGermany: string;
+    locationGermanyUrl: string;
+    locationWorldwide: string;
   };
   nav: {
     home: string;
@@ -40,6 +43,8 @@ interface Translations {
     menu: string;
     phone: string;
     location: string;
+    germany: string;
+    worldwide: string;
   };
   seo: {
     homeTitle: string;
@@ -100,6 +105,13 @@ interface Translations {
     backgroundTitle: string;
     backgroundText1: string;
     backgroundText2: string;
+    projectEnvironmentTitle: string;
+    projectEnvironmentHeadline: string;
+    projectEnvironmentSubtitle: string;
+    projectEnvironmentItems: {
+      title: string;
+      description: string;
+    }[];
     experienceTitle: string;
     contactTitle: string;
     contactText: string;
@@ -147,8 +159,12 @@ export const translations: Record<Language, Translations> = {
       name: "Tanisten",
       tagline: "Engineering • Automation • Digital Solutions",
       email: "info@tanisten.com",
-      phone: "+996 XXX XXX XXX",
-      location: "Germany / Kyrgyzstan / Remote"
+      phoneGermany: "+49 177 58 65 916",
+      phoneWorldwide: "+971 55 396 2189",
+      locationGermany: "Schellengasse 8, 74072 Heilbronn, Germany",
+      locationGermanyUrl:
+        "https://www.google.com/maps/place//data=!4m2!3m1!1s0x47982fde11992fb3:0xfbf6f8073cc1523c?sa=X&ved=1t:8290&ictx=111",
+      locationWorldwide: "IFZA Business Park, Dubai Silicon Oasis, Dubai, UAE"
     },
     nav: {
       home: "Home",
@@ -169,7 +185,9 @@ export const translations: Record<Language, Translations> = {
       pageNotFoundText: "The page you are looking for does not exist.",
       menu: "Menu",
       phone: "Phone",
-      location: "Location"
+      location: "Location",
+      germany: "Germany",
+      worldwide: "Worldwide"
     },
     seo: {
       homeTitle: "Tanisten | Engineering, Automation & Digital Solutions",
@@ -1107,6 +1125,22 @@ export const translations: Record<Language, Translations> = {
         "Tanisten combines mechanical and aviation engineering background with practical experience in aircraft structures and interiors, special-purpose machinery, semiconductor equipment environments, high-precision mechanical systems, CAD, technical documentation and engineering automation.",
       backgroundText2:
         "The company is also built around practical digital work: AI assistants, Python tools, websites, internal web applications and server setup. The background includes Germany and international engineering education and project environments.",
+      projectEnvironmentTitle: "Technical project environments",
+      projectEnvironmentHeadline: "Experience across precision equipment and aircraft engineering",
+      projectEnvironmentSubtitle:
+        "Selected environments that reflect the type of engineering and technical work behind Tanisten.",
+      projectEnvironmentItems: [
+        {
+          title: "Semiconductor equipment and special machinery",
+          description:
+            "Experience as a mechanical designer in precision equipment environments with CAD, documentation and production-oriented engineering support."
+        },
+        {
+          title: "Aircraft structures and CAD engineering",
+          description:
+            "Aviation engineering background with exposure to aircraft structures, interiors, CAD data and technical documentation workflows."
+        }
+      ],
       experienceTitle: "Experience areas",
       contactTitle: "Work with a technical partner for practical execution",
       contactText:
@@ -1231,8 +1265,12 @@ export const translations: Record<Language, Translations> = {
       name: "Tanisten",
       tagline: "Engineering • Automatisierung • Digitale Lösungen",
       email: "info@tanisten.com",
-      phone: "+996 XXX XXX XXX",
-      location: "Deutschland / Kirgisistan / Remote"
+      phoneGermany: "+49 177 58 65 916",
+      phoneWorldwide: "+971 55 396 2189",
+      locationGermany: "Schellengasse 8, 74072 Heilbronn, Deutschland",
+      locationGermanyUrl:
+        "https://www.google.com/maps/place//data=!4m2!3m1!1s0x47982fde11992fb3:0xfbf6f8073cc1523c?sa=X&ved=1t:8290&ictx=111",
+      locationWorldwide: "IFZA Business Park, Dubai Silicon Oasis, Dubai, VAE"
     },
     nav: {
       home: "Start",
@@ -1253,7 +1291,9 @@ export const translations: Record<Language, Translations> = {
       pageNotFoundText: "Die gesuchte Seite existiert nicht.",
       menu: "Menü",
       phone: "Telefon",
-      location: "Standort"
+      location: "Standort",
+      germany: "Deutschland",
+      worldwide: "Weltweit"
     },
     seo: {
       homeTitle: "Tanisten | Engineering, Automatisierung & Digitale Lösungen",
@@ -1980,6 +2020,22 @@ export const translations: Record<Language, Translations> = {
         "Tanisten verbindet einen Hintergrund in Maschinenbau und Luftfahrttechnik mit praktischer Erfahrung in Flugzeugstrukturen und Innenausstattung, Halbleiterausrüstung, hochpräzisen mechanischen Systemen, CAD, technischer Dokumentation und Engineering-Automatisierung.",
       backgroundText2:
         "Die Initiative ist außerdem auf praktische digitale Arbeit ausgerichtet: AI-Assistenten, Python-Tools, Websites, interne Webanwendungen und Server-Setup. Der Hintergrund umfasst Deutschland sowie internationale Engineering-Ausbildung und Projektumgebungen.",
+      projectEnvironmentTitle: "Technische Projektumgebungen",
+      projectEnvironmentHeadline: "Erfahrung in Präzisionsanlagen und Luftfahrttechnik",
+      projectEnvironmentSubtitle:
+        "Ausgewählte Umgebungen, die die technische Erfahrung hinter Tanisten widerspiegeln.",
+      projectEnvironmentItems: [
+        {
+          title: "Halbleiterausrüstung und Sondermaschinenbau",
+          description:
+            "Erfahrung als Konstrukteur in Präzisionsanlagen-Umgebungen mit CAD, Dokumentation und produktionsnaher Engineering-Unterstützung."
+        },
+        {
+          title: "Flugzeugstrukturen und CAD Engineering",
+          description:
+            "Luftfahrttechnischer Hintergrund mit Bezug zu Flugzeugstrukturen, Interiors, CAD-Daten und technischen Dokumentationsworkflows."
+        }
+      ],
       experienceTitle: "Erfahrungsbereiche",
       contactTitle: "Arbeiten Sie mit einem technischen Partner für praktische Umsetzung",
       contactText:

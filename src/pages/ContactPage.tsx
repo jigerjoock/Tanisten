@@ -61,10 +61,34 @@ export default function ContactPage() {
           <div className="space-y-5">
             <article className="card-surface p-6">
               <h3 className="text-lg font-semibold text-white">{t.common.contactDetails}</h3>
-              <div className="mt-4 space-y-2 text-sm text-slate-300">
-                <p>{t.contact.email}: {t.brand.email}</p>
-                <p>{t.common.phone}: {t.brand.phone}</p>
-                <p>{t.common.location}: {t.brand.location}</p>
+              <div className="mt-4 space-y-4 text-sm text-slate-300">
+                <p>
+                  {t.contact.email}:{" "}
+                  <a className="text-slate-100 transition hover:text-teal-300" href={`mailto:${t.brand.email}`}>
+                    {t.brand.email}
+                  </a>
+                </p>
+                <div className="rounded-lg border border-slate-800 bg-base-800/60 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{t.common.germany}</p>
+                  <a className="mt-2 block text-slate-100 transition hover:text-teal-300" href={`tel:${t.brand.phoneGermany.replace(/\s/g, "")}`}>
+                    {t.brand.phoneGermany}
+                  </a>
+                  <a
+                    className="mt-2 block leading-relaxed text-slate-300 transition hover:text-teal-300"
+                    href={t.brand.locationGermanyUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {t.brand.locationGermany}
+                  </a>
+                </div>
+                <div className="rounded-lg border border-slate-800 bg-base-800/60 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{t.common.worldwide}</p>
+                  <a className="mt-2 block text-slate-100 transition hover:text-teal-300" href={`tel:${t.brand.phoneWorldwide.replace(/\s/g, "")}`}>
+                    {t.brand.phoneWorldwide}
+                  </a>
+                  <p className="mt-2 leading-relaxed text-slate-300">{t.brand.locationWorldwide}</p>
+                </div>
               </div>
             </article>
             <article className="card-surface p-6">
