@@ -7,7 +7,9 @@ import HomePage from "./pages/HomePage";
 import ClientsPage from "./pages/ClientsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProductPage from "./pages/ProductPage";
+import PrivacyPage from "./pages/PrivacyPage";
 import ServicesPage from "./pages/ServicesPage";
+import CookieNotice from "./components/common/CookieNotice";
 
 export default function App() {
   return (
@@ -21,11 +23,13 @@ export default function App() {
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/industries" element={<ClientsPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
       <Footer />
+      <CookieNotice />
     </div>
   );
 }

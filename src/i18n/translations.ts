@@ -28,6 +28,7 @@ interface Translations {
     services: string;
     industries: string;
     about: string;
+    privacy: string;
     contact: string;
   };
   common: {
@@ -45,6 +46,7 @@ interface Translations {
     location: string;
     germany: string;
     worldwide: string;
+    accept: string;
   };
   seo: {
     homeTitle: string;
@@ -171,6 +173,7 @@ export const translations: Record<Language, Translations> = {
       services: "Services",
       industries: "Clients",
       about: "About",
+      privacy: "Privacy",
       contact: "Contact"
     },
     common: {
@@ -187,7 +190,8 @@ export const translations: Record<Language, Translations> = {
       phone: "Phone",
       location: "Location",
       germany: "Germany",
-      worldwide: "Worldwide"
+      worldwide: "Worldwide",
+      accept: "Accept"
     },
     seo: {
       homeTitle: "Tanisten | Engineering, Automation & Digital Solutions",
@@ -1277,6 +1281,7 @@ export const translations: Record<Language, Translations> = {
       services: "Leistungen",
       industries: "Kunden",
       about: "Über uns",
+      privacy: "Datenschutz",
       contact: "Kontakt"
     },
     common: {
@@ -1293,7 +1298,8 @@ export const translations: Record<Language, Translations> = {
       phone: "Telefon",
       location: "Standort",
       germany: "Deutschland",
-      worldwide: "Weltweit"
+      worldwide: "Weltweit",
+      accept: "Akzeptieren"
     },
     seo: {
       homeTitle: "Tanisten | Engineering, Automatisierung & Digitale Lösungen",

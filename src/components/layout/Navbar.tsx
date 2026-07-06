@@ -9,7 +9,8 @@ const navItems = [
   { key: "home", to: "/" },
   { key: "services", to: "/services" },
   { key: "industries", to: "/clients" },
-  { key: "about", to: "/about" }
+  { key: "about", to: "/about" },
+  { key: "privacy", to: "/privacy" }
 ] as const;
 
 export default function Navbar() {

@@ -7,6 +7,7 @@ const footerLinks = [
   { key: "services", to: "/services" },
   { key: "industries", to: "/industries" },
   { key: "about", to: "/about" },
+  { key: "privacy", to: "/privacy" },
   { key: "contact", to: "/contact" }
 ] as const;
 
