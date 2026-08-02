@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 import AboutPage from "./pages/AboutPage";
@@ -9,12 +9,16 @@ import NotFoundPage from "./pages/NotFoundPage";
 import ProductPage from "./pages/ProductPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import ServicesPage from "./pages/ServicesPage";
+import WeddingPage from "./pages/WeddingPage";
 import CookieNotice from "./components/common/CookieNotice";
 
 export default function App() {
+  const { pathname } = useLocation();
+  const isWeddingPage = pathname === "/wedding" || pathname.startsWith("/wedding/");
+
   return (
     <div className="min-h-screen">
-      <Navbar />
+      {!isWeddingPage && <Navbar />}
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -25,11 +29,12 @@ export default function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/wedding" element={<WeddingPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
-      <Footer />
-      <CookieNotice />
+      {!isWeddingPage && <Footer />}
+      {!isWeddingPage && <CookieNotice />}
     </div>
   );
 }

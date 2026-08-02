@@ -1,0 +1,126 @@
+.wedding-page {
+  --wine: #633b3d;
+  --ink: #342d29;
+  --cream: #f8f4ec;
+  --sage: #78806a;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.wedding-page h1, .wedding-page h2, .wedding-page h3, .wedding-page p { margin: 0; }
+.wedding-page h2 { font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 400; line-height: 1.05; }
+.wedding-kicker { color: var(--wine); font-family: Manrope, sans-serif; font-size: .72rem; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; }
+
+.wedding-hero { position: relative; display: grid; min-height: 100svh; place-items: center; padding: 3rem 1.5rem; background: radial-gradient(circle at 50% 42%, rgba(255,255,255,.92), transparent 34%), linear-gradient(135deg, #e9dfcf, #faf7f0 48%, #ddd8c8); text-align: center; }
+.wedding-hero::after { position: absolute; inset: 1.2rem; border: 1px solid rgba(99,59,61,.25); content: ""; pointer-events: none; }
+.wedding-hero-content { position: relative; z-index: 1; }
+.wedding-hero h1 { max-width: 12ch; margin: 1.5rem auto; color: var(--wine); font-size: clamp(4rem, 14vw, 9.5rem); font-style: italic; font-weight: 400; letter-spacing: -.06em; line-height: .88; }
+.wedding-date { margin-top: 1.4rem !important; font-family: Manrope, sans-serif; font-size: clamp(.9rem, 2vw, 1.1rem); letter-spacing: .22em; text-transform: uppercase; }
+.wedding-rule { display: flex; align-items: center; gap: 1rem; color: var(--wine); font-size: .7rem; }
+.wedding-rule::before, .wedding-rule::after { width: 7rem; height: 1px; background: rgba(99,59,61,.4); content: ""; }
+.wedding-scroll { display: grid; width: 2.8rem; height: 2.8rem; margin: 4rem auto 0; border: 1px solid rgba(99,59,61,.4); border-radius: 50%; place-items: center; transition: .25s; }
+.wedding-scroll:hover { background: var(--wine); color: white; }
+.wedding-flower { position: absolute; color: rgba(120,128,106,.18); font-size: min(48vw, 35rem); line-height: 1; }
+.wedding-flower-left { bottom: -9rem; left: -7rem; transform: rotate(-28deg); }
+.wedding-flower-right { top: -10rem; right: -8rem; transform: rotate(145deg); }
+
+.wedding-motorcycle { position: absolute; z-index: 3; top: -8rem; left: -13rem; width: clamp(8rem, 15vw, 12rem); filter: drop-shadow(0 12px 10px rgba(52,45,41,.22)); pointer-events: none; }
+.wedding-motorcycle svg { display: block; width: 100%; transform: rotate(8deg); }
+.wedding-wheel { fill: #292929; stroke: #6c625a; stroke-width: 5; }
+.wedding-bike-frame, .wedding-rider-line { fill: none; stroke: #372d2b; stroke-linecap: round; stroke-linejoin: round; stroke-width: 7; }
+.wedding-bike-red, .wedding-rider { fill: #a8292f; stroke: #642126; stroke-width: 3; }
+.wedding-rider-head { fill: #d8a17f; stroke: #732a2d; stroke-width: 6; }
+.wedding-scarf { fill: #a8292f; }
+.wedding-motion-line { position: absolute; right: 85%; width: 4rem; height: 2px; border-radius: 5px; background: rgba(168,41,47,.5); }
+.wedding-motion-line-one { top: 54%; }
+.wedding-motion-line-two { top: 68%; width: 2.7rem; }
+
+.wedding-photographer { position: absolute; z-index: 4; top: 2rem; right: clamp(1rem, 7vw, 7rem); width: clamp(5rem, 10vw, 8rem); opacity: 0; pointer-events: none; transform-origin: 50% 100%; }
+.wedding-photographer svg { display: block; width: 100%; filter: drop-shadow(0 10px 8px rgba(52,45,41,.18)); }
+.wedding-photographer-skin, .wedding-photographer-arm { fill: #d8a17f; stroke: #a56e55; stroke-linecap: round; stroke-width: 7; }
+.wedding-photographer-hair { fill: #49342c; }
+.wedding-photographer-dress { fill: #7b8069; stroke: #555c49; stroke-width: 2; }
+.wedding-camera { fill: #342d29; stroke: #efe6da; stroke-width: 2; }
+.wedding-camera-flash { position: absolute; z-index: 5; top: 41%; left: 17%; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: white; box-shadow: 0 0 0 0 rgba(255,255,255,0); opacity: 0; }
+
+.wedding-section { width: min(100% - 3rem, 980px); margin: 0 auto; padding: clamp(5rem, 11vw, 9rem) 0; text-align: center; }
+.wedding-section > h2 { max-width: 780px; margin: 1rem auto 2rem; }
+.wedding-section > p:last-child, .wedding-intro > p:last-child { max-width: 680px; margin: 0 auto; font-family: Manrope, sans-serif; line-height: 1.9; }
+.wedding-intro::before { display: block; margin-bottom: 2.5rem; color: var(--sage); content: "✦"; font-size: 1.5rem; }
+
+.wedding-date-card { display: grid; grid-template-columns: minmax(260px, .7fr) 1.3fr; width: min(100% - 3rem, 1080px); margin: 0 auto; background: #3f493c; color: white; box-shadow: 0 28px 70px rgba(52,45,41,.18); }
+.wedding-date-card > div:first-child { display: grid; padding: 4rem 2rem; border-right: 1px solid rgba(255,255,255,.18); place-items: center; }
+.wedding-date-card strong { font-size: 8rem; font-weight: 400; line-height: .85; }
+.wedding-date-card span { font-family: Manrope, sans-serif; font-size: .72rem; letter-spacing: .28em; text-transform: uppercase; }
+.wedding-date-details { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(3rem, 7vw, 6rem); }
+.wedding-date-details h2 { margin: .8rem 0 1rem; font-size: clamp(2rem, 5vw, 3.8rem); }
+.wedding-date-details p { font-family: Manrope, sans-serif; color: rgba(255,255,255,.72); }
+.wedding-date-details a, .wedding-rsvp a { margin-top: 2rem; padding-bottom: .35rem; border-bottom: 1px solid currentColor; font-family: Manrope, sans-serif; font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+
+.wedding-countdown { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 3rem; border-block: 1px solid rgba(99,59,61,.2); }
+.wedding-countdown div { padding: 2rem .5rem; border-right: 1px solid rgba(99,59,61,.2); }
+.wedding-countdown div:last-child { border: 0; }
+.wedding-countdown strong { display: block; color: var(--wine); font-size: clamp(2.3rem, 7vw, 5rem); font-weight: 400; }
+.wedding-countdown span { font-family: Manrope, sans-serif; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; }
+
+.wedding-program { background: #eee7dc; }
+.wedding-timeline { width: min(100%, 720px); margin: 4rem auto 0; text-align: left; }
+.wedding-timeline article { display: grid; grid-template-columns: 90px 1fr; gap: 1.5rem; padding: 0 0 2.8rem; }
+.wedding-timeline time { color: var(--wine); font-family: Manrope, sans-serif; font-weight: 700; }
+.wedding-timeline article > div { position: relative; padding-left: 2rem; border-left: 1px solid rgba(99,59,61,.3); }
+.wedding-timeline article > div::before { position: absolute; top: .25rem; left: -.35rem; width: .65rem; height: .65rem; border-radius: 50%; background: var(--wine); content: ""; }
+.wedding-timeline h3 { margin-bottom: .5rem; font-size: 1.5rem; font-weight: 400; }
+.wedding-timeline p { font-family: Manrope, sans-serif; color: #716964; font-size: .9rem; line-height: 1.7; }
+.wedding-rsvp { padding: 2rem; background: var(--wine); color: white; text-align: center; }
+.wedding-rsvp > div { padding: clamp(4rem, 10vw, 8rem) 1.5rem; border: 1px solid rgba(255,255,255,.25); }
+.wedding-rsvp .wedding-kicker { color: #dec7bb; }
+.wedding-rsvp h2 { margin: 1rem 0 1.5rem; }
+.wedding-rsvp p:not(.wedding-kicker) { font-family: Manrope, sans-serif; color: rgba(255,255,255,.75); }
+.wedding-rsvp a { display: inline-block; color: white; }
+.wedding-footer { display: flex; flex-direction: column; align-items: center; gap: .7rem; padding: 4rem 1rem; background: #28251f; color: white; text-align: center; }
+.wedding-footer p, .wedding-footer span { font-family: Manrope, sans-serif; font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; }
+.wedding-footer strong { color: #e2cfc4; font-size: 2rem; font-style: italic; font-weight: 400; }
+
+@media (max-width: 640px) {
+  .wedding-motorcycle { width: 7.5rem; }
+  .wedding-photographer { top: 3.5rem; right: .5rem; width: 4.8rem; }
+  .wedding-date-card { grid-template-columns: 1fr; }
+  .wedding-date-card > div:first-child { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.18); }
+  .wedding-date-details { align-items: center; text-align: center; }
+  .wedding-countdown div { padding-inline: .15rem; }
+  .wedding-countdown span { font-size: .52rem; letter-spacing: .08em; }
+  .wedding-timeline article { grid-template-columns: 62px 1fr; gap: .6rem; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .wedding-hero-content { animation: wedding-reveal 1.2s ease both; }
+  .wedding-motorcycle { animation: wedding-ride 7s cubic-bezier(.42,0,.58,1) 1.2s infinite; }
+  .wedding-wheel { transform-box: fill-box; transform-origin: center; animation: wedding-wheel-spin .45s linear infinite; }
+  .wedding-photographer { animation: wedding-photographer-appear 7s ease-in-out 1.2s infinite; }
+  .wedding-camera-flash { animation: wedding-photo-flash 7s linear 1.2s infinite; }
+  @keyframes wedding-reveal { from { opacity: 0; transform: translateY(20px); } }
+  @keyframes wedding-ride {
+    0%, 5% { transform: translate(0, 0) rotate(8deg); opacity: 0; }
+    10% { opacity: 1; }
+    72% { opacity: 1; }
+    82%, 100% { transform: translate(calc(100vw + 19rem), calc(100svh + 14rem)) rotate(8deg); opacity: 0; }
+  }
+  @keyframes wedding-wheel-spin { to { transform: rotate(360deg); } }
+  @keyframes wedding-photographer-appear {
+    0%, 25%, 78%, 100% { opacity: 0; transform: translateY(-20px) scale(.88); }
+    32%, 68% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes wedding-photo-flash {
+    0%, 43%, 47%, 100% { opacity: 0; box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+    44% { opacity: 1; box-shadow: 0 0 0 3rem rgba(255,255,255,.7); }
+    45% { opacity: 0; box-shadow: 0 0 0 6rem rgba(255,255,255,0); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wedding-motorcycle { top: auto; bottom: 1.5rem; left: 1rem; }
+  .wedding-photographer { opacity: 1; }
+}
