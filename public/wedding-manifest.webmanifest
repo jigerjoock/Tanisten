@@ -1,0 +1,15 @@
+{
+  "name": "AIDAI ✿ Айжигит — Үйлөнүү үлпөтү",
+  "short_name": "AIDAI ✿ Айжигит",
+  "description": "25-август 2026 — биздин тойго кош келиңиз",
+  "lang": "ky",
+  "start_url": "/wedding",
+  "scope": "/wedding",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAF8F3",
+  "theme_color": "#FAF8F3",
+  "icons": [
+    { "src": "/wedding-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
