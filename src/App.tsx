@@ -14,14 +14,16 @@ import CookieNotice from "./components/common/CookieNotice";
 
 export default function App() {
   const { pathname } = useLocation();
-  const isWeddingPage = pathname === "/wedding" || pathname.startsWith("/wedding/");
+  const hostname = window.location.hostname;
+  const isWeddingHost = hostname === "wedding.tanisten.com" || hostname === "tanisten-wedding.pages.dev" || hostname.endsWith(".tanisten-wedding.pages.dev");
+  const isWeddingPage = isWeddingHost || pathname === "/wedding" || pathname.startsWith("/wedding/");
 
   return (
     <div className="min-h-screen">
       {!isWeddingPage && <Navbar />}
       <main>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={isWeddingHost ? <WeddingPage /> : <HomePage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/services/:productId" element={<ProductPage />} />
           <Route path="/clients" element={<ClientsPage />} />

@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&display=swap');
 
-.wapp-shell { --ivory:#faf8f3; --white:#fff; --champagne:#e8dcc8; --warm:#b8aa9a; --sage:#8f9b86; --ink:#34352f; --gold:#b89a68; min-height:100svh; background:var(--ivory); color:var(--ink); font-family:Manrope,"Segoe UI",sans-serif; }
+html.wedding-light-theme,body.wedding-light-theme { color-scheme:only light; background:#aaa9ac; }
+.wapp-shell { --ivory:#faf8f3; --white:#fff; --champagne:#e8dcc8; --warm:#b8aa9a; --sage:#8f9b86; --ink:#34352f; --gold:#b89a68; min-height:100svh; background:var(--ivory); color:var(--ink); color-scheme:only light; font-family:Manrope,"Segoe UI",sans-serif; }
 .wapp-shell * { box-sizing:border-box; }.wapp-shell button,.wapp-shell input,.wapp-shell textarea { font:inherit; }.wapp-logo { font-family:"Cormorant Garamond",Georgia,serif; font-size:clamp(2.15rem,9vw,4.2rem); font-weight:500; letter-spacing:.035em; line-height:1; white-space:nowrap; }.wapp-logo span { color:var(--sage); font-size:.62em; }.wapp-logo.compact { font-size:1.05rem; letter-spacing:.06em; }
 .wapp-opening { position:relative; display:grid; min-height:100svh; overflow:hidden; background:var(--white); place-items:center; }.wapp-opening::before { position:absolute; inset:18px; border:1px solid var(--champagne); content:""; }.wapp-opening-inner { position:relative; z-index:2; width:min(88%,560px); padding:4rem 1rem; text-align:center; }.wapp-kicker { margin:0 0 1.1rem; color:#777b70; font-size:.65rem; font-weight:700; letter-spacing:.28em; text-transform:uppercase; }.wapp-gold-line { display:block; width:1px; height:42px; margin:1.7rem auto; background:linear-gradient(transparent,var(--gold),transparent); }.wapp-opening-date { margin:0; font-family:"Cormorant Garamond",serif; font-size:1.45rem; letter-spacing:.12em; }.wapp-welcome { margin:1rem 0 0; color:#72756e; font-size:.84rem; letter-spacing:.03em; }.wapp-button { display:inline-flex; align-items:center; justify-content:center; gap:1.2rem; min-height:46px; margin-top:2rem; padding:.8rem 1.25rem; border:1px solid var(--champagne); border-radius:999px; background:rgba(255,255,255,.82); color:var(--ink); cursor:pointer; font-size:.68rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; box-shadow:0 12px 35px rgba(90,80,65,.08); transition:.35s ease; }.wapp-button:hover { border-color:var(--gold); transform:translateY(-2px); }
 .wapp-botanical { position:absolute; inset:0; pointer-events:none; }.wapp-flower { position:absolute; color:#fff; filter:drop-shadow(0 5px 8px rgba(93,103,88,.12)); font-family:Georgia,serif; font-size:clamp(8rem,30vw,18rem); line-height:1; text-shadow:0 0 0 #e9e8e2,4px 5px 0 rgba(143,155,134,.11); }.wapp-flower.one { top:-5%; right:-8%; transform:rotate(18deg); }.wapp-flower.two { bottom:-7%; left:-9%; transform:rotate(-12deg); }.leaf { position:absolute; width:90px; height:34px; border-radius:100% 0 100% 0; background:rgba(143,155,134,.2); }.leaf.a { top:16%; left:-20px; transform:rotate(35deg); }.leaf.b { right:-20px; bottom:20%; transform:rotate(210deg); }.leaf.c { bottom:5%; left:18%; transform:rotate(8deg) scale(.65); }
@@ -45,8 +46,8 @@
 @media (max-width:430px){.wapp-hero{padding-inline:12px}.wapp-invitation{padding-inline:18px}.wapp-roses{inset:8px -8px}.wapp-roses span{font-size:4.5rem}.wapp-utility-grid{padding-inline:10px;gap:5px}.wapp-utility-grid button{min-height:60px}.wapp-invite-actions{flex-direction:column;max-width:240px;margin-inline:auto}}
 
 /* Silver-and-white stationery palette inspired by the supplied reference. */
-.wapp-shell { --ivory:#ececed; --white:#fdfdfd; --champagne:#c9c9cc; --warm:#a5a5aa; --sage:#73777a; --ink:#414145; --gold:#8f9094; --rose-x:0px; --rose-y:0px; position:relative; isolation:isolate; background:#aaa9ac; }
-.wapp-shell::before { position:fixed; z-index:-1; inset:-18px; background:url("../assets/wedding-silver-roses.png") center top/cover no-repeat; content:""; transform:translate3d(var(--rose-x),var(--rose-y),0) scale(1.025); transition:transform .45s cubic-bezier(.2,.7,.2,1); will-change:transform; }
+.wapp-shell { --ivory:#ececed; --white:#fdfdfd; --champagne:#c9c9cc; --warm:#a5a5aa; --sage:#73777a; --ink:#414145; --gold:#8f9094; position:relative; isolation:isolate; background:#aaa9ac; }
+.wapp-shell::before { position:fixed; z-index:-1; inset:0; background:url("../assets/wedding-silver-roses-v2.jpg") center/cover no-repeat; content:""; }
 .wapp-opening { background:rgba(238,238,239,.28); }
 .wapp-opening::before { inset:18px; border-color:rgba(255,255,255,.72); box-shadow:inset 0 0 0 1px rgba(105,105,110,.18); }
 .wapp-opening-inner { padding:4rem 2rem; border:1px solid rgba(125,125,130,.55); background:rgba(253,253,253,.9); box-shadow:0 24px 80px rgba(50,50,54,.2); backdrop-filter:blur(8px); }
@@ -114,6 +115,7 @@
 .wapp-finale::after { position:absolute; z-index:-1; inset:0; background:rgba(244,239,235,.2); content:""; }
 .wapp-finale img { display:block; width:100%; height:100svh; object-fit:contain; object-position:center; filter:drop-shadow(0 20px 55px rgba(50,44,40,.18)); }
 .wapp-finale-message { position:absolute; top:50%; right:20px; left:20px; color:#6d6e73; font-family:"Cormorant Garamond",Georgia,serif; font-size:clamp(3.2rem,16vw,6.2rem); font-style:italic; font-weight:500; letter-spacing:.015em; line-height:1; text-align:center; text-shadow:0 1px 0 #fff,0 10px 28px rgba(55,55,60,.16); opacity:0; transform:translateY(calc(-50% + 12px)) scale(.96); animation:wapp-finale-message .42s 5.05s cubic-bezier(.22,1,.36,1) forwards; }
+.wapp-finale-message span { display:inline-block; margin-left:.08em; font-family:"Segoe UI Emoji","Apple Color Emoji",sans-serif; font-size:.42em; font-style:normal; vertical-align:.2em; filter:drop-shadow(0 3px 7px rgba(55,55,60,.12)); }
 @keyframes wapp-finale-message { to{opacity:1;transform:translateY(-50%) scale(1)} }
 .wapp-finale-indicator { position:absolute; right:50%; bottom:max(22px,env(safe-area-inset-bottom)); display:flex; gap:7px; padding:10px 13px; border-radius:999px; background:rgba(248,245,242,.58); transform:translateX(50%); backdrop-filter:blur(10px); }.wapp-finale-indicator i { width:5px; height:5px; border-radius:50%; background:rgba(95,95,100,.32); }.wapp-finale-indicator i.active { width:16px; border-radius:99px; background:#696a6e; }
 @media (min-width:760px){.wapp-finale img{width:min(100%,900px)}}
@@ -127,7 +129,7 @@
 @keyframes wapp-petal-fall { 0%{opacity:0;transform:translate3d(0,-8vh,0) rotate(0deg)} 10%{opacity:.7} 50%{transform:translate3d(24px,52vh,0) rotate(190deg)} 90%{opacity:.58} 100%{opacity:0;transform:translate3d(-18px,110vh,0) rotate(380deg)} }
 @media (prefers-reduced-motion:reduce){.wapp-petals{display:none}}
 
-.wapp-envelope-opening { min-height:100svh; padding:24px; overflow:hidden; touch-action:pan-x; user-select:none; background:#aaa9ac; cursor:grab; }.wapp-envelope-opening::before { display:block; inset:-20px; border:0; background:url("../assets/wedding-silver-roses.png") center/cover no-repeat; opacity:.72; }.wapp-envelope-opening::after { position:absolute; inset:0; background:rgba(226,226,228,.34); content:""; backdrop-filter:blur(2px); }.wapp-envelope-opening:active { cursor:grabbing; }
+.wapp-envelope-opening { min-height:100svh; padding:24px; overflow:hidden; touch-action:pan-x; user-select:none; background:#aaa9ac; cursor:grab; }.wapp-envelope-opening::before { display:block; inset:0; border:0; background:url("../assets/wedding-silver-roses-v2.jpg") center/cover no-repeat; opacity:.72; }.wapp-envelope-opening::after { position:absolute; inset:0; background:rgba(226,226,228,.34); content:""; backdrop-filter:blur(2px); }.wapp-envelope-opening:active { cursor:grabbing; }
 .wapp-envelope-stage { position:relative; z-index:2; width:min(92vw,390px); height:480px; perspective:1100px; text-align:center; }
 .wapp-envelope { position:absolute; right:50%; bottom:115px; width:310px; height:195px; transform:translateX(50%); filter:drop-shadow(0 24px 28px rgba(45,45,50,.22)); transform-style:preserve-3d; }
 .wapp-envelope-back { position:absolute; inset:0; border:1px solid #c6c6ca; background:linear-gradient(150deg,#fafafa,#e7e7e9); }
@@ -153,5 +155,35 @@
 @media (max-width:430px){.wapp-hero{padding-right:12px;padding-left:12px}.wapp-utility-grid{padding-right:12px;padding-left:12px;gap:8px}}
 @media (min-width:431px){.wapp-hero{padding-right:20px;padding-left:20px}.wapp-utility-grid{padding-right:20px;padding-left:20px}}
 @keyframes wapp-name-shimmer { 0%{opacity:0;background-position:110% 0} 14%{opacity:.9} 78%{opacity:.9} 100%{opacity:0;background-position:-70% 0} }
+
+/* Crisp invitation typography without losing the soft editorial character. */
+.wapp-shell {
+  font-kerning:normal;
+  font-synthesis:none;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+.wapp-logo,
+.wapp-page-title,
+.wapp-section-head h1,
+.wapp-opening-date,
+.wapp-personal-cover h1,
+.wapp-inviter-name {
+  font-weight:600;
+}
+.wapp-personal-cover h1 { color:#4f5055; }
+.wapp-inviter-name { color:#4e4f54; }
+.wapp-personal-cover>p:not(.wapp-kicker),
+.wapp-invitation-message,
+.wapp-section-copy,
+.wapp-invite-program span,
+.wapp-location-summary p,
+.wapp-plan-pending p,
+.wapp-feature-pending p { color:#56575c; }
+.wapp-kicker,
+.wapp-countdown span,
+.wapp-date-detail b,
+.wapp-utility-grid b { font-weight:700; }
 .wapp-inviter-name { max-width:330px; color:#5c5d62; font-family:"Cormorant Garamond",Georgia,serif; font-size:clamp(1.65rem,7vw,2.45rem); font-style:italic; font-weight:500; line-height:1.05; text-wrap:balance; }
 .wapp-inviter-rule { display:block; width:1px; height:30px; margin:-7px auto 18px; background:linear-gradient(transparent,#8f9094,transparent); }

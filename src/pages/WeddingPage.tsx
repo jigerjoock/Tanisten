@@ -20,7 +20,7 @@ const copy = {
     monthYear: "август, 2026",
     open: "Чакырууну ачуу",
     days: "күн", hours: "саат", minutes: "мүнөт",
-    subtitleFamily: "Сизди үйлөнүү үлпөт тойго чакырабыз", subtitleCouple: "Сизди үйлөнүү үлпөт тоюбузга чакырабыз",
+    subtitleFamily: "Сизди үйлөнүү үлпөт тойго чакырабыз", subtitleCouple: "Сизди үйлөнүү үлпөт тоюма чакырам",
     remaining: "калды",
     responseNote: "Сиздин жообуңуз биз үчүн маанилүү",
     seating: "Отургузуу", guestBook: "Каалоо китеби", moments: "Тойдогу көз ирмемдер", gallery: "Сүрөттөр",
@@ -43,7 +43,7 @@ const copy = {
     monthYear: "август 2026",
     open: "Открыть приглашение",
     days: "дней", hours: "часов", minutes: "минут",
-    subtitleFamily: "Приглашаем Вас на свадебное торжество", subtitleCouple: "Приглашаем Вас на нашу свадьбу",
+    subtitleFamily: "Приглашаем Вас на свадебное торжество", subtitleCouple: "Приглашаю Вас на свою свадьбу",
     remaining: "осталось",
     responseNote: "Ваш ответ очень важен для нас",
     seating: "Рассадка", guestBook: "Книга пожеланий", moments: "Свадебные моменты", gallery: "Фотографии",
@@ -130,6 +130,15 @@ export default function WeddingPage() {
   }, [language]);
 
   useEffect(() => {
+    document.documentElement.classList.add("wedding-light-theme");
+    document.body.classList.add("wedding-light-theme");
+    return () => {
+      document.documentElement.classList.remove("wedding-light-theme");
+      document.body.classList.remove("wedding-light-theme");
+    };
+  }, []);
+
+  useEffect(() => {
     const manifest = document.createElement("link");
     manifest.rel = "manifest";
     manifest.href = `${import.meta.env.BASE_URL}wedding-manifest.webmanifest`;
@@ -166,24 +175,6 @@ export default function WeddingPage() {
     return () => window.clearTimeout(envelopeTimer);
   }, [envelopeOpening]);
 
-  useEffect(() => {
-    if (!opened) return;
-    const shell = document.querySelector<HTMLElement>(".wapp-shell");
-    if (!shell) return;
-    const moveRoses = (x: number, y: number) => {
-      shell.style.setProperty("--rose-x", `${Math.max(-9, Math.min(9, x))}px`);
-      shell.style.setProperty("--rose-y", `${Math.max(-7, Math.min(7, y))}px`);
-    };
-    const onPointerMove = (event: PointerEvent) => moveRoses((event.clientX / window.innerWidth - .5) * 14, (event.clientY / window.innerHeight - .5) * 10);
-    const onOrientation = (event: DeviceOrientationEvent) => moveRoses((event.gamma ?? 0) / 5, (event.beta ?? 0) / 8);
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    window.addEventListener("deviceorientation", onOrientation, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", onPointerMove);
-      window.removeEventListener("deviceorientation", onOrientation);
-    };
-  }, [opened]);
-
   const clockItems = useMemo(() => [[clock.days, t.days], [clock.hours, t.hours], [clock.minutes, t.minutes]], [clock, t]);
   const go = (next: Screen) => { setScreen(next); window.scrollTo({ top: 0, behavior: "smooth" }); };
   const playFinale = () => { setFinaleRun((current) => current + 1); setShowFinale(true); };
@@ -217,7 +208,7 @@ export default function WeddingPage() {
       <div className="wapp-shell">
         <Seo title="AIDAI ✿ Айжигит — үйлөнүү үлпөтү" description="25-август 2026 — биздин тойго кош келиңиз" />
         <audio ref={audioRef} src={weddingMusic} preload="auto" onEnded={() => setMusic(false)} />
-        <AnimatePresence>{showFinale && <motion.div className="wapp-finale" key={finaleRun} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, filter: "blur(8px)" }} transition={{ duration: .55 }}><img src={`${weddingFinale}?play=${finaleRun}`} alt="Айжигит жана Айдай" /><div className="wapp-finale-message">Сизди күтөбүз</div><div className="wapp-finale-indicator" aria-label="Page 5 of 5"><i /><i /><i /><i /><i className="active" /></div></motion.div>}</AnimatePresence>
+        <AnimatePresence>{showFinale && <motion.div className="wapp-finale" key={finaleRun} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, filter: "blur(8px)" }} transition={{ duration: .55 }}><img src={`${weddingFinale}?play=${finaleRun}`} alt="Айжигит жана Айдай" /><div className="wapp-finale-message">Сизди күтөбүз <span>😊</span></div><div className="wapp-finale-indicator" aria-label="Page 5 of 5"><i /><i /><i /><i /><i className="active" /></div></motion.div>}</AnimatePresence>
         <AnimatePresence mode="wait">
         {!opened ? (
           <motion.section className={`wapp-opening wapp-envelope-opening ${envelopeOpening ? "opening" : ""}`} key="opening" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, filter: "blur(7px)" }} transition={{ duration: .65 }} onPointerDown={(event) => setPointerStart(event.clientY)} onPointerUp={(event) => { if (pointerStart !== null && pointerStart - event.clientY > 38) openEnvelope(); setPointerStart(null); }}>
