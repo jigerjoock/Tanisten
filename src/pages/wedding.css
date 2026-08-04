@@ -84,15 +84,6 @@ html.wedding-light-theme,body.wedding-light-theme { color-scheme:only light; bac
 .wapp-page-arrow { display:grid; width:46px; height:40px; padding:8px; border:0; background:transparent; cursor:pointer; place-items:center; transition:.25s ease; }.wapp-page-arrow.up { grid-column:1; }.wapp-page-arrow.down { grid-column:3; }.wapp-page-arrow svg { width:25px; height:25px; overflow:visible; fill:#77787d; stroke:rgba(255,255,255,.7); stroke-linejoin:round; stroke-width:.45; filter:drop-shadow(0 3px 4px rgba(50,50,55,.18)); transition:fill .25s,transform .3s cubic-bezier(.22,1,.36,1); }.wapp-page-arrow.down svg { transform:rotate(180deg); }.wapp-page-arrow:hover svg { fill:#55565b; }.wapp-page-arrow.up:hover { transform:translateY(-2px); }.wapp-page-arrow.down:hover { transform:translateY(2px); }.wapp-page-arrow.up:hover svg { transform:scale(1.08); }.wapp-page-arrow.down:hover svg { transform:rotate(180deg) scale(1.08); }
 @media (max-width:430px){.wapp-invitation{min-height:570px}.wapp-invite-page{justify-content:center}.wapp-rsvp-page>div{grid-template-columns:1fr}.wapp-rsvp-page>div button{min-height:44px}.wapp-page-title{font-size:2.55rem}}
 
-.wapp-gif-opening { padding:0; background:#eee8e2; cursor:pointer; }
-.wapp-gif-opening::before { display:none; }
-.wapp-gif-frame { position:relative; display:grid; width:100%; min-height:100svh; place-items:center; overflow:hidden; isolation:isolate; background:#eee8e2; }
-.wapp-gif-frame::before { position:absolute; z-index:-1; inset:-36px; background:url("../assets/wedding-finale.gif") center/cover no-repeat; content:""; filter:blur(28px) saturate(.72); opacity:.52; transform:scale(1.08); }
-.wapp-gif-frame::after { position:absolute; z-index:-1; inset:0; background:rgba(244,239,235,.26); content:""; }
-.wapp-gif-frame img { display:block; width:100%; height:100svh; object-fit:contain; object-position:center; filter:drop-shadow(0 18px 50px rgba(55,48,44,.14)); }
-.wapp-gif-frame button { position:absolute; right:50%; bottom:max(24px,env(safe-area-inset-bottom)); display:grid; width:42px; height:34px; padding:0; border:0; background:rgba(255,255,255,.55); color:#54545a; cursor:pointer; font-family:Georgia,serif; font-size:1.55rem; transform:translateX(50%); place-items:center; backdrop-filter:blur(8px); }
-@media (min-width:760px){.wapp-gif-frame img{width:min(100%,760px)}}
-
 .wapp-logo.shimmer,.wapp-logo.shimmer span { color:transparent; background:linear-gradient(105deg,#505055 20%,#7f8085 38%,#f8f8fa 49%,#9b9ca1 57%,#505055 76%); background-size:260% 100%; background-position:110% 0; -webkit-background-clip:text; background-clip:text; animation:wapp-silver-shimmer 2.8s .65s cubic-bezier(.3,.7,.3,1) 1 both; }
 .wapp-date-detail { gap:3px!important; }
 .wapp-date-detail>.wapp-date-shimmer { position:relative; display:inline-block; flex:0 0 72px; width:72px; padding:7px 8px 9px 2px; margin:-7px -2px -9px -2px; overflow:visible; color:#77787c; line-height:1.08; white-space:nowrap; }
@@ -110,15 +101,6 @@ html.wedding-light-theme,body.wedding-light-theme { color-scheme:only light; bac
 .wapp-whatsapp { width:15px; height:15px; fill:none; stroke:currentColor; stroke-linecap:round; stroke-linejoin:round; stroke-width:1.4; }.wapp-whatsapp path+path { fill:currentColor; stroke:none; }
 .wapp-invite-actions a,.wapp-actions a { display:inline-flex; align-items:center; justify-content:center; gap:7px; text-decoration:none; }
 .wapp-response-mark { display:grid; width:54px; height:54px; margin:0 auto 18px; border:1px solid #c4c4c8; border-radius:50%; background:#f7f7f8; color:#fff; font-family:Georgia,serif; font-size:2.7rem; text-shadow:0 2px 4px rgba(70,70,75,.24); box-shadow:0 10px 28px rgba(60,60,65,.1); place-items:center; }
-.wapp-finale { position:fixed; z-index:100; inset:0; display:grid; overflow:hidden; background:#eee8e2; place-items:center; isolation:isolate; }
-.wapp-finale::before { position:absolute; z-index:-2; inset:-40px; background:url("../assets/wedding-finale.gif") center/cover no-repeat; content:""; filter:blur(30px) saturate(.72); opacity:.58; transform:scale(1.1); }
-.wapp-finale::after { position:absolute; z-index:-1; inset:0; background:rgba(244,239,235,.2); content:""; }
-.wapp-finale img { display:block; width:100%; height:100svh; object-fit:contain; object-position:center; filter:drop-shadow(0 20px 55px rgba(50,44,40,.18)); }
-.wapp-finale-message { position:absolute; top:50%; right:20px; left:20px; color:#6d6e73; font-family:"Cormorant Garamond",Georgia,serif; font-size:clamp(3.2rem,16vw,6.2rem); font-style:italic; font-weight:500; letter-spacing:.015em; line-height:1; text-align:center; text-shadow:0 1px 0 #fff,0 10px 28px rgba(55,55,60,.16); opacity:0; transform:translateY(calc(-50% + 12px)) scale(.96); animation:wapp-finale-message .42s 5.05s cubic-bezier(.22,1,.36,1) forwards; }
-.wapp-finale-message span { display:inline-block; margin-left:.08em; font-family:"Segoe UI Emoji","Apple Color Emoji",sans-serif; font-size:.42em; font-style:normal; vertical-align:.2em; filter:drop-shadow(0 3px 7px rgba(55,55,60,.12)); }
-@keyframes wapp-finale-message { to{opacity:1;transform:translateY(-50%) scale(1)} }
-.wapp-finale-indicator { position:absolute; right:50%; bottom:max(22px,env(safe-area-inset-bottom)); display:flex; gap:7px; padding:10px 13px; border-radius:999px; background:rgba(248,245,242,.58); transform:translateX(50%); backdrop-filter:blur(10px); }.wapp-finale-indicator i { width:5px; height:5px; border-radius:50%; background:rgba(95,95,100,.32); }.wapp-finale-indicator i.active { width:16px; border-radius:99px; background:#696a6e; }
-@media (min-width:760px){.wapp-finale img{width:min(100%,900px)}}
 .wapp-guest-place { margin:-15px 0 22px; color:#77787c; font-size:.62rem; font-weight:800; letter-spacing:.18em; text-align:center; text-transform:uppercase; }
 .wapp-plan-card { max-width:480px; margin:0 auto; overflow:hidden; border:1px solid #bdbdc1; background:rgba(253,253,253,.96); box-shadow:0 18px 48px rgba(50,50,55,.12); }.wapp-plan-card>header { display:flex; align-items:center; justify-content:center; gap:9px; padding:18px; border-bottom:1px solid #d2d2d5; }.wapp-plan-card>header span { color:#85868a; font-family:Georgia,serif; font-size:1.35rem; }.wapp-plan-card h2 { margin:0; font-family:"Cormorant Garamond",serif; font-size:1.7rem; font-weight:500; }
 .wapp-plan-preview { position:relative; height:250px; overflow:hidden; background:repeating-linear-gradient(0deg,transparent 0 31px,rgba(125,125,130,.055) 32px),repeating-linear-gradient(90deg,transparent 0 31px,rgba(125,125,130,.055) 32px),#f3f3f4; filter:grayscale(1); }.wapp-plan-preview::after { position:absolute; inset:0; background:rgba(250,250,251,.38); content:""; backdrop-filter:blur(2px); }.wapp-plan-preview .table { position:absolute; width:76px; height:76px; border:1px solid #aaaab0; border-radius:50%; background:#fafafa; box-shadow:0 0 0 9px rgba(165,165,170,.14); }.wapp-plan-preview .one{top:30px;left:12%}.wapp-plan-preview .two{top:48px;right:13%}.wapp-plan-preview .three{right:36%;bottom:22px}.wapp-plan-preview .chair { position:absolute; z-index:2; right:23%; bottom:46px; display:grid; width:30px; height:30px; border:1px dashed #85868a; border-radius:50%; background:white; color:#77787c; font-style:normal; place-items:center; }
@@ -185,5 +167,45 @@ html.wedding-light-theme,body.wedding-light-theme { color-scheme:only light; bac
 .wapp-countdown span,
 .wapp-date-detail b,
 .wapp-utility-grid b { font-weight:700; }
+
+/* One continuous invitation: no cards, arrows or page switching. */
+.wapp-invite-flow { display:block; min-height:0; padding-top:0; padding-bottom:0; }
+.wapp-invite-section { display:flex; min-height:78svh; padding:52px 0; border-bottom:1px solid #d0cdd0; flex-direction:column; justify-content:center; }
+.wapp-invite-section:last-child { border-bottom:0; }
+.wapp-invite-section.wapp-personal-cover { min-height:calc(100svh - 112px); }
+.wapp-invite-section .wapp-rsvp-page { flex:none; min-height:0; }
+@media (max-width:430px){
+  .wapp-invite-flow { padding-right:18px; padding-left:18px; }
+  .wapp-invite-section { min-height:82svh; padding:48px 0; }
+}
+
+/* The invitation letter is revealed first; practical details unlock afterwards. */
+.wapp-letter-hero { padding-top:18px; }
+.wapp-letter-sheet { position:relative; display:block; min-height:0; padding:0 48px; overflow:hidden; overflow-anchor:none; }
+.wapp-letter-opening { display:flex; min-height:calc(100svh - 112px); padding:50px 0 24px; flex-direction:column; align-items:center; justify-content:center; transition:min-height 1.05s cubic-bezier(.22,1,.36,1); }
+.wapp-letter-sheet.revealed .wapp-letter-opening { min-height:38svh; }
+.wapp-letter-title { margin:0; color:transparent; background:linear-gradient(105deg,#55565b 18%,#8f9095 37%,#fff 49%,#9c9da2 59%,#55565b 78%); background-size:270% 100%; background-position:110% 0; -webkit-background-clip:text; background-clip:text; font-family:"Cormorant Garamond",Georgia,serif; font-size:clamp(3.7rem,16vw,6.4rem); font-style:italic; font-weight:600; letter-spacing:-.04em; line-height:1.08; animation:wapp-silver-shimmer 3.2s .35s cubic-bezier(.3,.7,.3,1) 1 both; }
+.wapp-letter-copy { display:flex; min-height:58svh; padding:6px 8px 92px; align-items:flex-start; justify-content:center; opacity:0; transform:translateY(22px); transition:opacity .9s .18s ease,transform 1.05s .18s cubic-bezier(.22,1,.36,1); }
+.wapp-letter-sheet.revealed .wapp-letter-copy { opacity:1; transform:translateY(0); }
+.wapp-letter-copy p { width:min(100%,430px); margin:0; color:#4c4b50; font-family:"Cormorant Garamond",Georgia,serif; font-size:clamp(1.62rem,6.8vw,2.3rem); font-style:italic; font-weight:500; letter-spacing:.012em; line-height:1.5; text-align:center; text-wrap:balance; white-space:pre-line; }
+.wapp-details-feed { overflow-anchor:none; }
+.wapp-feed-divider { display:flex; min-height:150px; flex-direction:column; align-items:center; justify-content:center; gap:12px; color:#5f6065; text-align:center; }
+.wapp-feed-divider::before,.wapp-feed-divider::after { width:min(62vw,260px); height:1px; background:linear-gradient(90deg,transparent,#aaa8ab,transparent); content:""; }
+.wapp-feed-divider span { color:#969499; font-size:1.2rem; }
+.wapp-feed-divider p { margin:0; font-family:"Cormorant Garamond",Georgia,serif; font-size:1.25rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; }
+@media (max-width:430px){
+  .wapp-letter-sheet { padding-right:42px; padding-left:42px; }
+  .wapp-letter-copy { min-height:62svh; padding-right:2px; padding-left:2px; }
+}
+
+.wapp-silver-ornaments { position:absolute; z-index:1; inset:14px; overflow:hidden; pointer-events:none; }
+.wapp-silver-ornaments::before { position:absolute; inset:7px; border:1px solid rgba(150,149,154,.42); content:""; }
+.wapp-silver-ornaments svg { position:absolute; width:66px; height:66px; fill:none; stroke:#aaa9ae; stroke-linecap:square; stroke-linejoin:round; stroke-width:.72; filter:drop-shadow(0 1px 0 #fff); }
+.wapp-silver-ornaments svg .gem { fill:#b4b3b8; stroke:#f7f7f8; stroke-width:.9; }
+.wapp-silver-ornaments .tl { top:5px; left:5px; }.wapp-silver-ornaments .tr { top:5px; right:5px; transform:rotate(90deg); }.wapp-silver-ornaments .br { right:5px; bottom:5px; transform:rotate(180deg); }.wapp-silver-ornaments .bl { bottom:5px; left:5px; transform:rotate(270deg); }
+.wapp-letter-sheet>section,.wapp-invite-flow>.wapp-invite-section { position:relative; z-index:2; }
+.wapp-invite-flow { padding-right:42px; padding-left:42px; }
+.wapp-invite-flow>.wapp-invite-section { padding-right:8px; padding-left:8px; }
+.wapp-invite-flow>.wapp-invite-section:last-child { padding-bottom:86px; }
 .wapp-inviter-name { max-width:330px; color:#5c5d62; font-family:"Cormorant Garamond",Georgia,serif; font-size:clamp(1.65rem,7vw,2.45rem); font-style:italic; font-weight:500; line-height:1.05; text-wrap:balance; }
 .wapp-inviter-rule { display:block; width:1px; height:30px; margin:-7px auto 18px; background:linear-gradient(transparent,#8f9094,transparent); }

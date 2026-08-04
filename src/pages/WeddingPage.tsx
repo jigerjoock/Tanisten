@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import weddingFinale from "../assets/wedding-finale.gif";
 import weddingMusic from "../assets/wedding-music.mp3";
 import Seo from "../components/seo/Seo";
 import { findWeddingGuest, findWeddingInviter } from "../data/weddingGuests";
@@ -86,19 +85,17 @@ function WhatsAppIcon() {
   return <svg className="wapp-whatsapp" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3.5 20.5l1.3-4.4a8.4 8.4 0 1 1 15.7-4.3Z" /><path d="M8.2 7.5c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.8 2c.1.3 0 .5-.2.7l-.6.7c-.2.2-.1.4 0 .6.7 1.2 1.6 2.1 2.8 2.7.2.1.4.1.6-.1l.8-1c.2-.2.4-.3.7-.2l1.9.9c.3.1.4.3.4.5 0 .4-.2 1.4-.8 2-.5.5-1.3.8-2.2.6-1.1-.2-2.7-.8-4.4-2.3-2-1.8-3.2-4-3.5-5.1-.3-.9 0-1.5.1-1.8Z" /></svg>;
 }
 
+function SilverOrnaments() {
+  return <div className="wapp-silver-ornaments" aria-hidden="true">{["tl", "tr", "br", "bl"].map((corner) => <svg className={corner} key={corner} viewBox="0 0 86 86"><path d="M4 82V29C4 15 15 4 29 4H82" /><path d="M11 82V33C11 21 21 11 33 11H82" /><path d="M19 64V38C19 27 27 19 38 19H64" /><path d="M4 49c25 0 45-20 45-45M11 59c27 0 48-21 48-48" /><path className="gem" d="m19 12 7 7-7 7-7-7 7-7Z" /></svg>)}</div>;
+}
+
 function countdown() {
   const ms = Math.max(0, weddingDate.getTime() - Date.now());
   return { days: Math.floor(ms / 86400000), hours: Math.floor(ms / 3600000) % 24, minutes: Math.floor(ms / 60000) % 60 };
 }
 
 export default function WeddingPage() {
-  const [opened, setOpened] = useState(false);
-  const [envelopeOpening, setEnvelopeOpening] = useState(false);
-  const [pointerStart, setPointerStart] = useState<number | null>(null);
   const [screen, setScreen] = useState<Screen>("home");
-  const [invitePage, setInvitePage] = useState(0);
-  const [showFinale, setShowFinale] = useState(false);
-  const [finaleRun, setFinaleRun] = useState(0);
   const [language, setLanguage] = useState<Language>("ky");
   const [clock, setClock] = useState(countdown);
   const [music, setMusic] = useState(false);
@@ -106,6 +103,8 @@ export default function WeddingPage() {
   const [confirmed, setConfirmed] = useState(false);
   const [wishSent, setWishSent] = useState(false);
   const [uploads, setUploads] = useState<string[]>([]);
+  const [invitationVisible, setInvitationVisible] = useState(false);
+  const [invitationReady, setInvitationReady] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const gainRef = useRef<GainNode | null>(null);
@@ -118,10 +117,20 @@ export default function WeddingPage() {
     return params.get("guest") ?? params.get("name");
   }, []);
   const guestRecord = useMemo(() => findWeddingGuest(guestParameter), [guestParameter]);
+  const isGroupInvitation = guestParameter?.trim().toLocaleLowerCase() === "guest";
   const guestName = guestRecord?.name ?? guestParameter?.trim().slice(0, 80) ?? t.guestFallback;
   const inviterName = findWeddingInviter(guestRecord?.inviterId)?.name || findWeddingInviter(1)?.name || "Асанбай Табанович";
   const greeting = language === "ky" ? t.greetingUnknown : guestRecord?.gender === "female" ? t.greetingFemale : guestRecord?.gender === "male" ? t.greetingMale : t.greetingUnknown;
   const invitationText = guestRecord && guestRecord.inviterId >= 3 ? t.subtitleCouple : t.subtitleFamily;
+  const invitationLetter = useMemo(() => {
+    if (isGroupInvitation) {
+      return language === "ky"
+        ? "Урматтуу биздин ардактуу конокторубуз!\n\nСиздерди Айжигит & Айдай үйлөнүү үлпөт тоюна чакырабыз!"
+        : "Дорогие наши почётные гости!\n\nПриглашаем вас на свадьбу Айжигита и Айдай!";
+    }
+    const salutation = `${greeting} ${guestName}!`;
+    return `${salutation}\n\n${invitationText}\n\n${inviterName}`;
+  }, [greeting, guestName, invitationText, inviterName, isGroupInvitation, language]);
 
   useEffect(() => {
     const previous = document.documentElement.lang;
@@ -160,24 +169,8 @@ export default function WeddingPage() {
     return () => window.clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    if (!showFinale) return;
-    const finaleTimer = window.setTimeout(() => {
-      setShowFinale(false);
-      setInvitePage(0);
-    }, 6_150);
-    return () => window.clearTimeout(finaleTimer);
-  }, [showFinale]);
-
-  useEffect(() => {
-    if (!envelopeOpening) return;
-    const envelopeTimer = window.setTimeout(() => setOpened(true), 1_900);
-    return () => window.clearTimeout(envelopeTimer);
-  }, [envelopeOpening]);
-
   const clockItems = useMemo(() => [[clock.days, t.days], [clock.hours, t.hours], [clock.minutes, t.minutes]], [clock, t]);
   const go = (next: Screen) => { setScreen(next); window.scrollTo({ top: 0, behavior: "smooth" }); };
-  const playFinale = () => { setFinaleRun((current) => current + 1); setShowFinale(true); };
   const playMusic = () => {
     const audio = audioRef.current;
     if (!audio || audio.ended) return;
@@ -198,30 +191,69 @@ export default function WeddingPage() {
     if (!audio) return;
     if (audio.paused) playMusic(); else { audio.pause(); setMusic(false); }
   };
-  const openEnvelope = () => { if (envelopeOpening) return; playMusic(); setEnvelopeOpening(true); };
   const onUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files ?? []);
     setUploads((current) => [...current, ...files.map((file) => URL.createObjectURL(file))]);
   };
 
+  useEffect(() => {
+    const timer = window.setTimeout(playMusic, 180);
+    const retry = () => playMusic();
+    window.addEventListener("pointerdown", retry, { once: true, passive: true });
+    window.addEventListener("keydown", retry, { once: true });
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("pointerdown", retry);
+      window.removeEventListener("keydown", retry);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (screen !== "home") return;
+    setInvitationVisible(false);
+    setInvitationReady(false);
+    window.scrollTo({ top: 0 });
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) {
+      const reveal = window.setTimeout(() => {
+        setInvitationVisible(true);
+        setInvitationReady(true);
+      }, 500);
+      return () => window.clearTimeout(reveal);
+    }
+    let scrollFrame = 0;
+    const revealTimer = window.setTimeout(() => setInvitationVisible(true), 2_000);
+    const readyTimer = window.setTimeout(() => {
+      setInvitationReady(true);
+      window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+        const details = document.getElementById("wedding-primary-details");
+        if (!details) return;
+        const start = window.scrollY;
+        const target = Math.max(0, start + details.getBoundingClientRect().top - (window.innerHeight - 145));
+        const distance = target - start;
+        const startedAt = performance.now();
+        const duration = 12_000;
+        const move = (now: number) => {
+          const progress = Math.min(1, (now - startedAt) / duration);
+          const eased = .5 - Math.cos(Math.PI * progress) / 2;
+          window.scrollTo(0, start + distance * eased);
+          if (progress < 1) scrollFrame = window.requestAnimationFrame(move);
+        };
+        scrollFrame = window.requestAnimationFrame(move);
+      }));
+    }, 3_450);
+    return () => {
+      window.clearTimeout(revealTimer);
+      window.clearTimeout(readyTimer);
+      window.cancelAnimationFrame(scrollFrame);
+    };
+  }, [invitationLetter, screen]);
+
   return (
       <div className="wapp-shell">
         <Seo title="AIDAI ✿ Айжигит — үйлөнүү үлпөтү" description="25-август 2026 — биздин тойго кош келиңиз" />
         <audio ref={audioRef} src={weddingMusic} preload="auto" onEnded={() => setMusic(false)} />
-        <AnimatePresence>{showFinale && <motion.div className="wapp-finale" key={finaleRun} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, filter: "blur(8px)" }} transition={{ duration: .55 }}><img src={`${weddingFinale}?play=${finaleRun}`} alt="Айжигит жана Айдай" /><div className="wapp-finale-message">Сизди күтөбүз <span>😊</span></div><div className="wapp-finale-indicator" aria-label="Page 5 of 5"><i /><i /><i /><i /><i className="active" /></div></motion.div>}</AnimatePresence>
-        <AnimatePresence mode="wait">
-        {!opened ? (
-          <motion.section className={`wapp-opening wapp-envelope-opening ${envelopeOpening ? "opening" : ""}`} key="opening" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, filter: "blur(7px)" }} transition={{ duration: .65 }} onPointerDown={(event) => setPointerStart(event.clientY)} onPointerUp={(event) => { if (pointerStart !== null && pointerStart - event.clientY > 38) openEnvelope(); setPointerStart(null); }}>
-            <div className="wapp-envelope-petals" aria-hidden="true">{Array.from({ length: 5 }, (_, index) => <i key={index} />)}</div>
-            <motion.div className="wapp-envelope-stage" initial={{ opacity: 0, scale: .96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .8 }}>
-              <div className="wapp-envelope-card"><p>Чакыруу</p><Logo /></div>
-              <div className="wapp-envelope"><div className="wapp-envelope-back" /><div className="wapp-envelope-letter" /><div className="wapp-envelope-front" /><div className="wapp-envelope-flap" /><button className="wapp-wax-seal" onClick={openEnvelope} aria-label={t.open}><b>AIDAI</b><span>✿</span><b>Айжигит</b></button></div>
-              <p className="wapp-envelope-message">Ваше приглашение ждёт вас</p>
-              <div className="wapp-swipe-hint"><svg viewBox="0 0 28 16" aria-hidden="true"><path d="M2 14 14 2l12 12" /></svg><span>Проведите вверх</span></div>
-            </motion.div>
-          </motion.section>
-        ) : (
-          <motion.div className="wapp-app" key="app" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+          <div className="wapp-app">
             <div className="wapp-petals" aria-hidden="true">{Array.from({ length: 9 }, (_, index) => <i key={index} />)}</div>
               <header className="wapp-header"><button onClick={() => go("home")} aria-label={t.home}><Logo compact original /></button><div className="wapp-header-actions"><button className={screen === "home" ? "active" : ""} onClick={() => go("home")} aria-label={t.home}>⌂</button><button className={music ? "active" : ""} onClick={toggleMusic} aria-label={t.music}>{music ? "♪" : "♩"}</button><button onClick={() => setLanguage((value) => value === "ky" ? "ru" : "ky")} aria-label={t.language}>{language === "ky" ? "RU" : "КЫР"}</button></div></header>
             <AnimatePresence mode="wait">
@@ -229,31 +261,26 @@ export default function WeddingPage() {
                 {screen === "home" ? Home() : Section()}
               </motion.main>
             </AnimatePresence>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
     </div>
   );
 
   function Home() {
     return <>
-      <section className="wapp-hero"><BotanicalCorners /><div className="wapp-roses" aria-hidden="true"><span>❀</span><span>❁</span><span>❀</span><span>❁</span></div><motion.div className="wapp-invitation" initial={{ scale: .97, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: .7 }}>
-        <AnimatePresence mode="wait">
-          <motion.div className="wapp-invite-page" key={invitePage} initial={{ opacity: 0, scale: .99, rotateX: -2, filter: "blur(7px)" }} animate={{ opacity: 1, scale: 1, rotateX: 0, filter: "blur(0px)" }} exit={{ opacity: 0, scale: .995, rotateX: 2, filter: "blur(5px)" }} transition={{ duration: .55, ease: [0.22, 1, 0.36, 1] }}>
-            {invitePage === 0 && <div className="wapp-personal-cover"><p className="wapp-kicker">{greeting}</p><h1 data-text={guestName}>{guestName}</h1><span className="wapp-invitation-rule" /><p>{invitationText}</p><span className="wapp-inviter-rule" /><div className="wapp-inviter-name">{inviterName}</div></div>}
-            {invitePage === 1 && <><p className="wapp-kicker">25 · 08 · 2026</p><Logo shimmer /><span className="wapp-invitation-rule" /><p className="wapp-invitation-message">{t.welcome}</p><div className="wapp-invitation-details"><div className="wapp-date-detail"><span className="wapp-date-shimmer" data-text="25">25</span><p>{t.monthYear}<b>17:00</b></p></div><i /><p><b>{venue}</b><span>{address}</span></p></div><div className="wapp-countdown"><p className="wapp-countdown-label">{t.remaining}</p>{clockItems.map(([value, label]) => <div key={String(label)}><strong>{String(value).padStart(2, "0")}</strong><span>{label}</span></div>)}</div></>}
-            {invitePage === 2 && <><p className="wapp-kicker">25 · 08 · 2026</p><h2 className="wapp-page-title">{t.programTitle}</h2><span className="wapp-invitation-rule" /><div className="wapp-invite-program">{timeline.map(([time, name]) => <div key={time}><time>{time}</time><span>{name}</span></div>)}</div><div className="wapp-location-summary"><span>⌖</span><div><b>{venue}</b><p>{address}</p></div></div><div className="wapp-invite-actions"><a href="https://yandex.com/maps/?text=Palazzo%20Bishkek" target="_blank" rel="noreferrer">{t.map} →</a><a href="https://wa.me/996000000000" target="_blank" rel="noreferrer"><WhatsAppIcon />{t.call}</a></div></>}
-            {invitePage === 3 && <><div className="wapp-response-mark">❀</div><p className="wapp-kicker">{t.responseNote}</p><h2 className="wapp-page-title">{t.rsvpTitle}</h2><span className="wapp-invitation-rule" /><div className="wapp-inline-rsvp wapp-rsvp-page">{!confirmed ? <><div>{[["yes", t.yes], ["no", t.no], ["transport", t.transport]].map(([value, label]) => <button className={rsvp === value ? "active" : ""} onClick={() => setRsvp(value)} key={value}>{label}</button>)}</div><button className="wapp-rsvp-confirm" onClick={() => setConfirmed(true)}>{t.confirm}</button></> : <motion.div className="wapp-rsvp-bloom" initial={{ opacity: 0 }} animate={{ opacity: 1 }}><motion.span initial={{ scale: 0, rotate: -35 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: "spring", stiffness: 120, damping: 11 }}>❀</motion.span><motion.strong initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .55 }}>✓ {t.success}</motion.strong></motion.div>}</div><Logo compact original /></>}
-          </motion.div>
-        </AnimatePresence>
-        <nav className="wapp-page-nav" aria-label="Invitation pages">
-          <button className="wapp-page-arrow up" onClick={() => invitePage === 0 ? playFinale() : setInvitePage((current) => current - 1)} aria-label="Previous page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 22 20l-10-6-10 6L12 2Z" /></svg></button>
-          <div className="wapp-page-dots">{[0, 1, 2, 3].map((page) => <button key={page} className={invitePage === page ? "active" : ""} onClick={() => setInvitePage(page)} aria-label={`${page + 1}`} />)}<button onClick={playFinale} aria-label="5" /></div>
-          <button className="wapp-page-arrow down" onClick={() => invitePage === 3 ? playFinale() : setInvitePage((current) => current + 1)} aria-label="Next page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 22 20l-10-6-10 6L12 2Z" /></svg></button>
-        </nav>
-      </motion.div></section>
-      <section className="wapp-utility-grid">{utilityScreens.map((target, index) => { const cardIndex = utilityCardIndexes[index]; return <button key={target} onClick={() => go(target)}><span>{icons[cardIndex]}</span><b>{t.cards[cardIndex]}</b></button>; })}</section>
-      <p className="wapp-signoff">25 · 08 · 2026<br /><Logo compact original /></p>
+      <section className="wapp-hero wapp-letter-hero"><BotanicalCorners /><div className={`wapp-invitation wapp-letter-sheet ${invitationVisible ? "revealed" : ""}`}><SilverOrnaments />
+        <section className="wapp-letter-opening"><h1 className="wapp-letter-title">{language === "ky" ? "Чакыруу" : "Приглашение"}</h1><span className="wapp-invitation-rule" /></section>
+        <section className="wapp-letter-copy"><p>{invitationLetter}</p></section>
+      </div></section>
+      {invitationReady && <motion.div className="wapp-details-feed" id="wedding-details" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8 }}>
+        <header className="wapp-feed-divider"><span>✦</span><p>{language === "ky" ? "Той тууралуу маалымат" : "Информация о торжестве"}</p></header>
+        <section className="wapp-hero"><div className="wapp-invitation wapp-invite-flow"><SilverOrnaments />
+          <section className="wapp-invite-section" id="wedding-primary-details"><p className="wapp-kicker">25 · 08 · 2026</p><Logo shimmer /><span className="wapp-invitation-rule" /><p className="wapp-invitation-message">{t.welcome}</p><div className="wapp-invitation-details"><div className="wapp-date-detail"><span className="wapp-date-shimmer" data-text="25">25</span><p>{t.monthYear}<b>17:00</b></p></div><i /><p><b>{venue}</b><span>{address}</span></p></div><div className="wapp-countdown"><p className="wapp-countdown-label">{t.remaining}</p>{clockItems.map(([value, label]) => <div key={String(label)}><strong>{String(value).padStart(2, "0")}</strong><span>{label}</span></div>)}</div></section>
+          <section className="wapp-invite-section"><p className="wapp-kicker">25 · 08 · 2026</p><h2 className="wapp-page-title">{t.programTitle}</h2><span className="wapp-invitation-rule" /><div className="wapp-invite-program">{timeline.map(([time, name]) => <div key={time}><time>{time}</time><span>{name}</span></div>)}</div><div className="wapp-location-summary"><span>⌖</span><div><b>{venue}</b><p>{address}</p></div></div><div className="wapp-invite-actions"><a href="https://yandex.com/maps/?text=Palazzo%20Bishkek" target="_blank" rel="noreferrer">{t.map} →</a><a href="https://wa.me/996000000000" target="_blank" rel="noreferrer"><WhatsAppIcon />{t.call}</a></div></section>
+          <section className="wapp-invite-section"><div className="wapp-response-mark">❀</div><p className="wapp-kicker">{t.responseNote}</p><h2 className="wapp-page-title">{t.rsvpTitle}</h2><span className="wapp-invitation-rule" /><div className="wapp-inline-rsvp wapp-rsvp-page">{!confirmed ? <><div>{[["yes", t.yes], ["no", t.no], ["transport", t.transport]].map(([value, label]) => <button className={rsvp === value ? "active" : ""} onClick={() => setRsvp(value)} key={value}>{label}</button>)}</div><button className="wapp-rsvp-confirm" onClick={() => setConfirmed(true)}>{t.confirm}</button></> : <motion.div className="wapp-rsvp-bloom" initial={{ opacity: 0 }} animate={{ opacity: 1 }}><motion.span initial={{ scale: 0, rotate: -35 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: "spring", stiffness: 120, damping: 11 }}>❀</motion.span><motion.strong initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .55 }}>✓ {t.success}</motion.strong></motion.div>}</div><Logo compact original /></section>
+        </div></section>
+        <section className="wapp-utility-grid">{utilityScreens.map((target, index) => { const cardIndex = utilityCardIndexes[index]; return <button key={target} onClick={() => go(target)}><span>{icons[cardIndex]}</span><b>{t.cards[cardIndex]}</b></button>; })}</section>
+        <p className="wapp-signoff">25 · 08 · 2026<br /><Logo compact original /></p>
+      </motion.div>}
     </>;
   }
 
