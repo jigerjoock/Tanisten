@@ -207,5 +207,7 @@ html.wedding-light-theme,body.wedding-light-theme { color-scheme:only light; bac
 .wapp-invite-flow { padding-right:42px; padding-left:42px; }
 .wapp-invite-flow>.wapp-invite-section { padding-right:8px; padding-left:8px; }
 .wapp-invite-flow>.wapp-invite-section:last-child { padding-bottom:86px; }
+.wapp-organizer-link { display:inline-flex; align-items:center; justify-content:center; gap:10px; width:min(100%,290px); min-height:52px; margin:4px auto 28px; padding:12px 18px; border:1px solid #aaa9ae; background:linear-gradient(180deg,#fbfbfc,#eeeeef); color:#4f5055; font-size:.7rem; font-weight:700; letter-spacing:.08em; text-decoration:none; box-shadow:0 10px 25px rgba(55,55,60,.08); }
+.wapp-organizer-link .wapp-whatsapp { width:19px; height:19px; }
 .wapp-inviter-name { max-width:330px; color:#5c5d62; font-family:"Cormorant Garamond",Georgia,serif; font-size:clamp(1.65rem,7vw,2.45rem); font-style:italic; font-weight:500; line-height:1.05; text-wrap:balance; }
 .wapp-inviter-rule { display:block; width:1px; height:30px; margin:-7px auto 18px; background:linear-gradient(transparent,#8f9094,transparent); }

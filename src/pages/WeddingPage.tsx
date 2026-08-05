@@ -14,7 +14,7 @@ const addresses = { ky: "Бишкек ш., Сухэ-Батор көчөсү, 3/2
 
 const copy = {
   ky: {
-    welcome: "Салтанатта чогуу болуңуз",
+    welcome: "Салтанатта чоогу болуңуз",
     date: "25-август, 2026",
     monthYear: "август, 2026",
     open: "Чакырууну ачуу",
@@ -222,6 +222,16 @@ export default function WeddingPage() {
       return () => window.clearTimeout(reveal);
     }
     let scrollFrame = 0;
+    let autoScrolling = false;
+    const stopAutoScroll = () => {
+      if (!autoScrolling) return;
+      autoScrolling = false;
+      window.cancelAnimationFrame(scrollFrame);
+    };
+    window.addEventListener("pointerdown", stopAutoScroll, { passive: true });
+    window.addEventListener("touchstart", stopAutoScroll, { passive: true });
+    window.addEventListener("wheel", stopAutoScroll, { passive: true });
+    window.addEventListener("keydown", stopAutoScroll);
     const revealTimer = window.setTimeout(() => setInvitationVisible(true), 2_000);
     const readyTimer = window.setTimeout(() => {
       setInvitationReady(true);
@@ -233,11 +243,14 @@ export default function WeddingPage() {
         const distance = target - start;
         const startedAt = performance.now();
         const duration = 12_000;
+        autoScrolling = true;
         const move = (now: number) => {
+          if (!autoScrolling) return;
           const progress = Math.min(1, (now - startedAt) / duration);
           const eased = .5 - Math.cos(Math.PI * progress) / 2;
           window.scrollTo(0, start + distance * eased);
           if (progress < 1) scrollFrame = window.requestAnimationFrame(move);
+          else autoScrolling = false;
         };
         scrollFrame = window.requestAnimationFrame(move);
       }));
@@ -246,6 +259,10 @@ export default function WeddingPage() {
       window.clearTimeout(revealTimer);
       window.clearTimeout(readyTimer);
       window.cancelAnimationFrame(scrollFrame);
+      window.removeEventListener("pointerdown", stopAutoScroll);
+      window.removeEventListener("touchstart", stopAutoScroll);
+      window.removeEventListener("wheel", stopAutoScroll);
+      window.removeEventListener("keydown", stopAutoScroll);
     };
   }, [invitationLetter, screen]);
 
@@ -275,8 +292,8 @@ export default function WeddingPage() {
         <header className="wapp-feed-divider"><span>✦</span><p>{language === "ky" ? "Той тууралуу маалымат" : "Информация о торжестве"}</p></header>
         <section className="wapp-hero"><div className="wapp-invitation wapp-invite-flow"><SilverOrnaments />
           <section className="wapp-invite-section" id="wedding-primary-details"><p className="wapp-kicker">25 · 08 · 2026</p><Logo shimmer /><span className="wapp-invitation-rule" /><p className="wapp-invitation-message">{t.welcome}</p><div className="wapp-invitation-details"><div className="wapp-date-detail"><span className="wapp-date-shimmer" data-text="25">25</span><p>{t.monthYear}<b>17:00</b></p></div><i /><p><b>{venue}</b><span>{address}</span></p></div><div className="wapp-countdown"><p className="wapp-countdown-label">{t.remaining}</p>{clockItems.map(([value, label]) => <div key={String(label)}><strong>{String(value).padStart(2, "0")}</strong><span>{label}</span></div>)}</div></section>
-          <section className="wapp-invite-section"><p className="wapp-kicker">25 · 08 · 2026</p><h2 className="wapp-page-title">{t.programTitle}</h2><span className="wapp-invitation-rule" /><div className="wapp-invite-program">{timeline.map(([time, name]) => <div key={time}><time>{time}</time><span>{name}</span></div>)}</div><div className="wapp-location-summary"><span>⌖</span><div><b>{venue}</b><p>{address}</p></div></div><div className="wapp-invite-actions"><a href="https://yandex.com/maps/?text=Palazzo%20Bishkek" target="_blank" rel="noreferrer">{t.map} →</a><a href="https://wa.me/996000000000" target="_blank" rel="noreferrer"><WhatsAppIcon />{t.call}</a></div></section>
-          <section className="wapp-invite-section"><div className="wapp-response-mark">❀</div><p className="wapp-kicker">{t.responseNote}</p><h2 className="wapp-page-title">{t.rsvpTitle}</h2><span className="wapp-invitation-rule" /><div className="wapp-inline-rsvp wapp-rsvp-page">{!confirmed ? <><div>{[["yes", t.yes], ["no", t.no], ["transport", t.transport]].map(([value, label]) => <button className={rsvp === value ? "active" : ""} onClick={() => setRsvp(value)} key={value}>{label}</button>)}</div><button className="wapp-rsvp-confirm" onClick={() => setConfirmed(true)}>{t.confirm}</button></> : <motion.div className="wapp-rsvp-bloom" initial={{ opacity: 0 }} animate={{ opacity: 1 }}><motion.span initial={{ scale: 0, rotate: -35 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: "spring", stiffness: 120, damping: 11 }}>❀</motion.span><motion.strong initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .55 }}>✓ {t.success}</motion.strong></motion.div>}</div><Logo compact original /></section>
+          <section className="wapp-invite-section"><p className="wapp-kicker">25 · 08 · 2026</p><h2 className="wapp-page-title">{t.programTitle}</h2><span className="wapp-invitation-rule" /><div className="wapp-invite-program">{timeline.map(([time, name]) => <div key={time}><time>{time}</time><span>{name}</span></div>)}</div><div className="wapp-location-summary"><span>⌖</span><div><b>{venue}</b><p>{address}</p></div></div><div className="wapp-invite-actions"><a href="https://yandex.com/maps/?text=Palazzo%20Bishkek" target="_blank" rel="noreferrer">{t.map} →</a></div></section>
+          <section className="wapp-invite-section"><div className="wapp-response-mark">❀</div><p className="wapp-kicker">{t.responseNote}</p><h2 className="wapp-page-title">{t.rsvpTitle}</h2><span className="wapp-invitation-rule" /><a className="wapp-organizer-link" href="https://wa.me/996000000000" target="_blank" rel="noreferrer"><WhatsAppIcon />{t.call}</a><Logo compact original /></section>
         </div></section>
         <section className="wapp-utility-grid">{utilityScreens.map((target, index) => { const cardIndex = utilityCardIndexes[index]; return <button key={target} onClick={() => go(target)}><span>{icons[cardIndex]}</span><b>{t.cards[cardIndex]}</b></button>; })}</section>
         <p className="wapp-signoff">25 · 08 · 2026<br /><Logo compact original /></p>
