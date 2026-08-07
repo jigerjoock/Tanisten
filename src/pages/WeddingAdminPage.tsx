@@ -40,7 +40,7 @@ export default function WeddingAdminPage() {
           {guests.map((guest) => {
             const slug = guest.slug ?? "";
             const link = buildInvitationLink(slug);
-            const message = buildInvitationMessage({ guestName: guest.name, guestId: slug, inviterId: inviter.id });
+            const message = buildInvitationMessage({ guestName: guest.name, gender: guest.gender, guestId: slug, inviterId: inviter.id });
             return <article key={`${inviter.id}-${guest.name}`}>
               <div><strong>{guest.name}</strong><a href={link} target="_blank" rel="noreferrer">{link}</a></div>
               <div className="wadmin-share-actions">

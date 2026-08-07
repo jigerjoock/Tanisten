@@ -1,10 +1,11 @@
 import { InvitationVoice, WeddingShareLocale, weddingShareCopy } from "../locales/weddingShare";
-import { WeddingInviter } from "../data/weddingGuests";
+import { GuestGender, WeddingInviter } from "../data/weddingGuests";
 
 const WEDDING_URL = "https://wedding.tanisten.com/";
 
 export type InvitationMessageInput = {
   guestName: string;
+  gender: GuestGender;
   guestId: string;
   inviterId: WeddingInviter["id"];
   locale?: WeddingShareLocale;
@@ -23,17 +24,15 @@ export function buildInvitationLink(guestId: string): string {
   return url.toString();
 }
 
-export function buildInvitationMessage({ guestName, guestId, inviterId, locale = "ru" }: InvitationMessageInput): string {
+export function buildInvitationMessage({ guestName, gender, guestId, inviterId, locale = "ru" }: InvitationMessageInput): string {
   const copy = weddingShareCopy[locale];
   const voice = invitationVoiceByInviter[inviterId];
   const invitationLink = buildInvitationLink(guestId);
 
   return [
-    copy.salutation(guestName),
+    copy.salutation(guestName, gender),
     copy.invitation[voice],
-    `${copy.date}\n${copy.venue}`,
-    `${copy.personalInvitation}\n\n${invitationLink}`,
-    copy.closing[voice]
+    invitationLink
   ].join("\n\n");
 }
 
