@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { weddingGuests, weddingInviters } from "../data/weddingGuests";
+import { buildInvitationLink, buildInvitationMessage, copyInvitationLink, openWhatsApp } from "../utils/weddingSharing";
 import "./wedding-admin.css";
 
-const weddingUrl = "https://wedding.tanisten.com/";
 type Wish = { id: number; name: string; message: string; guestSlug: string; createdAt: string };
 
 export default function WeddingAdminPage() {
@@ -18,8 +18,7 @@ export default function WeddingAdminPage() {
   }, []);
 
   const copyLink = async (slug: string) => {
-    const link = `${weddingUrl}?guest=${encodeURIComponent(slug)}`;
-    await navigator.clipboard.writeText(link);
+    await copyInvitationLink(slug);
     setCopied(slug);
     window.setTimeout(() => setCopied((current) => current === slug ? null : current), 1600);
   };
@@ -40,12 +39,14 @@ export default function WeddingAdminPage() {
         {guests.length > 0 ? <div className="wadmin-list">
           {guests.map((guest) => {
             const slug = guest.slug ?? "";
-            const link = `${weddingUrl}?guest=${encodeURIComponent(slug)}`;
+            const link = buildInvitationLink(slug);
+            const message = buildInvitationMessage({ guestName: guest.name, guestId: slug, inviterId: inviter.id });
             return <article key={`${inviter.id}-${guest.name}`}>
               <div><strong>{guest.name}</strong><a href={link} target="_blank" rel="noreferrer">{link}</a></div>
-              <button type="button" disabled={!slug} className={copied === slug ? "copied" : ""} onClick={() => copyLink(slug)}>
-                {copied === slug ? "Скопировано ✓" : "Копировать"}
-              </button>
+              <div className="wadmin-share-actions">
+                <button type="button" disabled={!slug} className={copied === slug ? "copied" : ""} onClick={() => copyLink(slug)}>{copied === slug ? "Скопировано ✓" : "Копировать"}</button>
+                <button type="button" disabled={!slug} className="wadmin-whatsapp" onClick={() => openWhatsApp(message)} aria-label={`Отправить приглашение для ${guest.name} в WhatsApp`}><span>◉</span> WhatsApp</button>
+              </div>
             </article>;
           })}
         </div> : <p className="wadmin-empty">Приглашённые пока не добавлены</p>}

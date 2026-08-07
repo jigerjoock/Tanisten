@@ -298,7 +298,7 @@ export default function WeddingPage() {
   return (
       <div className={`wapp-shell theme-${weddingStyle} ${entered ? "entered" : ""}`}>
         <PalazzoBackdrop />
-        <Seo title="AIDAI ✿ Айжигит — үйлөнүү үлпөтү" description="25-август 2026 — биздин тойго кош келиңиз" />
+        <Seo title="AIDAI ✿ Айжигит" description={"Свадебное приглашение\n25 августа 2026\nPalazzo, Бишкек"} image="https://wedding.tanisten.com/wedding-preview.jpg" />
         <audio ref={audioRef} src={weddingMusic} preload="auto" onEnded={() => setMusic(false)} />
         <AnimatePresence>
           {!entered && <motion.section className="wapp-entry" initial={{ opacity: 1 }} exit={{ opacity: 0, scale: 1.025, filter: "blur(7px)" }} transition={{ duration: .85, ease: [0.22, 1, 0.36, 1] }}>
