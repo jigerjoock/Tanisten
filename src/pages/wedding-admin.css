@@ -20,4 +20,11 @@
 .wadmin-list button:hover { border-color:#77777d; background:#ececef; }
 .wadmin-list button.copied { border-color:#798b79; background:#edf4ed; color:#4d684d; }
 .wadmin-empty { margin:0; padding:24px 22px; color:#96969b; font-size:.75rem; }
+.wadmin-wishes { margin-top:8px; }
+.wadmin-wish-list { display:grid; padding:8px 22px 22px; gap:10px; }
+.wadmin-wish-list article { padding:16px; border:1px solid #dedee1; border-radius:8px; background:#fafafa; }
+.wadmin-wish-list article>header { display:flex; align-items:baseline; justify-content:space-between; gap:15px; }
+.wadmin-wish-list strong { font-family:"Cormorant Garamond",Georgia,serif; font-size:1.25rem; }
+.wadmin-wish-list time,.wadmin-wish-list small { color:#939399; font-size:.6rem; }
+.wadmin-wish-list p { margin:8px 0; color:#56565b; font-family:"Cormorant Garamond",Georgia,serif; font-size:1.15rem; line-height:1.45; white-space:pre-wrap; }
 @media (max-width:560px){.wadmin-shell{padding:28px 10px 55px}.wadmin-group>header{padding:17px 15px}.wadmin-list article{grid-template-columns:1fr;padding:15px;gap:11px}.wadmin-list button{width:100%}.wadmin-header{margin-bottom:24px}}

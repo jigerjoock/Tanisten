@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS wishes (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  message TEXT NOT NULL,
+  guest_slug TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS wishes_created_at_idx ON wishes(created_at DESC);

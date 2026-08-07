@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "tanisten-wedding",
+  "pages_build_output_dir": "./dist",
+  "d1_databases": [
+    {
+      "binding": "WEDDING_DB",
+      "database_name": "wedding-wishes",
+      "database_id": "eba4041f-7b47-4627-a90c-8cbe1f8808eb"
+    }
+  ]
+}

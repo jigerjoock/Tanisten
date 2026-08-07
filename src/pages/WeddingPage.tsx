@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import weddingMusic from "../assets/wedding-music.mp3";
 import Seo from "../components/seo/Seo";
 import { findWeddingGuest, findWeddingInviter } from "../data/weddingGuests";
@@ -114,7 +114,8 @@ export default function WeddingPage() {
   const [rsvp, setRsvp] = useState("yes");
   const [confirmed, setConfirmed] = useState(false);
   const [wishSent, setWishSent] = useState(false);
-  const [uploads, setUploads] = useState<string[]>([]);
+  const [wishSending, setWishSending] = useState(false);
+  const [wishError, setWishError] = useState("");
   const [invitationVisible, setInvitationVisible] = useState(false);
   const [invitationReady, setInvitationReady] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -131,7 +132,9 @@ export default function WeddingPage() {
   const guestRecord = useMemo(() => findWeddingGuest(guestParameter), [guestParameter]);
   const isGroupInvitation = guestParameter?.trim().toLocaleLowerCase() === "guest";
   const guestName = guestRecord?.name ?? guestParameter?.trim().slice(0, 80) ?? t.guestFallback;
-  const inviterName = findWeddingInviter(guestRecord?.inviterId)?.name || findWeddingInviter(1)?.name || "Асанбай Табанович";
+  const inviter = findWeddingInviter(guestRecord?.inviterId) || findWeddingInviter(1);
+  const inviterName = inviter?.name || "Асанбай Табанович";
+  const organizerWhatsApp = `https://wa.me/${inviter?.whatsapp || "996772178085"}`;
   const greeting = language === "ky" ? t.greetingUnknown : guestRecord?.gender === "female" ? t.greetingFemale : guestRecord?.gender === "male" ? t.greetingMale : t.greetingUnknown;
   const invitationText = guestRecord && guestRecord.inviterId >= 3 ? t.subtitleCouple : t.subtitleFamily;
   const invitationLetter = useMemo(() => {
@@ -208,9 +211,25 @@ export default function WeddingPage() {
     if (!audio) return;
     if (audio.paused) playMusic(); else { audio.pause(); setMusic(false); }
   };
-  const onUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files ?? []);
-    setUploads((current) => [...current, ...files.map((file) => URL.createObjectURL(file))]);
+  const submitWish = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setWishSending(true);
+    setWishError("");
+    const form = new FormData(event.currentTarget);
+    try {
+      const response = await fetch("/api/wishes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: form.get("name"), message: form.get("message"), website: form.get("website"), guestSlug: guestRecord?.slug ?? guestParameter ?? "" })
+      });
+      if (!response.ok) throw new Error("wish_failed");
+      setWishSent(true);
+      event.currentTarget.reset();
+    } catch {
+      setWishError(language === "ky" ? "Каалоо жөнөтүлгөн жок. Кайра аракет кылыңыз." : "Не удалось отправить пожелание. Попробуйте ещё раз.");
+    } finally {
+      setWishSending(false);
+    }
   };
 
   useEffect(() => {
@@ -316,7 +335,7 @@ export default function WeddingPage() {
         <section className="wapp-hero"><div className="wapp-invitation wapp-invite-flow"><SilverOrnaments />
           <section className="wapp-invite-section" id="wedding-primary-details"><p className="wapp-kicker">25 · 08 · 2026</p><Logo shimmer /><span className="wapp-invitation-rule" /><p className="wapp-invitation-message">{t.welcome}</p><div className="wapp-invitation-details"><div className="wapp-date-detail"><span className="wapp-date-shimmer" data-text="25">25</span><p>{t.monthYear}<b>17:00</b></p></div><i /><p><b>{venue}</b><span>{address}</span></p></div><div className="wapp-countdown"><p className="wapp-countdown-label">{t.remaining}</p>{clockItems.map(([value, label]) => <div key={String(label)}><strong>{String(value).padStart(2, "0")}</strong><span>{label}</span></div>)}</div></section>
           <section className="wapp-invite-section"><p className="wapp-kicker">25 · 08 · 2026</p><h2 className="wapp-page-title">{t.programTitle}</h2><span className="wapp-invitation-rule" /><div className="wapp-invite-program">{timeline.map(([time, name]) => <div key={time}><time>{time}</time><span>{name}</span></div>)}</div><div className="wapp-location-summary"><span>⌖</span><div><b>{venue}</b><p>{address}</p></div></div><div className="wapp-invite-actions"><a href="https://yandex.com/maps/?text=Palazzo%20Bishkek" target="_blank" rel="noreferrer">{t.map} →</a></div></section>
-          <section className="wapp-invite-section"><div className="wapp-response-mark">❀</div><p className="wapp-kicker">{t.responseNote}</p><h2 className="wapp-page-title">{t.rsvpTitle}</h2><span className="wapp-invitation-rule" /><a className="wapp-organizer-link" href="https://wa.me/996000000000" target="_blank" rel="noreferrer"><WhatsAppIcon />{t.call}</a><Logo compact original /></section>
+          <section className="wapp-invite-section"><div className="wapp-response-mark">❀</div><p className="wapp-kicker">{t.responseNote}</p><h2 className="wapp-page-title">{t.rsvpTitle}</h2><span className="wapp-invitation-rule" /><a className="wapp-organizer-link" href={organizerWhatsApp} target="_blank" rel="noreferrer"><WhatsAppIcon />{t.call}</a><Logo compact original /></section>
         </div></section>
         <section className="wapp-utility-grid">{utilityScreens.map((target, index) => { const cardIndex = utilityCardIndexes[index]; return <button key={target} onClick={() => go(target)}><span>{icons[cardIndex]}</span><b>{t.cards[cardIndex]}</b></button>; })}</section>
         <p className="wapp-signoff">25 · 08 · 2026<br /><Logo compact original /></p>
@@ -326,11 +345,11 @@ export default function WeddingPage() {
 
   function Section() {
     return <section className="wapp-section"><button className="wapp-back" onClick={() => go("home")}>← {t.back}</button>
-      {screen === "location" && <><SectionHead eyebrow="Palazzo" title={t.locationTitle} /><div className="wapp-location-hero"><span>25</span><div><b>{t.date}</b><p>17:00</p></div></div><article className="wapp-info-card"><h3>{venue}</h3><p>{address}</p><div className="wapp-actions"><a href="https://yandex.com/maps/?text=Palazzo%20Bishkek" target="_blank" rel="noreferrer">{t.map}</a><button onClick={() => navigator.clipboard?.writeText(address)}>{t.copy}</button><a href="https://wa.me/996000000000" target="_blank" rel="noreferrer"><WhatsAppIcon />{t.call}</a></div></article></>}
+      {screen === "location" && <><SectionHead eyebrow="Palazzo" title={t.locationTitle} /><div className="wapp-location-hero"><span>25</span><div><b>{t.date}</b><p>17:00</p></div></div><article className="wapp-info-card"><h3>{venue}</h3><p>{address}</p><div className="wapp-actions"><a href="https://yandex.com/maps/?text=Palazzo%20Bishkek" target="_blank" rel="noreferrer">{t.map}</a><button onClick={() => navigator.clipboard?.writeText(address)}>{t.copy}</button><a href={organizerWhatsApp} target="_blank" rel="noreferrer"><WhatsAppIcon />{t.call}</a></div></article></>}
       {screen === "route" && <><SectionHead eyebrow={t.cards[1]} title={t.cards[1]} /><div className="wapp-map"><div className="wapp-route-line"><span>●</span><i /><b>Palazzo</b></div></div><article className="wapp-info-card"><h3>{venue}</h3><p>{address}</p><a className="wapp-primary-link" href="https://yandex.com/maps/?text=Palazzo%20Bishkek" target="_blank" rel="noreferrer">{t.map} →</a></article></>}
       {screen === "program" && <><SectionHead eyebrow="25 · 08 · 2026" title={t.programTitle} /><div className="wapp-timeline">{timeline.map(([time, name], index) => <motion.article key={time} initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * .12 }}><div className="wapp-bud">❀</div><time>{time}</time><p>{name}</p></motion.article>)}</div></>}
       {screen === "table" && <><SectionHead eyebrow={t.seating} title={guestName} /><p className="wapp-guest-place">{t.tableTitle}</p><article className="wapp-plan-card"><header><span>⌑</span><h2>{t.plan}</h2></header><div className="wapp-plan-preview" aria-hidden="true"><i className="table one" /><i className="table two" /><i className="table three" /><i className="chair marked">?</i></div><div className="wapp-plan-pending"><span>✦</span><p>{t.planPending}</p></div></article></>}
-      {screen === "wishes" && <><SectionHead eyebrow={t.guestBook} title={t.wishesTitle} /><p className="wapp-section-copy">{t.wishesHint}</p><form className="wapp-form" onSubmit={(e: FormEvent) => { e.preventDefault(); setWishSent(true); }}><label>{t.name}<input required /></label><label>{t.wish}<textarea required rows={4} /></label><label className="wapp-upload">＋ {t.media}<input type="file" accept="image/*,video/*,audio/*" multiple onChange={onUpload} /></label><button className="wapp-button">{t.send}</button></form>{wishSent && <motion.div className="wapp-success" initial={{ opacity: 0, scale: .9 }} animate={{ opacity: 1, scale: 1 }}>❀<p>{t.success}</p></motion.div>}</>}
+      {screen === "wishes" && <><SectionHead eyebrow={t.guestBook} title={t.wishesTitle} /><p className="wapp-section-copy">{t.wishesHint}</p>{!wishSent ? <form className="wapp-form" onSubmit={submitWish}><label>{t.name}<input name="name" defaultValue={guestRecord?.name ?? ""} minLength={2} maxLength={80} required /></label><label>{t.wish}<textarea name="message" minLength={2} maxLength={1000} required rows={5} /></label><input className="wapp-honeypot" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" /><button className="wapp-button" disabled={wishSending}>{wishSending ? (language === "ky" ? "Жөнөтүлүүдө…" : "Отправляем…") : t.send}</button>{wishError && <p className="wapp-form-error">{wishError}</p>}</form> : <motion.div className="wapp-success" initial={{ opacity: 0, scale: .9 }} animate={{ opacity: 1, scale: 1 }}>❀<p>{language === "ky" ? "Рахмат! Каалооңуз сакталды." : "Спасибо! Ваше пожелание сохранено."}</p></motion.div>}</>}
       {screen === "games" && <><SectionHead eyebrow={t.moments} title={t.gamesTitle} /><div className="wapp-game-list">{games[language].map(([name, desc], i) => <motion.button key={name} whileTap={{ scale: .98 }} onClick={(event) => { event.currentTarget.classList.toggle("revealed"); }}><span>0{i + 1}</span><div><b>{name}</b><p>{desc}</p></div><i>✿</i></motion.button>)}</div></>}
       {screen === "gallery" && <><SectionHead eyebrow={t.gallery} title={t.galleryTitle} /><article className="wapp-feature-pending"><div className="wapp-pending-camera" aria-hidden="true"><span>□</span><i>✦</i></div><p>{t.galleryPending}</p></article></>}
       {screen === "rsvp" && <><SectionHead eyebrow="RSVP" title={t.rsvpTitle} />{!confirmed ? <div className="wapp-rsvp"><div>{[["yes", t.yes], ["no", t.no], ["transport", t.transport]].map(([value, label]) => <button className={rsvp === value ? "active" : ""} onClick={() => setRsvp(value)} key={value}><span>{rsvp === value ? "✓" : ""}</span>{label}</button>)}</div><button className="wapp-button" onClick={() => setConfirmed(true)}>{t.confirm}</button></div> : <motion.div className="wapp-success large" initial={{ opacity: 0, scale: .8 }} animate={{ opacity: 1, scale: 1 }}><motion.span animate={{ rotate: [0, 12, -8, 0] }} transition={{ duration: 1.6 }}>❀</motion.span><h3>{t.success}</h3><Logo compact /></motion.div>}</>}

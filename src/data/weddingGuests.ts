@@ -3,6 +3,7 @@ export type GuestGender = "male" | "female";
 export type WeddingInviter = {
   id: 1 | 2 | 3 | 4;
   name: string;
+  whatsapp: string;
 };
 
 export type WeddingGuest = {
@@ -13,10 +14,10 @@ export type WeddingGuest = {
 };
 
 export const weddingInviters: WeddingInviter[] = [
-  { id: 1, name: "Асанбай Табанович" },
-  { id: 2, name: "Азил Кокенович" },
-  { id: 3, name: "Айдай" },
-  { id: 4, name: "Айжигит" }
+  { id: 1, name: "Асанбай Табанович", whatsapp: "996772178085" },
+  { id: 2, name: "Азил Кокенович", whatsapp: "996557112241" },
+  { id: 3, name: "Айдай", whatsapp: "996700918273" },
+  { id: 4, name: "Айжигит", whatsapp: "491775865916" }
 ];
 
 export const weddingGuests: WeddingGuest[] = [

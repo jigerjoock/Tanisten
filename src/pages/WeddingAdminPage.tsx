@@ -1,15 +1,21 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { weddingGuests, weddingInviters } from "../data/weddingGuests";
 import "./wedding-admin.css";
 
 const weddingUrl = "https://wedding.tanisten.com/";
+type Wish = { id: number; name: string; message: string; guestSlug: string; createdAt: string };
 
 export default function WeddingAdminPage() {
   const [copied, setCopied] = useState<string | null>(null);
+  const [wishes, setWishes] = useState<Wish[]>([]);
   const groups = useMemo(() => weddingInviters.map((inviter) => ({
     inviter,
     guests: weddingGuests.filter((guest) => guest.inviterId === inviter.id)
   })), []);
+
+  useEffect(() => {
+    fetch("/api/wishes").then((response) => response.ok ? response.json() : Promise.reject()).then((data) => setWishes(data.wishes ?? [])).catch(() => setWishes([]));
+  }, []);
 
   const copyLink = async (slug: string) => {
     const link = `${weddingUrl}?guest=${encodeURIComponent(slug)}`;
@@ -44,6 +50,14 @@ export default function WeddingAdminPage() {
           })}
         </div> : <p className="wadmin-empty">Приглашённые пока не добавлены</p>}
       </section>)}
+      <section className="wadmin-group wadmin-wishes">
+        <header><div><small>Книга пожеланий</small><h2>Пожелания гостей</h2></div><b>{wishes.length}</b></header>
+        {wishes.length > 0 ? <div className="wadmin-wish-list">{wishes.map((wish) => <article key={wish.id}>
+          <header><strong>{wish.name}</strong><time>{new Date(`${wish.createdAt.replace(" ", "T")}Z`).toLocaleString("ru-RU")}</time></header>
+          <p>{wish.message}</p>
+          {wish.guestSlug && <small>?guest={wish.guestSlug}</small>}
+        </article>)}</div> : <p className="wadmin-empty">Пожеланий пока нет</p>}
+      </section>
     </div>
   </main>;
 }
