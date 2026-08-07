@@ -1,17 +1,27 @@
 import { useEffect, useMemo, useState } from "react";
-import { weddingGuests, weddingInviters } from "../data/weddingGuests";
+import { WeddingInviter, weddingGuests, weddingInviters } from "../data/weddingGuests";
 import { buildInvitationLink, buildInvitationMessage, copyInvitationLink, openWhatsApp } from "../utils/weddingSharing";
 import "./wedding-admin.css";
 
 type Wish = { id: number; name: string; message: string; guestSlug: string; createdAt: string };
 
-export default function WeddingAdminPage() {
+type WeddingAdminPageProps = {
+  inviterId?: WeddingInviter["id"];
+};
+
+export default function WeddingAdminPage({ inviterId }: WeddingAdminPageProps) {
   const [copied, setCopied] = useState<string | null>(null);
   const [wishes, setWishes] = useState<Wish[]>([]);
-  const groups = useMemo(() => weddingInviters.map((inviter) => ({
+  const groups = useMemo(() => weddingInviters.filter((inviter) => inviterId === undefined || inviter.id === inviterId).map((inviter) => ({
     inviter,
     guests: weddingGuests.filter((guest) => guest.inviterId === inviter.id)
-  })), []);
+  })), [inviterId]);
+  const selectedInviter = inviterId === undefined ? undefined : weddingInviters.find((inviter) => inviter.id === inviterId);
+  const visibleWishes = useMemo(() => {
+    if (inviterId === undefined) return wishes;
+    const guestSlugs = new Set(weddingGuests.filter((guest) => guest.inviterId === inviterId).map((guest) => guest.slug).filter(Boolean));
+    return wishes.filter((wish) => guestSlugs.has(wish.guestSlug));
+  }, [inviterId, wishes]);
 
   useEffect(() => {
     fetch("/api/wishes").then((response) => response.ok ? response.json() : Promise.reject()).then((data) => setWishes(data.wishes ?? [])).catch(() => setWishes([]));
@@ -26,7 +36,7 @@ export default function WeddingAdminPage() {
   return <main className="wadmin-shell">
     <header className="wadmin-header">
       <p>25 · 08 · 2026</p>
-      <h1>Ссылки для гостей</h1>
+      <h1>{selectedInviter ? `Гости — ${selectedInviter.name}` : "Ссылки для гостей"}</h1>
       <span>Айжигит ✿ Айдай</span>
     </header>
 
@@ -52,8 +62,8 @@ export default function WeddingAdminPage() {
         </div> : <p className="wadmin-empty">Приглашённые пока не добавлены</p>}
       </section>)}
       <section className="wadmin-group wadmin-wishes">
-        <header><div><small>Книга пожеланий</small><h2>Пожелания гостей</h2></div><b>{wishes.length}</b></header>
-        {wishes.length > 0 ? <div className="wadmin-wish-list">{wishes.map((wish) => <article key={wish.id}>
+        <header><div><small>Книга пожеланий</small><h2>Пожелания гостей</h2></div><b>{visibleWishes.length}</b></header>
+        {visibleWishes.length > 0 ? <div className="wadmin-wish-list">{visibleWishes.map((wish) => <article key={wish.id}>
           <header><strong>{wish.name}</strong><time>{new Date(`${wish.createdAt.replace(" ", "T")}Z`).toLocaleString("ru-RU")}</time></header>
           <p>{wish.message}</p>
           {wish.guestSlug && <small>?guest={wish.guestSlug}</small>}

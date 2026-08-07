@@ -17,7 +17,7 @@ export default function App() {
   const { pathname } = useLocation();
   const hostname = window.location.hostname;
   const isWeddingHost = hostname === "wedding.tanisten.com" || hostname === "tanisten-wedding.pages.dev" || hostname.endsWith(".tanisten-wedding.pages.dev");
-  const isWeddingPage = isWeddingHost || pathname === "/wedding" || pathname.startsWith("/wedding/") || pathname === "/admin";
+  const isWeddingPage = isWeddingHost || pathname === "/wedding" || pathname.startsWith("/wedding/") || pathname === "/admin" || pathname.startsWith("/admin/");
 
   return (
     <div className="min-h-screen">
@@ -34,6 +34,7 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/wedding" element={<WeddingPage />} />
           <Route path="/admin" element={<WeddingAdminPage />} />
+          <Route path="/admin/aidai" element={<WeddingAdminPage inviterId={3} />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

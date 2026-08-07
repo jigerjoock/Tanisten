@@ -40,8 +40,16 @@ export const weddingGuests: WeddingGuest[] = [
   { name: "Людмила аяшапа", gender: "female", inviterId: 4, slug: "lyudmila" },
   { name: "Светлана аяшапа", gender: "female", inviterId: 4, slug: "svetlana" },
   { name: "Абдихалил аяшата", gender: "male", inviterId: 4, slug: "abdihalil" },
-  { name: "Жылдыз", gender: "female", inviterId: 3, slug: "zhyldyz" },
-  { name: "Айназик", gender: "female", inviterId: 3, slug: "ainazik" }
+  { name: "Жылдыз", gender: "female", inviterId: 2, slug: "zhyldyz" },
+  { name: "Айназик", gender: "female", inviterId: 2, slug: "ainazik" },
+  { name: "Элина", gender: "female", inviterId: 3, slug: "elina" },
+  { name: "Темирлан", gender: "male", inviterId: 3, slug: "temirlan" },
+  { name: "Бакай байке", gender: "male", inviterId: 3, slug: "bakai" },
+  { name: "Ален", gender: "male", inviterId: 3, slug: "alen" },
+  { name: "Адинай эже", gender: "female", inviterId: 3, slug: "adinai" },
+  { name: "Жезде", gender: "male", inviterId: 3, slug: "zhezde" },
+  { name: "Бегимай эже", gender: "female", inviterId: 3, slug: "begimai" },
+  { name: "Айжан", gender: "female", inviterId: 3, slug: "aizhan" }
 ];
 
 export function findWeddingGuest(value: string | null) {
