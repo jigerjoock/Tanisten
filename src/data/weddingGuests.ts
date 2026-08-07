@@ -22,6 +22,23 @@ export const weddingInviters: WeddingInviter[] = [
 export const weddingGuests: WeddingGuest[] = [
   { name: "Айнура Кокеновна", gender: "female", inviterId: 2, slug: "ainura" },
   { name: "Василий Ким", gender: "male", inviterId: 4, slug: "vasya" },
+  { name: "Карина", gender: "female", inviterId: 4, slug: "karina" },
+  { name: "Алымбек Абдиев", gender: "male", inviterId: 4, slug: "alymbek" },
+  { name: "Насыйкат", gender: "female", inviterId: 4, slug: "nasyikat" },
+  { name: "Кузя", gender: "male", inviterId: 4, slug: "kuzya" },
+  { name: "Бектемир Уланов", gender: "male", inviterId: 4, slug: "bektemir" },
+  { name: "Айзат", gender: "female", inviterId: 4, slug: "aizat" },
+  { name: "Марсель", gender: "male", inviterId: 4, slug: "marsel" },
+  { name: "Сезим", gender: "female", inviterId: 4, slug: "sezim" },
+  { name: "Саня Угай", gender: "male", inviterId: 4, slug: "sanya" },
+  { name: "Снежана", gender: "female", inviterId: 4, slug: "snezhana" },
+  { name: "Гүлгаакы", gender: "female", inviterId: 4, slug: "gulgaaky" },
+  { name: "Бактыбек аяшата", gender: "male", inviterId: 4, slug: "baktybek" },
+  { name: "Чинара аяшапа", gender: "female", inviterId: 4, slug: "chinara" },
+  { name: "Виталий аяшата", gender: "male", inviterId: 4, slug: "vitaliy" },
+  { name: "Людмила аяшапа", gender: "female", inviterId: 4, slug: "lyudmila" },
+  { name: "Светлана аяшапа", gender: "female", inviterId: 4, slug: "svetlana" },
+  { name: "Абдихалил аяшата", gender: "male", inviterId: 4, slug: "abdihalil" },
   { name: "Жылдыз", gender: "female", inviterId: 3, slug: "zhyldyz" },
   { name: "Айназик", gender: "female", inviterId: 3, slug: "ainazik" }
 ];

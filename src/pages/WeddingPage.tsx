@@ -6,6 +6,7 @@ import { findWeddingGuest, findWeddingInviter } from "../data/weddingGuests";
 import "./wedding.css";
 
 type Language = "ky" | "ru";
+type WeddingStyle = "silver" | "palazzo";
 type Screen = "home" | "location" | "route" | "program" | "table" | "wishes" | "games" | "gallery" | "rsvp";
 
 const weddingDate = new Date("2026-08-25T17:00:00+05:00");
@@ -89,6 +90,15 @@ function SilverOrnaments() {
   return <div className="wapp-silver-ornaments" aria-hidden="true">{["tl", "tr", "br", "bl"].map((corner) => <svg className={corner} key={corner} viewBox="0 0 86 86"><path d="M4 82V29C4 15 15 4 29 4H82" /><path d="M11 82V33C11 21 21 11 33 11H82" /><path d="M19 64V38C19 27 27 19 38 19H64" /><path d="M4 49c25 0 45-20 45-45M11 59c27 0 48-21 48-48" /><path className="gem" d="m19 12 7 7-7 7-7-7 7-7Z" /></svg>)}</div>;
 }
 
+function PalazzoBackdrop() {
+  return <div className="wapp-palazzo-backdrop" aria-hidden="true">
+    <i className="line left" /><i className="line right" />
+    <i className="carving left top" /><i className="carving right top" />
+    <i className="carving left bottom" /><i className="carving right bottom" />
+    <i className="mark top" /><i className="mark bottom" />
+  </div>;
+}
+
 function countdown() {
   const ms = Math.max(0, weddingDate.getTime() - Date.now());
   return { days: Math.floor(ms / 86400000), hours: Math.floor(ms / 3600000) % 24, minutes: Math.floor(ms / 60000) % 60 };
@@ -97,6 +107,8 @@ function countdown() {
 export default function WeddingPage() {
   const [screen, setScreen] = useState<Screen>("home");
   const [language, setLanguage] = useState<Language>("ky");
+  const [weddingStyle, setWeddingStyle] = useState<WeddingStyle>(() => Math.random() < .5 ? "silver" : "palazzo");
+  const [entered, setEntered] = useState(false);
   const [clock, setClock] = useState(countdown);
   const [music, setMusic] = useState(false);
   const [rsvp, setRsvp] = useState("yes");
@@ -148,6 +160,11 @@ export default function WeddingPage() {
   }, []);
 
   useEffect(() => {
+    const theme = document.querySelector('meta[name="theme-color"]');
+    theme?.setAttribute("content", weddingStyle === "palazzo" ? "#160F13" : "#FAF8F3");
+  }, [weddingStyle]);
+
+  useEffect(() => {
     const manifest = document.createElement("link");
     manifest.rel = "manifest";
     manifest.href = `${import.meta.env.BASE_URL}wedding-manifest.webmanifest`;
@@ -197,19 +214,7 @@ export default function WeddingPage() {
   };
 
   useEffect(() => {
-    const timer = window.setTimeout(playMusic, 180);
-    const retry = () => playMusic();
-    window.addEventListener("pointerdown", retry, { once: true, passive: true });
-    window.addEventListener("keydown", retry, { once: true });
-    return () => {
-      window.clearTimeout(timer);
-      window.removeEventListener("pointerdown", retry);
-      window.removeEventListener("keydown", retry);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (screen !== "home") return;
+    if (!entered || screen !== "home") return;
     setInvitationVisible(false);
     setInvitationReady(false);
     window.scrollTo({ top: 0 });
@@ -264,15 +269,33 @@ export default function WeddingPage() {
       window.removeEventListener("wheel", stopAutoScroll);
       window.removeEventListener("keydown", stopAutoScroll);
     };
-  }, [invitationLetter, screen]);
+  }, [entered, invitationLetter, screen]);
+
+  const enterInvitation = () => {
+    playMusic();
+    setEntered(true);
+  };
 
   return (
-      <div className="wapp-shell">
+      <div className={`wapp-shell theme-${weddingStyle} ${entered ? "entered" : ""}`}>
+        <PalazzoBackdrop />
         <Seo title="AIDAI ✿ Айжигит — үйлөнүү үлпөтү" description="25-август 2026 — биздин тойго кош келиңиз" />
         <audio ref={audioRef} src={weddingMusic} preload="auto" onEnded={() => setMusic(false)} />
+        <AnimatePresence>
+          {!entered && <motion.section className="wapp-entry" initial={{ opacity: 1 }} exit={{ opacity: 0, scale: 1.025, filter: "blur(7px)" }} transition={{ duration: .85, ease: [0.22, 1, 0.36, 1] }}>
+            <PalazzoBackdrop />
+            <div className="wapp-petals wapp-entry-petals" aria-hidden="true">{Array.from({ length: 9 }, (_, index) => <i key={index} />)}</div>
+            <motion.div className="wapp-entry-card" initial={{ opacity: 0, y: 16, rotateX: 5 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}>
+              <SilverOrnaments />
+              <p>AIDAI <span>✿</span> Айжигит</p>
+              <button className="wapp-entry-button" onClick={enterInvitation}><span>{language === "ky" ? "Чакыруу" : "Приглашение"}</span></button>
+              <small>{language === "ky" ? "Ачуу үчүн басыңыз" : "Нажмите, чтобы открыть"}</small>
+            </motion.div>
+          </motion.section>}
+        </AnimatePresence>
           <div className="wapp-app">
             <div className="wapp-petals" aria-hidden="true">{Array.from({ length: 9 }, (_, index) => <i key={index} />)}</div>
-              <header className="wapp-header"><button onClick={() => go("home")} aria-label={t.home}><Logo compact original /></button><div className="wapp-header-actions"><button className={screen === "home" ? "active" : ""} onClick={() => go("home")} aria-label={t.home}>⌂</button><button className={music ? "active" : ""} onClick={toggleMusic} aria-label={t.music}>{music ? "♪" : "♩"}</button><button onClick={() => setLanguage((value) => value === "ky" ? "ru" : "ky")} aria-label={t.language}>{language === "ky" ? "RU" : "КЫР"}</button></div></header>
+              <header className="wapp-header"><button onClick={() => go("home")} aria-label={t.home}><Logo compact original /></button><div className="wapp-header-actions"><button className={screen === "home" ? "active" : ""} onClick={() => go("home")} aria-label={t.home}>⌂</button><button className={`wapp-style-toggle ${weddingStyle === "palazzo" ? "active" : ""}`} onClick={() => setWeddingStyle((value) => value === "silver" ? "palazzo" : "silver")} aria-label={language === "ky" ? "Стилди өзгөртүү" : "Сменить стиль"} title={weddingStyle === "silver" ? "Palazzo" : "Silver"}>{weddingStyle === "silver" ? "✦" : "◇"}</button><button className={music ? "active" : ""} onClick={toggleMusic} aria-label={t.music}>{music ? "♪" : "♩"}</button><button onClick={() => setLanguage((value) => value === "ky" ? "ru" : "ky")} aria-label={t.language}>{language === "ky" ? "RU" : "КЫР"}</button></div></header>
             <AnimatePresence mode="wait">
               <motion.main key={screen} className="wapp-main" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: .55, ease: "easeOut" }}>
                 {screen === "home" ? Home() : Section()}

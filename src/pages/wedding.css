@@ -211,3 +211,350 @@ html.wedding-light-theme,body.wedding-light-theme { color-scheme:only light; bac
 .wapp-organizer-link .wapp-whatsapp { width:19px; height:19px; }
 .wapp-inviter-name { max-width:330px; color:#5c5d62; font-family:"Cormorant Garamond",Georgia,serif; font-size:clamp(1.65rem,7vw,2.45rem); font-style:italic; font-weight:500; line-height:1.05; text-wrap:balance; }
 .wapp-inviter-rule { display:block; width:1px; height:30px; margin:-7px auto 18px; background:linear-gradient(transparent,#8f9094,transparent); }
+
+/* Palazzo: a second, restaurant-inspired evening theme. */
+.wapp-shell.theme-palazzo {
+  --ivory:#160f13;
+  --white:#21151c;
+  --champagne:#8e7244;
+  --warm:#b89a61;
+  --sage:#d2b875;
+  --ink:#f5eddf;
+  --gold:#c5a45f;
+  background:#120c10;
+  color:#f5eddf;
+}
+.wapp-shell.theme-palazzo::before {
+  background:
+    radial-gradient(circle at 50% -8%,rgba(197,164,95,.22),transparent 31%),
+    radial-gradient(circle at 8% 38%,rgba(84,38,67,.42),transparent 36%),
+    radial-gradient(circle at 92% 72%,rgba(84,38,67,.3),transparent 34%),
+    linear-gradient(145deg,#291522 0%,#160f13 48%,#0e0a0c 100%);
+}
+.theme-palazzo .wapp-app { background:rgba(12,7,10,.26); }
+.theme-palazzo .wapp-header {
+  border-color:rgba(197,164,95,.32);
+  background:rgba(20,12,17,.9);
+  box-shadow:0 1px 0 rgba(232,205,145,.1),0 12px 35px rgba(0,0,0,.18);
+}
+.theme-palazzo .wapp-header-actions button { color:#d5c29b; }
+.theme-palazzo .wapp-header-actions button.active {
+  border-color:#a98a4f;
+  background:rgba(197,164,95,.12);
+  color:#f8eedb;
+}
+.wapp-style-toggle { transition:color .3s ease,background .3s ease,border-color .3s ease,transform .3s ease; }
+.wapp-style-toggle:hover { transform:rotate(18deg); }
+.theme-palazzo .wapp-invitation,
+.theme-palazzo .wapp-section {
+  border-color:#8e7244;
+  background:linear-gradient(150deg,rgba(45,25,38,.97),rgba(24,15,20,.98));
+  box-shadow:0 28px 80px rgba(0,0,0,.52),inset 0 0 0 6px rgba(197,164,95,.035);
+}
+.theme-palazzo .wapp-invitation::before,
+.theme-palazzo .wapp-invitation::after { border-color:#c5a45f; }
+.theme-palazzo .wapp-silver-ornaments::before { border-color:rgba(197,164,95,.38); }
+.theme-palazzo .wapp-silver-ornaments svg {
+  stroke:#b89552;
+  filter:drop-shadow(0 1px 5px rgba(197,164,95,.18));
+}
+.theme-palazzo .wapp-silver-ornaments svg .gem { fill:#c5a45f; stroke:#f1dfb5; }
+.theme-palazzo .wapp-letter-title {
+  background-image:linear-gradient(105deg,#8f713d 18%,#d9bd7e 38%,#fff1c8 49%,#c7a45d 61%,#806332 80%);
+}
+.theme-palazzo .wapp-letter-copy p,
+.theme-palazzo .wapp-invitation-message,
+.theme-palazzo .wapp-section-copy,
+.theme-palazzo .wapp-invite-program span,
+.theme-palazzo .wapp-location-summary p,
+.theme-palazzo .wapp-plan-pending p,
+.theme-palazzo .wapp-feature-pending p,
+.theme-palazzo .wapp-inviter-name { color:#e5d9c6; }
+.theme-palazzo .wapp-kicker,
+.theme-palazzo .wapp-countdown span,
+.theme-palazzo .wapp-countdown-label,
+.theme-palazzo .wapp-signoff { color:#bda77d; }
+.theme-palazzo .wapp-logo span,
+.theme-palazzo .wapp-utility-grid span,
+.theme-palazzo .wapp-location-summary>span,
+.theme-palazzo .wapp-invite-program time { color:#c5a45f; }
+.theme-palazzo .wapp-logo,
+.theme-palazzo .wapp-page-title,
+.theme-palazzo .wapp-countdown strong,
+.theme-palazzo .wapp-location-summary b,
+.theme-palazzo .wapp-signoff .wapp-logo { color:#f5eddf; }
+.theme-palazzo .wapp-invitation-rule,
+.theme-palazzo .wapp-inviter-rule { background:linear-gradient(transparent,#c5a45f,transparent); }
+.theme-palazzo .wapp-invite-section { border-color:rgba(197,164,95,.25); }
+.theme-palazzo .wapp-feed-divider { color:#e2cfaa; }
+.theme-palazzo .wapp-feed-divider::before,
+.theme-palazzo .wapp-feed-divider::after { background:linear-gradient(90deg,transparent,#a88950,transparent); }
+.theme-palazzo .wapp-feed-divider span { color:#c5a45f; }
+.theme-palazzo .wapp-invite-program,
+.theme-palazzo .wapp-invite-program div,
+.theme-palazzo .wapp-countdown { border-color:rgba(197,164,95,.3); }
+.theme-palazzo .wapp-invite-program::before { background:linear-gradient(transparent,#b89552 8%,#b89552 92%,transparent); }
+.theme-palazzo .wapp-invite-program div::before { border-color:#c5a45f; background:#281722; }
+.theme-palazzo .wapp-location-summary,
+.theme-palazzo .wapp-info-card,
+.theme-palazzo .wapp-form,
+.theme-palazzo .wapp-table-result,
+.theme-palazzo .wapp-rsvp,
+.theme-palazzo .wapp-game-list button,
+.theme-palazzo .wapp-success,
+.theme-palazzo .wapp-plan-card {
+  border-color:#80683e;
+  background:linear-gradient(145deg,#2b1924,#1c1218);
+  color:#f5eddf;
+  box-shadow:0 18px 50px rgba(0,0,0,.28);
+}
+.theme-palazzo .wapp-utility-grid button {
+  border-color:#80683e;
+  background:linear-gradient(155deg,rgba(48,27,40,.98),rgba(26,16,22,.98));
+  color:#f5eddf;
+  box-shadow:0 12px 30px rgba(0,0,0,.3);
+}
+.theme-palazzo .wapp-organizer-link,
+.theme-palazzo .wapp-actions a,
+.theme-palazzo .wapp-actions button,
+.theme-palazzo .wapp-primary-link,
+.theme-palazzo .wapp-button {
+  border-color:#987a43;
+  background:linear-gradient(180deg,#3a2431,#241721);
+  color:#f6ead3;
+  box-shadow:0 10px 28px rgba(0,0,0,.24);
+}
+.theme-palazzo .wapp-form label,
+.theme-palazzo .wapp-info-card p,
+.theme-palazzo .wapp-game-list p { color:#c8baa6; }
+.theme-palazzo .wapp-form input,
+.theme-palazzo .wapp-form textarea,
+.theme-palazzo .wapp-rsvp>div button {
+  border-color:#745e39;
+  background:#170f14;
+  color:#f5eddf;
+}
+.theme-palazzo .wapp-plan-card>header,
+.theme-palazzo .wapp-plan-pending { border-color:rgba(197,164,95,.25); }
+.theme-palazzo .wapp-plan-preview {
+  background:repeating-linear-gradient(0deg,transparent 0 31px,rgba(197,164,95,.055) 32px),repeating-linear-gradient(90deg,transparent 0 31px,rgba(197,164,95,.055) 32px),#170f14;
+  filter:none;
+}
+.theme-palazzo .wapp-plan-preview::after { background:rgba(20,12,17,.24); }
+.theme-palazzo .wapp-plan-preview .table,
+.theme-palazzo .wapp-plan-preview .chair { border-color:#9f8149; background:#2a1923; color:#e5d2ad; }
+.theme-palazzo .wapp-date-detail>.wapp-date-shimmer { color:#d8be83; }
+.theme-palazzo .wapp-date-shimmer::after { background-image:linear-gradient(105deg,transparent 22%,rgba(240,217,166,.12) 38%,#fff0c7 49%,rgba(240,217,166,.14) 60%,transparent 76%); }
+.theme-palazzo .wapp-petals i { background:linear-gradient(145deg,#fff9ed,#d4bb86); opacity:.62; }
+.theme-palazzo .wapp-invitation-details p,
+.theme-palazzo .wapp-invitation-details>p>span,
+.theme-palazzo .wapp-date-detail p,
+.theme-palazzo .wapp-location-summary p { color:#c8b99f; }
+.theme-palazzo .wapp-invitation-details b,
+.theme-palazzo .wapp-date-detail b,
+.theme-palazzo .wapp-location-summary b { color:#f7ecda; }
+.theme-palazzo .wapp-invitation-details>i { background:#a88445; }
+.theme-palazzo .wapp-invite-actions a {
+  border-color:#a8874a;
+  background:linear-gradient(180deg,#4a2c3e,#2a1923);
+  color:#f6e8cd;
+  box-shadow:0 9px 22px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,239,203,.12);
+}
+.theme-palazzo .wapp-invite-actions a:hover { border-color:#d2b875; background:#513044; color:#fff5e5; }
+.theme-palazzo .wapp-response-mark,
+.theme-palazzo .wapp-bud {
+  border-color:#a8874a;
+  background:radial-gradient(circle at 36% 30%,#533247,#2a1923 68%);
+  color:#d6b96f;
+  text-shadow:0 1px 0 #6e5226,0 0 9px rgba(213,185,111,.3);
+  box-shadow:0 10px 28px rgba(0,0,0,.3),inset 0 0 0 3px rgba(197,164,95,.06);
+}
+.theme-palazzo .wapp-success { color:#d6b96f; }
+.theme-palazzo .wapp-back { color:#d2b875; text-shadow:0 0 10px rgba(197,164,95,.16); }
+.theme-palazzo .wapp-back:hover,.theme-palazzo .wapp-back:active { color:#f0d99e; }
+@keyframes wapp-palazzo-carving-shine { 0%,32%{background-position:115% 0;filter:drop-shadow(0 0 4px rgba(197,164,95,.1))} 48%{background-position:-20% 0;filter:drop-shadow(0 0 9px rgba(225,196,128,.28))} 62%,100%{background-position:-55% 0;filter:drop-shadow(0 0 4px rgba(197,164,95,.1))} }
+.theme-palazzo .wapp-response-mark { animation:wapp-palazzo-flower-glow 5.5s 2s ease-in-out infinite; }
+@keyframes wapp-palazzo-flower-glow { 0%,68%,100%{color:#c9a655;box-shadow:0 10px 28px rgba(0,0,0,.3),inset 0 0 0 3px rgba(197,164,95,.06)} 80%{color:#f0d58f;box-shadow:0 10px 28px rgba(0,0,0,.3),0 0 18px rgba(213,185,111,.18),inset 0 0 0 3px rgba(235,207,144,.14)} }
+.theme-palazzo .wapp-logo.shimmer::after { background-image:linear-gradient(105deg,transparent 25%,rgba(224,192,118,.14) 39%,#fff0c5 49%,rgba(224,192,118,.18) 59%,transparent 73%); }
+@media (prefers-reduced-motion:reduce){.wapp-palazzo-backdrop .carving,.theme-palazzo .wapp-response-mark{animation:none}}
+.wapp-palazzo-backdrop { display:none; }
+.theme-palazzo .wapp-palazzo-backdrop { position:fixed; z-index:0; inset:0; display:block; overflow:hidden; pointer-events:none; }
+.theme-palazzo .wapp-app { position:relative; z-index:1; }
+.wapp-palazzo-backdrop .line { position:absolute; top:74px; bottom:24px; width:5px; border-right:1px solid rgba(197,164,95,.2); border-left:1px solid rgba(197,164,95,.08); }
+.wapp-palazzo-backdrop .line.left { left:22px; }
+.wapp-palazzo-backdrop .line.right { right:22px; }
+.wapp-palazzo-backdrop .carving { position:absolute; width:54px; height:235px; background:linear-gradient(105deg,#795b2b 12%,#b8944f 36%,#f0d99e 49%,#a88443 62%,#755627 86%); background-size:260% 100%; opacity:.2; filter:drop-shadow(0 0 5px rgba(197,164,95,.12)); -webkit-mask:url("../assets/palazzo-victorian-ornament.svg") center/contain no-repeat; mask:url("../assets/palazzo-victorian-ornament.svg") center/contain no-repeat; animation:wapp-palazzo-carving-shine 8s 1.4s ease-in-out infinite; }
+.wapp-palazzo-backdrop .carving.left { left:29px; }
+.wapp-palazzo-backdrop .carving.right { right:29px; transform:scaleX(-1); }
+.wapp-palazzo-backdrop .carving.top { top:110px; }
+.wapp-palazzo-backdrop .carving.bottom { bottom:66px; transform:scaleY(-1); }
+.wapp-palazzo-backdrop .carving.right.bottom { transform:scale(-1); }
+.wapp-palazzo-backdrop .mark { position:absolute; left:50%; width:12px; height:12px; border:1px solid rgba(213,183,116,.38); transform:translateX(-50%) rotate(45deg); box-shadow:0 0 12px rgba(197,164,95,.12); }
+.wapp-palazzo-backdrop .mark::after { position:absolute; inset:3px; background:rgba(197,164,95,.35); content:""; }
+.wapp-palazzo-backdrop .mark.top { top:78px; }
+.wapp-palazzo-backdrop .mark.bottom { bottom:28px; }
+@media (max-width:520px){.wapp-palazzo-backdrop .line.left{left:10px}.wapp-palazzo-backdrop .line.right{right:10px}.wapp-palazzo-backdrop .carving{width:38px;height:190px;opacity:.16}.wapp-palazzo-backdrop .carving.left{left:13px}.wapp-palazzo-backdrop .carving.right{right:13px}.wapp-palazzo-backdrop .mark{opacity:.75}}
+
+/* User-gesture entry: guarantees that music starts with the invitation. */
+.wapp-entry {
+  position:fixed;
+  z-index:100;
+  inset:0;
+  display:grid;
+  min-height:100svh;
+  overflow:hidden;
+  background:
+    linear-gradient(rgba(239,239,241,.34),rgba(239,239,241,.34)),
+    url("../assets/wedding-silver-roses-v2.jpg") center/cover no-repeat;
+  perspective:1100px;
+  place-items:center;
+}
+.wapp-entry::before {
+  position:absolute;
+  inset:14px;
+  border:1px solid rgba(255,255,255,.82);
+  box-shadow:inset 0 0 0 1px rgba(105,105,110,.2);
+  content:"";
+  pointer-events:none;
+}
+.wapp-entry-card {
+  position:relative;
+  z-index:3;
+  display:flex;
+  width:min(calc(100vw - 52px),430px);
+  min-height:360px;
+  padding:68px 38px 46px;
+  border:1px solid #aaaab0;
+  border-radius:10px;
+  background:rgba(253,253,253,.94);
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 30px 90px rgba(38,38,43,.26),0 3px 0 rgba(255,255,255,.9) inset;
+  transform-style:preserve-3d;
+  text-align:center;
+  backdrop-filter:blur(9px);
+}
+.wapp-entry-card>p {
+  position:relative;
+  z-index:2;
+  margin:0 0 42px;
+  color:#55565b;
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(1.7rem,8vw,2.55rem);
+  font-weight:600;
+  letter-spacing:.055em;
+}
+.wapp-entry-card>p span { color:#919297; font-size:.62em; }
+.wapp-entry-button {
+  position:relative;
+  z-index:3;
+  width:min(100%,260px);
+  min-height:82px;
+  padding:14px 30px;
+  border:1px solid #999a9f!important;
+  border-radius:8px!important;
+  background:linear-gradient(145deg,#fff,#ececef)!important;
+  color:#505157!important;
+  cursor:pointer;
+  font-family:"Cormorant Garamond",Georgia,serif!important;
+  font-size:clamp(1.55rem,7vw,2.05rem)!important;
+  font-style:italic!important;
+  font-weight:600!important;
+  letter-spacing:.045em;
+  box-shadow:0 13px 24px rgba(47,47,52,.18),inset 0 1px 0 #fff,inset 0 -3px 8px rgba(82,82,88,.08);
+  transform:translateZ(18px);
+  animation:wapp-entry-breathe 2.6s ease-in-out infinite;
+}
+.wapp-entry-button::before,
+.wapp-entry-button::after {
+  position:absolute;
+  top:50%;
+  width:34px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#8e8f94);
+  content:"";
+}
+.wapp-entry-button::before { left:12px; }
+.wapp-entry-button::after { right:12px; transform:rotate(180deg); }
+.wapp-entry-button span::before,.wapp-entry-button span::after { margin:0 8px; color:#929399; content:"✦"; font-size:.42em; vertical-align:middle; }
+.wapp-entry-button:active { animation:none; transform:translateY(2px) translateZ(8px) scale(.98); box-shadow:0 6px 13px rgba(47,47,52,.17),inset 0 2px 5px rgba(50,50,55,.08); }
+.wapp-entry-card>small { position:relative; z-index:2; margin-top:24px; color:#85868b; font-size:.55rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+.wapp-entry-pattern { display:none; }
+.wapp-entry-petals { z-index:2; }
+@keyframes wapp-entry-breathe { 0%,100%{transform:translateZ(18px) scale(1)} 50%{transform:translateZ(24px) scale(1.025)} }
+
+/* The Palazzo entry and background never inherit the white theme surface. */
+.theme-palazzo .wapp-entry {
+  background:
+    radial-gradient(circle at 50% 15%,rgba(197,164,95,.17),transparent 32%),
+    radial-gradient(circle at 15% 72%,rgba(87,38,70,.38),transparent 35%),
+    linear-gradient(145deg,#2b1624,#130d11 62%,#090709);
+}
+.theme-palazzo .wapp-entry::before { border-color:rgba(197,164,95,.42); box-shadow:inset 0 0 0 1px rgba(245,226,180,.08); }
+.theme-palazzo .wapp-entry .wapp-palazzo-backdrop { position:absolute; z-index:1; }
+.theme-palazzo .wapp-entry-card {
+  border-color:#9b7c45;
+  background:linear-gradient(150deg,rgba(48,27,40,.97),rgba(23,14,19,.98));
+  box-shadow:0 34px 100px rgba(0,0,0,.62),inset 0 0 0 5px rgba(197,164,95,.04);
+}
+.theme-palazzo .wapp-entry-card>p { color:#f1e5cf; }
+.theme-palazzo .wapp-entry-card>p span { color:#c5a45f; }
+.theme-palazzo .wapp-entry-card>small { color:#baa57b; }
+.theme-palazzo .wapp-entry-button {
+  border-color:#b89552!important;
+  background:linear-gradient(145deg,#4a2c3e,#241721)!important;
+  color:#f5e6c8!important;
+  box-shadow:0 15px 28px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,236,190,.18),inset 0 -4px 10px rgba(0,0,0,.18);
+}
+.theme-palazzo .wapp-entry-button::before,
+.theme-palazzo .wapp-entry-button::after { background:linear-gradient(90deg,transparent,#c5a45f); }
+.theme-palazzo .wapp-entry-button span::before,
+.theme-palazzo .wapp-entry-button span::after { color:#d2b875; }
+.theme-palazzo::after {
+  position:fixed;
+  z-index:-1;
+  inset:18px;
+  border:1px solid rgba(197,164,95,.2);
+  box-shadow:inset 0 0 0 5px rgba(197,164,95,.025),inset 0 0 0 6px rgba(197,164,95,.08);
+  background:
+    radial-gradient(circle,rgba(232,203,139,.34) 0 1px,transparent 2px) 50% 32px/34px 34px repeat-x,
+    radial-gradient(circle,rgba(232,203,139,.26) 0 1px,transparent 2px) 50% calc(100% - 32px)/34px 34px repeat-x,
+    linear-gradient(135deg,transparent 0 36%,rgba(197,164,95,.25) 36.5% 37%,transparent 37.5% 49%,rgba(197,164,95,.13) 49.5% 50%,transparent 50.5%) top left/128px 128px no-repeat,
+    linear-gradient(225deg,transparent 0 36%,rgba(197,164,95,.25) 36.5% 37%,transparent 37.5% 49%,rgba(197,164,95,.13) 49.5% 50%,transparent 50.5%) top right/128px 128px no-repeat,
+    linear-gradient(45deg,transparent 0 36%,rgba(197,164,95,.25) 36.5% 37%,transparent 37.5% 49%,rgba(197,164,95,.13) 49.5% 50%,transparent 50.5%) bottom left/128px 128px no-repeat,
+    linear-gradient(315deg,transparent 0 36%,rgba(197,164,95,.25) 36.5% 37%,transparent 37.5% 49%,rgba(197,164,95,.13) 49.5% 50%,transparent 50.5%) bottom right/128px 128px no-repeat;
+  content:"";
+  pointer-events:none;
+}
+.theme-palazzo::after { display:none; }
+@media (max-width:390px){.wapp-entry-card{min-height:330px;padding-right:28px;padding-left:28px}.wapp-entry-button{min-height:76px}}
+@media (prefers-reduced-motion:reduce){.wapp-entry-button{animation:none}}
+
+/* Visible, restrained metallic passes. Intro pauses the first pass until opened. */
+.wapp-shell:not(.entered) .wapp-letter-title { animation-play-state:paused; }
+.wapp-shell.entered .wapp-letter-title { animation:wapp-metal-pass 7.5s .25s ease-in-out infinite; }
+.wapp-shell .wapp-logo.shimmer,
+.wapp-shell .wapp-logo.shimmer span {
+  background-image:linear-gradient(105deg,#45464b 12%,#76777d 35%,#fff 47%,#d8d9dc 52%,#696a70 65%,#45464b 86%);
+  background-size:320% 100%;
+  animation:wapp-metal-pass 7s .8s ease-in-out infinite;
+}
+.wapp-shell .wapp-date-shimmer::after {
+  background-image:linear-gradient(105deg,transparent 22%,rgba(255,255,255,.28) 38%,#fff 48%,rgba(255,255,255,.36) 58%,transparent 76%);
+  background-size:340% 100%;
+  animation:wapp-metal-pass 6.5s 1.15s ease-in-out infinite;
+}
+.theme-palazzo .wapp-logo.shimmer,
+.theme-palazzo .wapp-logo.shimmer span {
+  background-image:linear-gradient(105deg,#8a682e 10%,#c19a4c 34%,#fff0b9 47%,#e4c676 53%,#a77d35 68%,#785923 88%);
+}
+.theme-palazzo .wapp-date-shimmer::after {
+  background-image:linear-gradient(105deg,transparent 20%,rgba(226,192,111,.28) 37%,#fff0b8 48%,rgba(232,201,127,.36) 59%,transparent 77%);
+}
+@keyframes wapp-metal-pass {
+  0%,20%{background-position:120% 0}
+  43%{background-position:-70% 0}
+  44%,100%{background-position:-70% 0}
+}
+@media (prefers-reduced-motion:reduce){.wapp-shell.entered .wapp-letter-title,.wapp-shell .wapp-logo.shimmer,.wapp-shell .wapp-logo.shimmer span,.wapp-shell .wapp-date-shimmer::after{animation:none}}

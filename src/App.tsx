@@ -10,13 +10,14 @@ import ProductPage from "./pages/ProductPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import ServicesPage from "./pages/ServicesPage";
 import WeddingPage from "./pages/WeddingPage";
+import WeddingAdminPage from "./pages/WeddingAdminPage";
 import CookieNotice from "./components/common/CookieNotice";
 
 export default function App() {
   const { pathname } = useLocation();
   const hostname = window.location.hostname;
   const isWeddingHost = hostname === "wedding.tanisten.com" || hostname === "tanisten-wedding.pages.dev" || hostname.endsWith(".tanisten-wedding.pages.dev");
-  const isWeddingPage = isWeddingHost || pathname === "/wedding" || pathname.startsWith("/wedding/");
+  const isWeddingPage = isWeddingHost || pathname === "/wedding" || pathname.startsWith("/wedding/") || pathname === "/admin";
 
   return (
     <div className="min-h-screen">
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/wedding" element={<WeddingPage />} />
+          <Route path="/admin" element={<WeddingAdminPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
