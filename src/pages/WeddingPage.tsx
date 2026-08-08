@@ -21,7 +21,7 @@ const copy = {
     monthYear: "август, 2026",
     open: "Чакырууну ачуу",
     days: "күн", hours: "саат", minutes: "мүнөт",
-    subtitleFamily: "Сизди үйлөнүү үлпөт тойго чакырабыз", subtitleCouple: "Сизди үйлөнүү үлпөт тоюма чакырам",
+    subtitleFamily: "Сизди үйлөнүү үлпөт тойго чакырабыз", subtitleFamilyPlural: "Сиздерди үйлөнүү үлпөт тойго чакырабыз", subtitleCouple: "Сизди үйлөнүү үлпөт тоюма чакырам", subtitleCouplePlural: "Сиздерди үйлөнүү үлпөт тоюма чакырам",
     remaining: "калды",
     responseNote: "Сиздин жообуңуз биз үчүн маанилүү",
     seating: "Отургузуу", guestBook: "Каалоо китеби", moments: "Тойдогу көз ирмемдер", gallery: "Сүрөттөр",
@@ -44,7 +44,7 @@ const copy = {
     monthYear: "август 2026",
     open: "Открыть приглашение",
     days: "дней", hours: "часов", minutes: "минут",
-    subtitleFamily: "Приглашаем Вас на свадебное торжество", subtitleCouple: "Приглашаю Вас на свою свадьбу",
+    subtitleFamily: "Приглашаем Вас на свадебное торжество", subtitleFamilyPlural: "Приглашаем Вас на свадебное торжество", subtitleCouple: "Приглашаю Вас на свою свадьбу", subtitleCouplePlural: "Приглашаю Вас на свою свадьбу",
     remaining: "осталось",
     responseNote: "Ваш ответ очень важен для нас",
     seating: "Рассадка", guestBook: "Книга пожеланий", moments: "Свадебные моменты", gallery: "Фотографии",
@@ -132,12 +132,16 @@ export default function WeddingPage() {
   }, []);
   const guestRecord = useMemo(() => findWeddingGuest(guestParameter), [guestParameter]);
   const isGroupInvitation = guestParameter?.trim().toLocaleLowerCase() === "guest";
-  const guestName = guestRecord?.name ?? guestParameter?.trim().slice(0, 80) ?? t.guestFallback;
+  const guestName = guestRecord
+    ? language === "ky" && guestRecord.guestCount === 2 ? guestRecord.name.split(" и ").join(" жана ") : guestRecord.name
+    : guestParameter?.trim().slice(0, 80) ?? t.guestFallback;
   const inviter = findWeddingInviter(guestRecord?.inviterId) || findWeddingInviter(1);
   const inviterName = inviter?.name || "Асанбай Табанович";
   const organizerWhatsApp = `https://wa.me/${inviter?.whatsapp || "996772178085"}`;
-  const greeting = language === "ky" ? t.greetingUnknown : guestRecord?.gender === "female" ? t.greetingFemale : guestRecord?.gender === "male" ? t.greetingMale : t.greetingUnknown;
-  const invitationText = guestRecord && guestRecord.inviterId >= 3 ? t.subtitleCouple : t.subtitleFamily;
+  const greeting = language === "ky" ? t.greetingUnknown : guestRecord?.guestCount === 2 ? "Уважаемые" : guestRecord?.gender === "female" ? t.greetingFemale : guestRecord?.gender === "male" ? t.greetingMale : t.greetingUnknown;
+  const invitationText = guestRecord?.guestCount === 2
+    ? guestRecord.inviterId >= 3 ? t.subtitleCouplePlural : t.subtitleFamilyPlural
+    : guestRecord && guestRecord.inviterId >= 3 ? t.subtitleCouple : t.subtitleFamily;
   const invitationLetter = useMemo(() => {
     if (isGroupInvitation) {
       return language === "ky"
@@ -350,7 +354,7 @@ export default function WeddingPage() {
       {screen === "route" && <><SectionHead eyebrow={t.cards[1]} title={t.cards[1]} /><div className="wapp-map"><div className="wapp-route-line"><span>●</span><i /><b>Palazzo</b></div></div><article className="wapp-info-card"><h3>{venue}</h3><p>{address}</p><a className="wapp-primary-link" href={palazzoMapUrl} target="_blank" rel="noreferrer">{t.map} →</a></article></>}
       {screen === "program" && <><SectionHead eyebrow="25 · 08 · 2026" title={t.programTitle} /><div className="wapp-timeline">{timeline.map(([time, name], index) => <motion.article key={time} initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * .12 }}><div className="wapp-bud">❀</div><time>{time}</time><p>{name}</p></motion.article>)}</div></>}
       {screen === "table" && <><SectionHead eyebrow={t.seating} title={guestName} /><p className="wapp-guest-place">{t.tableTitle}</p><article className="wapp-plan-card"><header><span>⌑</span><h2>{t.plan}</h2></header><div className="wapp-plan-preview" aria-hidden="true"><i className="table one" /><i className="table two" /><i className="table three" /><i className="chair marked">?</i></div><div className="wapp-plan-pending"><span>✦</span><p>{t.planPending}</p></div></article></>}
-      {screen === "wishes" && <><SectionHead eyebrow={t.guestBook} title={t.wishesTitle} /><p className="wapp-section-copy">{t.wishesHint}</p>{!wishSent ? <form className="wapp-form" onSubmit={submitWish}><label>{t.name}<input name="name" defaultValue={guestRecord?.name ?? ""} minLength={2} maxLength={80} required /></label><label>{t.wish}<textarea name="message" minLength={2} maxLength={1000} required rows={5} /></label><input className="wapp-honeypot" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" /><button className="wapp-button" disabled={wishSending}>{wishSending ? (language === "ky" ? "Жөнөтүлүүдө…" : "Отправляем…") : t.send}</button>{wishError && <p className="wapp-form-error">{wishError}</p>}</form> : <motion.div className="wapp-success" initial={{ opacity: 0, scale: .9 }} animate={{ opacity: 1, scale: 1 }}>❀<p>{language === "ky" ? "Рахмат! Каалооңуз сакталды." : "Спасибо! Ваше пожелание сохранено."}</p></motion.div>}</>}
+      {screen === "wishes" && <><SectionHead eyebrow={t.guestBook} title={t.wishesTitle} /><p className="wapp-section-copy">{t.wishesHint}</p>{!wishSent ? <form className="wapp-form" onSubmit={submitWish}><label>{t.name}<input name="name" defaultValue={guestRecord ? guestName : ""} minLength={2} maxLength={80} required /></label><label>{t.wish}<textarea name="message" minLength={2} maxLength={1000} required rows={5} /></label><input className="wapp-honeypot" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" /><button className="wapp-button" disabled={wishSending}>{wishSending ? (language === "ky" ? "Жөнөтүлүүдө…" : "Отправляем…") : t.send}</button>{wishError && <p className="wapp-form-error">{wishError}</p>}</form> : <motion.div className="wapp-success" initial={{ opacity: 0, scale: .9 }} animate={{ opacity: 1, scale: 1 }}>❀<p>{language === "ky" ? "Рахмат! Каалооңуз сакталды." : "Спасибо! Ваше пожелание сохранено."}</p></motion.div>}</>}
       {screen === "games" && <><SectionHead eyebrow={t.moments} title={t.gamesTitle} /><div className="wapp-game-list">{games[language].map(([name, desc], i) => <motion.button key={name} whileTap={{ scale: .98 }} onClick={(event) => { event.currentTarget.classList.toggle("revealed"); }}><span>0{i + 1}</span><div><b>{name}</b><p>{desc}</p></div><i>✿</i></motion.button>)}</div></>}
       {screen === "gallery" && <><SectionHead eyebrow={t.gallery} title={t.galleryTitle} /><article className="wapp-feature-pending"><div className="wapp-pending-camera" aria-hidden="true"><span>□</span><i>✦</i></div><p>{t.galleryPending}</p></article></>}
       {screen === "rsvp" && <><SectionHead eyebrow="RSVP" title={t.rsvpTitle} />{!confirmed ? <div className="wapp-rsvp"><div>{[["yes", t.yes], ["no", t.no], ["transport", t.transport]].map(([value, label]) => <button className={rsvp === value ? "active" : ""} onClick={() => setRsvp(value)} key={value}><span>{rsvp === value ? "✓" : ""}</span>{label}</button>)}</div><button className="wapp-button" onClick={() => setConfirmed(true)}>{t.confirm}</button></div> : <motion.div className="wapp-success large" initial={{ opacity: 0, scale: .8 }} animate={{ opacity: 1, scale: 1 }}><motion.span animate={{ rotate: [0, 12, -8, 0] }} transition={{ duration: 1.6 }}>❀</motion.span><h3>{t.success}</h3><Logo compact /></motion.div>}</>}

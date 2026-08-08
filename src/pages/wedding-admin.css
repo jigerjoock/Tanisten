@@ -15,6 +15,7 @@
 .wadmin-list article:last-child { border-bottom:0; }
 .wadmin-list article>div { min-width:0; }
 .wadmin-list strong { display:block; margin-bottom:4px; font-family:"Cormorant Garamond",Georgia,serif; font-size:1.25rem; font-weight:600; }
+.wadmin-guest-count { display:block; margin:-1px 0 5px; color:#77777d; font-size:.6rem; font-weight:700; letter-spacing:.04em; }
 .wadmin-list a { display:block; overflow:hidden; color:#85858b; font-size:.68rem; text-decoration:none; text-overflow:ellipsis; white-space:nowrap; }
 .wadmin-list button { min-width:116px; min-height:39px; padding:8px 13px; border:1px solid #aaaab0; border-radius:7px; background:#f6f6f7; color:#4f4f54; cursor:pointer; font-size:.64rem; font-weight:800; transition:.25s ease; }
 .wadmin-list button:hover { border-color:#77777d; background:#ececef; }

@@ -17,9 +17,10 @@ export default function WeddingAdminPage({ inviterId }: WeddingAdminPageProps) {
     guests: weddingGuests.filter((guest) => guest.inviterId === inviter.id)
   })), [inviterId]);
   const selectedInviter = inviterId === undefined ? undefined : weddingInviters.find((inviter) => inviter.id === inviterId);
+  const totalGuestCount = groups.reduce((total, group) => total + group.guests.reduce((groupTotal, guest) => groupTotal + guest.guestCount, 0), 0);
   const visibleWishes = useMemo(() => {
     if (inviterId === undefined) return wishes;
-    const guestSlugs = new Set(weddingGuests.filter((guest) => guest.inviterId === inviterId).map((guest) => guest.slug).filter(Boolean));
+    const guestSlugs = new Set(weddingGuests.filter((guest) => guest.inviterId === inviterId).flatMap((guest) => [guest.slug, ...(guest.aliases ?? [])]).filter(Boolean));
     return wishes.filter((wish) => guestSlugs.has(wish.guestSlug));
   }, [inviterId, wishes]);
 
@@ -37,22 +38,22 @@ export default function WeddingAdminPage({ inviterId }: WeddingAdminPageProps) {
     <header className="wadmin-header">
       <p>25 · 08 · 2026</p>
       <h1>{selectedInviter ? `Гости — ${selectedInviter.name}` : "Ссылки для гостей"}</h1>
-      <span>Айжигит ✿ Айдай</span>
+      <span>Айжигит ✿ Айдай · Всего гостей: {totalGuestCount}</span>
     </header>
 
     <div className="wadmin-groups">
       {groups.map(({ inviter, guests }) => <section className="wadmin-group" key={inviter.id}>
         <header>
           <div><small>Пригласитель</small><h2>{inviter.name}</h2></div>
-          <b>{guests.length}</b>
+          <b title={`${guests.reduce((total, guest) => total + guest.guestCount, 0)} гостей`}>{guests.reduce((total, guest) => total + guest.guestCount, 0)}</b>
         </header>
         {guests.length > 0 ? <div className="wadmin-list">
           {guests.map((guest) => {
             const slug = guest.slug ?? "";
             const link = buildInvitationLink(slug);
-            const message = buildInvitationMessage({ guestName: guest.name, gender: guest.gender, guestId: slug, inviterId: inviter.id });
+            const message = buildInvitationMessage({ guestName: guest.name, gender: guest.gender, guestCount: guest.guestCount, guestId: slug, inviterId: inviter.id });
             return <article key={`${inviter.id}-${guest.name}`}>
-              <div><strong>{guest.name}</strong><a href={link} target="_blank" rel="noreferrer">{link}</a></div>
+              <div><strong>{guest.name}</strong><span className="wadmin-guest-count">{guest.guestCount === 2 ? "2 гостя · пара" : "1 гость"}</span><a href={link} target="_blank" rel="noreferrer">{link}</a></div>
               <div className="wadmin-share-actions">
                 <button type="button" disabled={!slug} className={copied === slug ? "copied" : ""} onClick={() => copyLink(slug)}>{copied === slug ? "Скопировано ✓" : "Копировать"}</button>
                 <button type="button" disabled={!slug} className="wadmin-whatsapp" onClick={() => openWhatsApp(message)} aria-label={`Отправить приглашение для ${guest.name} в WhatsApp`}><span>◉</span> WhatsApp</button>

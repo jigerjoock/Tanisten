@@ -6,6 +6,7 @@ const WEDDING_URL = "https://wedding.tanisten.com/";
 export type InvitationMessageInput = {
   guestName: string;
   gender: GuestGender;
+  guestCount: 1 | 2;
   guestId: string;
   inviterId: WeddingInviter["id"];
   locale?: WeddingShareLocale;
@@ -24,13 +25,13 @@ export function buildInvitationLink(guestId: string): string {
   return url.toString();
 }
 
-export function buildInvitationMessage({ guestName, gender, guestId, inviterId, locale = "ru" }: InvitationMessageInput): string {
+export function buildInvitationMessage({ guestName, gender, guestCount, guestId, inviterId, locale = "ru" }: InvitationMessageInput): string {
   const copy = weddingShareCopy[locale];
   const voice = invitationVoiceByInviter[inviterId];
   const invitationLink = buildInvitationLink(guestId);
 
   return [
-    copy.salutation(guestName, gender),
+    copy.salutation(guestName, gender, guestCount),
     copy.invitation[voice],
     invitationLink
   ].join("\n\n");
