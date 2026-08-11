@@ -34,6 +34,8 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/wedding" element={<WeddingPage />} />
           <Route path="/admin" element={<WeddingAdminPage />} />
+          <Route path="/admin/asanbai" element={<WeddingAdminPage inviterId={1} />} />
+          <Route path="/admin/azil" element={<WeddingAdminPage inviterId={2} />} />
           <Route path="/admin/aidai" element={<WeddingAdminPage inviterId={3} />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

@@ -35,7 +35,7 @@ const copy = {
     wishesTitle: "Жылуу каалооңуз", wishesHint: "Бизге жүрөктөн чыккан сөздөрүңүздү калтырыңыз",
     name: "Атыңыз", wish: "Каалооңуз", media: "Сүрөт же видео", send: "Жөнөтүү",
     gamesTitle: "Эстеликке айланган оюндар", galleryTitle: "Сиздердин көзүңүздөр менен",
-    rsvpTitle: "Биз менен бирге болосузбу?", yes: "Ооба", no: "Жок", transport: "Транспорт керек",
+    rsvpTitle: "Кубанычыбызды биз менен бөлүшүңүз", yes: "Ооба", no: "Жок", transport: "Транспорт керек",
     confirm: "Жоопту ырастоо", success: "Рахмат! Жообуңуз кабыл алынды.", tableResult: "Сиздин столуңуз — № 8"
   },
   ru: {
@@ -58,7 +58,7 @@ const copy = {
     wishesTitle: "Ваше тёплое пожелание", wishesHint: "Оставьте нам несколько слов от сердца",
     name: "Ваше имя", wish: "Пожелание", media: "Фото или видео", send: "Отправить",
     gamesTitle: "Игры, которые станут воспоминаниями", galleryTitle: "Свадьба вашими глазами",
-    rsvpTitle: "Вы будете с нами?", yes: "Да", no: "Нет", transport: "Нужен транспорт",
+    rsvpTitle: "Разделите этот счастливый день вместе с нами", yes: "Да", no: "Нет", transport: "Нужен транспорт",
     confirm: "Подтвердить ответ", success: "Спасибо! Ваш ответ принят.", tableResult: "Ваш стол — № 8"
   }
 };
@@ -75,8 +75,8 @@ const games = {
   ru: [["Интеллектуальные игры", "Проявите смекалку и приведите команду к победе"], ["Танцевальные баттлы", "Покажите себя на танцполе"], ["Музыкальные баттлы", "Угадайте знакомые мелодии и подпевайте"], ["Той тапшырмасы", "Выполните особое свадебное задание"]]
 };
 
-function Logo({ compact = false, original = false, shimmer = false }: { compact?: boolean; original?: boolean; shimmer?: boolean }) {
-  return <div className={`wapp-logo ${compact ? "compact" : ""} ${shimmer ? "shimmer" : ""}`}>{original ? "AIDAI" : "Айжигит"} <span>✿</span> {original ? "Айжигит" : "Айдай"}</div>;
+function Logo({ compact = false, shimmer = false }: { compact?: boolean; original?: boolean; shimmer?: boolean }) {
+  return <div className={`wapp-logo ${compact ? "compact" : ""} ${shimmer ? "shimmer" : ""}`}><span className="wapp-logo-name left">Айжигит</span><span className="wapp-logo-mark">✿</span><span className="wapp-logo-name right">Айдай</span></div>;
 }
 
 function BotanicalCorners() {
@@ -136,7 +136,7 @@ export default function WeddingPage() {
     ? language === "ky" && guestRecord.guestCount === 2 ? guestRecord.name.split(" и ").join(" жана ") : guestRecord.name
     : guestParameter?.trim().slice(0, 80) ?? t.guestFallback;
   const inviter = findWeddingInviter(guestRecord?.inviterId) || findWeddingInviter(1);
-  const inviterName = inviter?.name || "Асанбай Табанович";
+  const inviterName = inviter?.name || "Асанбай Пазылов";
   const organizerWhatsApp = `https://wa.me/${inviter?.whatsapp || "996772178085"}`;
   const greeting = language === "ky" ? t.greetingUnknown : guestRecord?.guestCount === 2 ? "Уважаемые" : guestRecord?.gender === "female" ? t.greetingFemale : guestRecord?.gender === "male" ? t.greetingMale : t.greetingUnknown;
   const invitationText = guestRecord?.guestCount === 2
@@ -303,7 +303,7 @@ export default function WeddingPage() {
   return (
       <div className={`wapp-shell theme-${weddingStyle} ${entered ? "entered" : ""}`}>
         <PalazzoBackdrop />
-        <Seo title="AIDAI ✿ Айжигит" description="Для Вас подготовлено персональное приглашение. Нажмите, чтобы открыть." image="https://wedding.tanisten.com/wedding-preview.jpg?v=20260807c" />
+        <Seo title="Айжигит ✿ Айдай" description="Для Вас подготовлено персональное приглашение. Нажмите, чтобы открыть." image="https://wedding.tanisten.com/wedding-preview.jpg?v=20260807c" />
         <audio ref={audioRef} src={weddingMusic} preload="auto" onEnded={() => setMusic(false)} />
         <AnimatePresence>
           {!entered && <motion.section className="wapp-entry" initial={{ opacity: 1 }} exit={{ opacity: 0, scale: 1.025, filter: "blur(7px)" }} transition={{ duration: .85, ease: [0.22, 1, 0.36, 1] }}>
@@ -311,7 +311,7 @@ export default function WeddingPage() {
             <div className="wapp-petals wapp-entry-petals" aria-hidden="true">{Array.from({ length: 9 }, (_, index) => <i key={index} />)}</div>
             <motion.div className="wapp-entry-card" initial={{ opacity: 0, y: 16, rotateX: 5 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}>
               <SilverOrnaments />
-              <p>AIDAI <span>✿</span> Айжигит</p>
+              <p>Айжигит <span>✿</span> Айдай</p>
               <button className="wapp-entry-button" onClick={enterInvitation}><span>{language === "ky" ? "Чакыруу" : "Приглашение"}</span></button>
               <small>{language === "ky" ? "Ачуу үчүн басыңыз" : "Нажмите, чтобы открыть"}</small>
             </motion.div>
