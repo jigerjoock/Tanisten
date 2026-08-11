@@ -18,6 +18,8 @@ export default function WeddingAdminPage({ inviterId }: WeddingAdminPageProps) {
   })), [inviterId]);
   const selectedInviter = inviterId === undefined ? undefined : weddingInviters.find((inviter) => inviter.id === inviterId);
   const totalGuestCount = groups.reduce((total, group) => total + group.guests.reduce((groupTotal, guest) => groupTotal + guest.guestCount, 0), 0);
+  const generalInvitationLink = buildInvitationLink("guest");
+  const generalInvitationMessage = buildInvitationMessage({ guestName: "гости", gender: "male", guestCount: 2, guestId: "guest", inviterId: 2 });
   const visibleWishes = useMemo(() => {
     if (inviterId === undefined) return wishes;
     const guestSlugs = new Set(weddingGuests.filter((guest) => guest.inviterId === inviterId).flatMap((guest) => [guest.slug, ...(guest.aliases ?? [])]).filter(Boolean));
@@ -42,6 +44,16 @@ export default function WeddingAdminPage({ inviterId }: WeddingAdminPageProps) {
     </header>
 
     <div className="wadmin-groups">
+      {inviterId === undefined && <section className="wadmin-group wadmin-general">
+        <header><div><small>Для всех гостей</small><h2>Общее приглашение</h2></div><b>✦</b></header>
+        <article>
+          <div><strong>Урматтуу коноктор</strong><a href={generalInvitationLink} target="_blank" rel="noreferrer">{generalInvitationLink}</a></div>
+          <div className="wadmin-share-actions">
+            <button type="button" className={copied === "guest" ? "copied" : ""} onClick={() => copyLink("guest")}>{copied === "guest" ? "Скопировано ✓" : "Копировать ссылку"}</button>
+            <button type="button" className="wadmin-whatsapp" onClick={() => openWhatsApp(generalInvitationMessage)} aria-label="Отправить общее приглашение в WhatsApp"><span>◉</span> WhatsApp</button>
+          </div>
+        </article>
+      </section>}
       {groups.map(({ inviter, guests }) => <section className="wadmin-group" key={inviter.id}>
         <header>
           <div><small>Пригласитель</small><h2>{inviter.name}</h2></div>

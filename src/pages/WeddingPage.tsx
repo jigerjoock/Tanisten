@@ -75,8 +75,8 @@ const games = {
   ru: [["Интеллектуальные игры", "Проявите смекалку и приведите команду к победе"], ["Танцевальные баттлы", "Покажите себя на танцполе"], ["Музыкальные баттлы", "Угадайте знакомые мелодии и подпевайте"], ["Той тапшырмасы", "Выполните особое свадебное задание"]]
 };
 
-function Logo({ compact = false, shimmer = false }: { compact?: boolean; original?: boolean; shimmer?: boolean }) {
-  return <div className={`wapp-logo ${compact ? "compact" : ""} ${shimmer ? "shimmer" : ""}`}><span className="wapp-logo-name left">Айжигит</span><span className="wapp-logo-mark">✿</span><span className="wapp-logo-name right">Айдай</span></div>;
+function Logo({ compact = false, original = false, shimmer = false }: { compact?: boolean; original?: boolean; shimmer?: boolean }) {
+  return <div className={`wapp-logo ${compact ? "compact" : ""} ${shimmer ? "shimmer" : ""}`}><span className="wapp-logo-name left">{original ? "Айдай" : "Айжигит"}</span><span className="wapp-logo-mark">✿</span><span className="wapp-logo-name right">{original ? "Айжигит" : "Айдай"}</span></div>;
 }
 
 function BotanicalCorners() {
@@ -135,7 +135,7 @@ export default function WeddingPage() {
   const guestName = guestRecord
     ? language === "ky" && guestRecord.guestCount === 2 ? guestRecord.name.split(" и ").join(" жана ") : guestRecord.name
     : guestParameter?.trim().slice(0, 80) ?? t.guestFallback;
-  const inviter = findWeddingInviter(guestRecord?.inviterId) || findWeddingInviter(1);
+  const inviter = findWeddingInviter(guestRecord?.inviterId ?? (isGroupInvitation ? 2 : undefined)) || findWeddingInviter(1);
   const inviterName = inviter?.name || "Асанбай Пазылов";
   const organizerWhatsApp = `https://wa.me/${inviter?.whatsapp || "996772178085"}`;
   const greeting = language === "ky" ? t.greetingUnknown : guestRecord?.guestCount === 2 ? "Уважаемые" : guestRecord?.gender === "female" ? t.greetingFemale : guestRecord?.gender === "male" ? t.greetingMale : t.greetingUnknown;
@@ -145,8 +145,8 @@ export default function WeddingPage() {
   const invitationLetter = useMemo(() => {
     if (isGroupInvitation) {
       return language === "ky"
-        ? "Урматтуу биздин ардактуу конокторубуз!\n\nСиздерди Айжигит & Айдай үйлөнүү үлпөт тоюна чакырабыз!"
-        : "Дорогие наши почётные гости!\n\nПриглашаем вас на свадьбу Айжигита и Айдай!";
+        ? `Урматтуу коноктор!\n\nСиздерди Айжигит жана Айдайдын үйлөнүү үлпөт тоюна чакырабыз!\n\n${inviterName}`
+        : `Дорогие наши почётные гости!\n\nПриглашаем вас на свадьбу Айжигита и Айдай!\n\n${inviterName}`;
     }
     const salutation = `${greeting} ${guestName}!`;
     return `${salutation}\n\n${invitationText}\n\n${inviterName}`;

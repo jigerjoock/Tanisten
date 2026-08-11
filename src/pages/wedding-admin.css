@@ -12,6 +12,14 @@
 .wadmin-group h2 { margin:3px 0 0; font-family:"Cormorant Garamond",Georgia,serif; font-size:1.65rem; font-weight:600; }
 .wadmin-group>header b { display:grid; flex:0 0 36px; width:36px; height:36px; border:1px solid #b9b9be; border-radius:50%; color:#6b6b70; font-size:.72rem; place-items:center; }
 .wadmin-list article { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:18px; padding:16px 22px; border-bottom:1px solid #e6e6e8; }
+.wadmin-general { border-color:#aaaab0; }
+.wadmin-general>article { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:18px; padding:18px 22px; }
+.wadmin-general>article>div:first-child { min-width:0; }
+.wadmin-general strong { display:block; margin-bottom:4px; font-family:"Cormorant Garamond",Georgia,serif; font-size:1.3rem; }
+.wadmin-general a { display:block; overflow:hidden; color:#85858b; font-size:.68rem; text-decoration:none; text-overflow:ellipsis; white-space:nowrap; }
+.wadmin-general button { min-width:116px; min-height:39px; padding:8px 13px; border:1px solid #aaaab0; border-radius:7px; background:#f6f6f7; color:#4f4f54; cursor:pointer; font-size:.64rem; font-weight:800; }
+.wadmin-general button.copied { border-color:#798b79; background:#edf4ed; color:#4d684d; }
+.wadmin-general .wadmin-whatsapp { border-color:#1faa59; background:#25d366; color:#fff; box-shadow:0 7px 18px rgba(37,211,102,.2); }
 .wadmin-list article:last-child { border-bottom:0; }
 .wadmin-list article>div { min-width:0; }
 .wadmin-list strong { display:block; margin-bottom:4px; font-family:"Cormorant Garamond",Georgia,serif; font-size:1.25rem; font-weight:600; }
@@ -32,4 +40,4 @@
 .wadmin-wish-list strong { font-family:"Cormorant Garamond",Georgia,serif; font-size:1.25rem; }
 .wadmin-wish-list time,.wadmin-wish-list small { color:#939399; font-size:.6rem; }
 .wadmin-wish-list p { margin:8px 0; color:#56565b; font-family:"Cormorant Garamond",Georgia,serif; font-size:1.15rem; line-height:1.45; white-space:pre-wrap; }
-@media (max-width:560px){.wadmin-shell{padding:28px 10px 55px}.wadmin-group>header{padding:17px 15px}.wadmin-list article{grid-template-columns:1fr;padding:15px;gap:11px}.wadmin-share-actions{display:grid;grid-template-columns:1fr 1fr}.wadmin-list button{width:100%;min-width:0}.wadmin-header{margin-bottom:24px}}
+@media (max-width:560px){.wadmin-shell{padding:28px 10px 55px}.wadmin-group>header{padding:17px 15px}.wadmin-list article,.wadmin-general>article{grid-template-columns:1fr;padding:15px;gap:11px}.wadmin-share-actions{display:grid;grid-template-columns:1fr 1fr}.wadmin-list button,.wadmin-general button{width:100%;min-width:0}.wadmin-header{margin-bottom:24px}}
