@@ -21,3 +21,13 @@ test("hardening migration blocks direct learner writes and scopes teachers", () 
   assert.match(migration, /group_teachers/);
   assert.match(migration, /feedback is required when returning work for changes/i);
 });
+
+test("automatic validation and course-wide teaching access fail closed", async () => {
+  const failClosedMigration = await readFile(new URL("../supabase/migrations/202610150003_fail_closed_checks_and_teacher_scopes.sql", import.meta.url), "utf8");
+  assert.match(failClosedMigration, /Automatic validation is not configured/);
+  assert.match(failClosedMigration, /v_passed boolean := false/);
+  assert.match(failClosedMigration, /expected_answer/);
+  assert.match(failClosedMigration, /Automatic code execution is not configured/);
+  assert.match(failClosedMigration, /grants_course_wide_access boolean not null default false/);
+  assert.match(failClosedMigration, /grants_course_wide_access\)/);
+});

@@ -12,8 +12,10 @@ Independent Next.js LMS for `learn.tanisten.com`. It does not share runtime, dep
 
 ## Exercise modes
 
-- `automatic` evaluates `check_config` conditions (`min_length`, `contains`, `equals`) on `Check`, records every attempt, and marks a matching submission `passed`.
+- `automatic` fails closed. A `text_response` can pass only when `check_config` declares `version: "1"`, `executor: "text_exact"`, and a non-empty `expected_answer`, then the trimmed answer matches exactly. Scratch, Python and JavaScript store an extensible exercise schema but stay incomplete until a trusted verifier/runner is deployed; the UI never claims to execute code locally.
 - `teacher` creates a `submitted` record when the learner marks work complete; `/teacher` lets staff approve (`passed`) or reject it with feedback.
+
+Teacher access is group-scoped by default. A direct `course_teachers` assignment reaches every enrolled student only when an admin explicitly sets `grants_course_wide_access`; the admin UI makes that scope explicit.
 
 ## CodeLab v0.2 archive
 
