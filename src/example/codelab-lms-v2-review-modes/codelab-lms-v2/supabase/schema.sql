@@ -1,0 +1,54 @@
+-- CodeLab LMS v0.2: run in Supabase SQL Editor on a new project.
+create extension if not exists pgcrypto;
+create type public.user_role as enum ('admin','teacher','student');
+create type public.progress_status as enum ('not_started','in_progress','submitted','completed');
+create table public.organizations (id uuid primary key default gen_random_uuid(), name text not null, created_at timestamptz not null default now());
+create table public.profiles (id uuid primary key references auth.users(id) on delete cascade, organization_id uuid references public.organizations(id), full_name text not null default '', role public.user_role not null default 'student', created_at timestamptz not null default now());
+create table public.groups (id uuid primary key default gen_random_uuid(), organization_id uuid not null references public.organizations(id), name text not null, created_at timestamptz not null default now());
+create table public.group_members (group_id uuid not null references public.groups(id) on delete cascade, student_id uuid not null references public.profiles(id) on delete cascade, primary key(group_id,student_id));
+create table public.group_teachers (group_id uuid not null references public.groups(id) on delete cascade, teacher_id uuid not null references public.profiles(id) on delete cascade, primary key(group_id,teacher_id));
+create table public.courses (id uuid primary key default gen_random_uuid(), organization_id uuid references public.organizations(id), title text not null, slug text unique not null, language text not null, published boolean not null default false, created_at timestamptz not null default now());
+create table public.modules (id uuid primary key default gen_random_uuid(), course_id uuid not null references public.courses(id) on delete cascade, title text not null, sort_order integer not null default 0);
+create table public.lessons (id uuid primary key default gen_random_uuid(), module_id uuid not null references public.modules(id) on delete cascade, title text not null, content jsonb not null default '{}'::jsonb, sort_order integer not null default 0);
+create table public.assignments (id uuid primary key default gen_random_uuid(), lesson_id uuid not null references public.lessons(id) on delete cascade, title text not null, instructions jsonb not null default '{}'::jsonb, kind text not null check(kind in ('reading','scratch','python','javascript','quiz')));
+create table public.enrollments (student_id uuid not null references public.profiles(id) on delete cascade, course_id uuid not null references public.courses(id) on delete cascade, enrolled_at timestamptz not null default now(), primary key(student_id,course_id));
+create table public.lesson_progress (student_id uuid not null references public.profiles(id) on delete cascade, lesson_id uuid not null references public.lessons(id) on delete cascade, status public.progress_status not null default 'not_started', started_at timestamptz, submitted_at timestamptz, completed_at timestamptz, attempts integer not null default 0 check(attempts>=0), updated_at timestamptz not null default now(), primary key(student_id,lesson_id));
+create table public.submissions (id uuid primary key default gen_random_uuid(), assignment_id uuid not null references public.assignments(id) on delete cascade, student_id uuid not null references public.profiles(id) on delete cascade, answer jsonb not null default '{}'::jsonb, submitted_at timestamptz not null default now(), reviewed_at timestamptz, reviewed_by uuid references public.profiles(id), feedback text, grade numeric);
+create table public.activity_events (id bigint generated always as identity primary key, student_id uuid not null references public.profiles(id) on delete cascade, lesson_id uuid references public.lessons(id), event_name text not null check(event_name in ('lesson_started','submission_created','lesson_completed','lesson_reopened')), occurred_at timestamptz not null default now(), metadata jsonb not null default '{}'::jsonb);
+create index on public.group_members(student_id);
+create index on public.group_teachers(teacher_id);
+create index on public.lesson_progress(lesson_id,status);
+create index on public.submissions(student_id,submitted_at desc);
+create index on public.activity_events(student_id,occurred_at desc);
+-- Helpers are SECURITY DEFINER to avoid recursive profile/group RLS checks.
+create function public.my_org() returns uuid language sql stable security definer set search_path='' as $$ select organization_id from public.profiles where id=(select auth.uid()) $$;
+create function public.is_staff() returns boolean language sql stable security definer set search_path='' as $$ select exists(select 1 from public.profiles where id=(select auth.uid()) and role in ('admin','teacher')) $$;
+create function public.can_view_student(target uuid) returns boolean language sql stable security definer set search_path='' as $$ select target=(select auth.uid()) or exists(select 1 from public.profiles staff join public.profiles pupil on pupil.organization_id=staff.organization_id where staff.id=(select auth.uid()) and pupil.id=target and staff.role='admin') or exists(select 1 from public.group_teachers gt join public.group_members gm on gm.group_id=gt.group_id where gt.teacher_id=(select auth.uid()) and gm.student_id=target) $$;
+-- Enable RLS on every table; NO broad write policies. Writes must be added through vetted RPC/API.
+alter table public.organizations enable row level security;
+alter table public.profiles enable row level security;
+alter table public.groups enable row level security;
+alter table public.group_members enable row level security;
+alter table public.group_teachers enable row level security;
+alter table public.courses enable row level security;
+alter table public.modules enable row level security;
+alter table public.lessons enable row level security;
+alter table public.assignments enable row level security;
+alter table public.enrollments enable row level security;
+alter table public.lesson_progress enable row level security;
+alter table public.submissions enable row level security;
+alter table public.activity_events enable row level security;
+create policy organizations_select on public.organizations for select to authenticated using(id=public.my_org());
+create policy profiles_select on public.profiles for select to authenticated using(id=(select auth.uid()) or public.can_view_student(id));
+create policy groups_select on public.groups for select to authenticated using(organization_id=public.my_org());
+create policy group_members_select on public.group_members for select to authenticated using(public.can_view_student(student_id));
+create policy group_teachers_select on public.group_teachers for select to authenticated using(teacher_id=(select auth.uid()) or exists(select 1 from public.groups g where g.id=group_id and g.organization_id=public.my_org() and public.is_staff()));
+create policy courses_select on public.courses for select to authenticated using((published=true and (organization_id is null or organization_id=public.my_org())) or (organization_id=public.my_org() and public.is_staff()));
+create policy modules_select on public.modules for select to authenticated using(exists(select 1 from public.courses c where c.id=course_id));
+create policy lessons_select on public.lessons for select to authenticated using(exists(select 1 from public.modules m where m.id=module_id));
+create policy assignments_select on public.assignments for select to authenticated using(exists(select 1 from public.lessons l where l.id=lesson_id));
+create policy enrollments_select on public.enrollments for select to authenticated using(public.can_view_student(student_id));
+create policy lesson_progress_select on public.lesson_progress for select to authenticated using(public.can_view_student(student_id));
+create policy submissions_select on public.submissions for select to authenticated using(public.can_view_student(student_id));
+create policy activity_events_select on public.activity_events for select to authenticated using(public.can_view_student(student_id));
+-- Intentional: no INSERT/UPDATE/DELETE policy yet. Production requires secured workflows and role/organization checks before writes.
