@@ -4,6 +4,7 @@ export type SubmissionStatus = "draft" | "submitted" | "passed" | "rejected";
 
 export interface Exercise {
   id: string;
+  lesson_id: string;
   title: string;
   description: string;
   check_mode: CheckMode;
@@ -18,4 +19,18 @@ export interface Submission {
   answer: string;
   feedback: string | null;
   checked_at: string | null;
+}
+
+export interface CourseModule {
+  id: string;
+  title: string;
+  position: number;
+}
+
+export interface Lesson {
+  id: string;
+  module_id: string;
+  title: string;
+  description: string;
+  position: number;
 }

@@ -22,3 +22,7 @@ The archive was not present in this repository when this scaffold was created. P
 ## Cloudflare Workers
 
 `wrangler.jsonc` only defines a Worker; it does not configure a DNS route or alter `tanisten.com`. After setting Cloudflare credentials, run `npm run deploy` from this directory. Bind `learn.tanisten.com` in Cloudflare only after explicit approval and DNS readiness.
+
+## Security tests
+
+Run `npm test` for fast route/migration security contracts. `npm run test:rls` runs the pgTAP permission suite against a started local Supabase stack; it verifies direct learner writes are denied, unassigned teachers cannot access or approve work, and assigned teachers can review. Start the local stack first with `supabase start`.
