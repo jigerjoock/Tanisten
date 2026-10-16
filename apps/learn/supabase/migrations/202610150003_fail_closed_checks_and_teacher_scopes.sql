@@ -64,9 +64,9 @@ begin
   end if;
 
   insert into public.submissions (exercise_id, student_id, answer, status, feedback, checked_at)
-  values (p_exercise_id, auth.uid(), v_answer, case when v_passed then 'passed' else 'draft' end, v_message, case when v_passed then now() else null end)
+  values (p_exercise_id, auth.uid(), v_answer, (case when v_passed then 'passed' else 'draft' end)::public.submission_status, v_message, case when v_passed then now() else null end)
   on conflict (exercise_id, student_id) do update set answer = excluded.answer, status = excluded.status, feedback = excluded.feedback, checked_by = null, checked_at = excluded.checked_at;
   insert into public.exercise_attempts (exercise_id, student_id, answer, outcome, message)
-  values (p_exercise_id, auth.uid(), v_answer, case when v_passed then 'passed' else 'draft' end, v_message);
+  values (p_exercise_id, auth.uid(), v_answer, (case when v_passed then 'passed' else 'draft' end)::public.submission_status, v_message);
   return jsonb_build_object('status', case when v_passed then 'passed' else 'draft' end, 'message', v_message);
 end; $$;
