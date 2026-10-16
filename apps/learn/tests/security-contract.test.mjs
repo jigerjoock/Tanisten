@@ -7,6 +7,8 @@ const exerciseRoute = await readFile(new URL("../app/api/exercises/[id]/route.ts
 const auth = await readFile(new URL("../lib/auth.ts", import.meta.url), "utf8");
 const middleware = await readFile(new URL("../lib/supabase/middleware.ts", import.meta.url), "utf8");
 const rlsTests = await readFile(new URL("../supabase/tests/rls_permissions.test.sql", import.meta.url), "utf8");
+const signOutAction = await readFile(new URL("../app/logout/actions.ts", import.meta.url), "utf8");
+const layout = await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8");
 
 test("submission writes use trusted RPC transitions", () => {
   assert.match(exerciseRoute, /rpc\(procedure/);
@@ -44,4 +46,12 @@ test("admin authorization keeps RLS and logs only safe diagnostics", () => {
   assert.match(rlsTests, /select plan\(15\)/);
   assert.match(rlsTests, /admin can read their own profile through RLS/);
   assert.match(rlsTests, /admin role resolves for the matching authenticated user/);
+});
+
+test("sign-out clears the Supabase session and navigation stays role-aware", () => {
+  assert.match(signOutAction, /supabase\.auth\.signOut\(\)/);
+  assert.match(signOutAction, /redirect\("\/login"\)/);
+  assert.match(layout, /role === "admin"/);
+  assert.match(layout, /role === "teacher"/);
+  assert.match(layout, /action=\{signOut\}/);
 });
