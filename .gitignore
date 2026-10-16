@@ -1,4 +1,6 @@
 node_modules
+downloaded/
+__pycache__/
 dist
 .DS_Store
 *.log

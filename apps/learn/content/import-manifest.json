@@ -1,0 +1,19 @@
+{
+  "manifest_version": 1,
+  "locale": "de",
+  "curriculum_shape": { "courses": 2, "modules_per_course": 5, "lessons_per_module": 10, "exercises_per_lesson": 5, "exercises_total": 500 },
+  "import_policy": { "public_upstream_assets_included": false, "upstream_solutions_included": false, "remote_database_modified": false },
+  "sources": [
+    { "repo": "exercism/python", "archive_sha256": "20e2ae3f24c52b3dacd5f42a08189ecf498b83a134b67a0205aa837eeb6b6621", "license": "MIT", "reusable_exercises": 163, "used": "Konzeptuelle, eigenständige Python-Adaptionen; keine Tests, Exemplarlösungen oder Texte kopiert.", "attribution": "Copyright (c) 2021 Exercism; MIT-Lizenz bei jeder materiellen Übernahme beilegen." },
+    { "repo": "raspberrypilearning/getting-started-with-scratch", "archive_sha256": "ce02bc268b38a0539ff5391a2f505bd5a328241edb152f4153bd7ddbf7dfe74d", "license": "CC BY 4.0", "reusable_exercises": 1, "used": "Eigenständige deutsche Einführungskonzepte; keine Dateien kopiert.", "attribution": "Getting Started with Scratch by Raspberry Pi Foundation, CC BY 4.0." },
+    { "repo": "raspberrypilearning/catch-the-dots", "archive_sha256": "91955b55283371d226b7a5aa3338914212e0377b18f29c8093a1eb6b8a2d4718", "license": "AMBIGUOUS: badge CC BY-SA 4.0, text CC BY 4.0", "reusable_exercises": 0, "used": "Ausgeschlossen; 42 SB3-Dateien sind lokalisierte resource/solution-Paare unter unklarer Lizenz.", "attribution": "Keine Übernahme." },
+    { "repo": "raspberrypilearning/scary-spot-the-difference", "archive_sha256": "1de278adc2e95aeac226a0ce7581ebc4c230f14bcdd2693293d1b248c65e20d3", "license": "CC BY 4.0", "reusable_exercises": 1, "used": "Eigenständige Konzepte für visuelle Interaktion; Lösungen ausgeschlossen.", "attribution": "Scary Spot the Difference by Raspberry Pi Foundation, CC BY 4.0." },
+    { "repo": "raspberrypilearning/turtley-amazing", "archive_sha256": "49fb58bc71c98ec61d831b03dd020f830fd3aae3607751a5fdc6d58a09842e34", "license": "CC BY 4.0", "reusable_exercises": 1, "used": "Eigenständige Turtle-/Bewegungskonzepte; Starter und Komplettlösung nicht kopiert.", "attribution": "Turtley Amazing by Raspberry Pi Foundation, CC BY 4.0." },
+    { "repo": "raspberrypilearning/scratch-3d-science", "archive_sha256": "f494742c762cc859e45aaa92d43e06a5ab61923cef9db9653ede92682e1a993a", "license": "AMBIGUOUS: template still names PROJECT NAME/project-name", "reusable_exercises": 0, "used": "Ausgeschlossen.", "attribution": "Keine Übernahme." },
+    { "repo": "raspberrypilearning/jam-worksheets", "archive_sha256": "c8fb4b53761f039730aa5c06210faf8074febb97a0016c02ddffeb0531b48e0f", "license": "AMBIGUOUS: CC BY-SA badge, CC BY text", "reusable_exercises": 0, "used": "Ausgeschlossen, einschließlich PDFs.", "attribution": "Keine Übernahme." },
+    { "repo": "raspberrypilearning/physical-computing-with-scratch", "archive_sha256": "d0e345020981f2e37d64f4d8e764428f004c8479ef4c8edd48666a1cff3881a8", "license": "CC BY 4.0", "reusable_exercises": 1, "used": "Nicht importiert: einziges SB3 ist eine Lösung und das Projekt benötigt Legacy-Hardware.", "attribution": "Keine Übernahme." }
+  ],
+  "reusable_exercise_total": 167,
+  "reusable_sb3_starter_total": 0,
+  "validator": "node scripts/validate-curriculum.mjs"
+}
