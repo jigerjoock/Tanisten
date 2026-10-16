@@ -3,8 +3,34 @@ import { requireUser } from "../../lib/auth";
 
 export default async function DashboardPage() {
   const { supabase, user } = await requireUser();
-  const { data: memberships } = await supabase.from("course_memberships").select("course:courses(id, slug, title, description)").eq("user_id", user.id);
-  const courses = memberships?.flatMap((item) => item.course?.[0] ? [item.course[0]] : []) ?? [];
+const { data: memberships, error: membershipsError } = await supabase
+  .from("course_memberships")
+  .select("course:courses(id, slug, title, description)")
+  .eq("user_id", user.id);
+
+console.log("[dashboard-debug]", {
+  authUserId: user.id,
+  membershipsCount: memberships?.length ?? 0,
+  membershipsErrorCode: membershipsError?.code ?? null,
+  membershipsErrorMessage: membershipsError?.message ?? null,
+  memberships: memberships?.map((m) => ({
+    hasCourse: Boolean(m.course),
+  })),
+});
+
+if (membershipsError) {
+  throw new Error(`Kurse konnten nicht geladen werden: ${membershipsError.message}`);
+}
+const courses = (memberships ?? []).flatMap((item) => {
+  const course = item.course;
+  return course
+    ? Array.isArray(course)
+      ? course
+      : [course]
+    : [];
+});
+
+
   const courseIds = courses.map((course) => course.id);
   const { data: exercises } = courseIds.length ? await supabase.from("exercises").select("id, course_id").in("course_id", courseIds) : { data: [] };
   const exerciseIds = (exercises ?? []).map((exercise) => exercise.id);
