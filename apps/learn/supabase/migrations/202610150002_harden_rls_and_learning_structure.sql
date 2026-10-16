@@ -186,8 +186,9 @@ declare v_submission public.submissions%rowtype; v_course_id uuid; v_feedback te
 begin
   if auth.uid() is null then raise exception 'Authentication is required'; end if;
   if p_decision not in ('passed', 'rejected') then raise exception 'Invalid review decision'; end if;
-  select s.*, e.course_id into v_submission, v_course_id from public.submissions s join public.exercises e on e.id = s.exercise_id where s.id = p_submission_id;
+  select s.* into v_submission from public.submissions s where s.id = p_submission_id;
   if not found then raise exception 'Submission not found'; end if;
+  select course_id into v_course_id from public.exercises where id = v_submission.exercise_id;
   if not public.can_teach_student_in_course(v_submission.student_id, v_course_id) then raise exception 'Teacher is not assigned to this student and course'; end if;
   if v_submission.status <> 'submitted' then raise exception 'Only pending submissions can be reviewed'; end if;
   if p_decision = 'rejected' and v_feedback is null then raise exception 'Feedback is required when returning work for changes'; end if;
