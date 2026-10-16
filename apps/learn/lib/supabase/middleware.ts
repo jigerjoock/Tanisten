@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { getConfiguredSupabaseProjectRef, logAuthDiagnostic } from "../auth-diagnostics";
 
 export async function updateSession(request: NextRequest) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -18,6 +19,13 @@ export async function updateSession(request: NextRequest) {
     }
   });
 
-  await supabase.auth.getUser();
+  const { data: { user }, error } = await supabase.auth.getUser();
+  logAuthDiagnostic("middleware_session", {
+    pathname: request.nextUrl.pathname,
+    supabaseProjectRef: getConfiguredSupabaseProjectRef(),
+    supabaseCookieCount: request.cookies.getAll().filter(({ name }) => name.startsWith("sb-")).length,
+    authenticated: Boolean(user),
+    authErrorCode: error?.code ?? null
+  });
   return response;
 }

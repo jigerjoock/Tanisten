@@ -1,7 +1,7 @@
 begin;
 create extension if not exists pgtap with schema extensions;
 set local search_path to extensions, public, auth;
-select plan(13);
+select plan(15);
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
 values
@@ -66,6 +66,13 @@ select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000102
 select set_config('request.jwt.claim.role', 'authenticated', true);
 select lives_ok($$select public.review_exercise_submission('00000000-0000-0000-0000-000000000602', 'passed', null)$$, 'explicit course-wide teacher can approve any enrolled student');
 select is((select status::text from public.submissions where id = '00000000-0000-0000-0000-000000000602'), 'passed', 'course-wide approval records passed status');
+
+reset role;
+set local role authenticated;
+select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000104', true);
+select set_config('request.jwt.claim.role', 'authenticated', true);
+select is((select role::text from public.profiles where id = '00000000-0000-0000-0000-000000000104'), 'admin', 'admin can read their own profile through RLS');
+select ok(public.is_admin(), 'admin role resolves for the matching authenticated user');
 
 select * from finish();
 rollback;

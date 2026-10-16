@@ -4,6 +4,9 @@ import test from "node:test";
 
 const migration = await readFile(new URL("../supabase/migrations/202610150002_harden_rls_and_learning_structure.sql", import.meta.url), "utf8");
 const exerciseRoute = await readFile(new URL("../app/api/exercises/[id]/route.ts", import.meta.url), "utf8");
+const auth = await readFile(new URL("../lib/auth.ts", import.meta.url), "utf8");
+const middleware = await readFile(new URL("../lib/supabase/middleware.ts", import.meta.url), "utf8");
+const rlsTests = await readFile(new URL("../supabase/tests/rls_permissions.test.sql", import.meta.url), "utf8");
 
 test("submission writes use trusted RPC transitions", () => {
   assert.match(exerciseRoute, /rpc\(procedure/);
@@ -30,4 +33,15 @@ test("automatic validation and course-wide teaching access fail closed", async (
   assert.match(failClosedMigration, /Automatic code execution is not configured/);
   assert.match(failClosedMigration, /grants_course_wide_access boolean not null default false/);
   assert.match(failClosedMigration, /grants_course_wide_access\)/);
+});
+
+test("admin authorization keeps RLS and logs only safe diagnostics", () => {
+  assert.match(auth, /\.maybeSingle\(\)/);
+  assert.match(auth, /logAuthDiagnostic\("require_role"/);
+  assert.match(auth, /supabaseProjectRef/);
+  assert.match(middleware, /supabaseCookieCount/);
+  assert.doesNotMatch(middleware, /cookies\.getAll\(\).*value/);
+  assert.match(rlsTests, /select plan\(15\)/);
+  assert.match(rlsTests, /admin can read their own profile through RLS/);
+  assert.match(rlsTests, /admin role resolves for the matching authenticated user/);
 });
