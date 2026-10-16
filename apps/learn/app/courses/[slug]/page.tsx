@@ -1,15 +1,21 @@
 import { notFound } from "next/navigation";
-import { requireUser } from "../../../lib/auth";
+import { getCurrentProfile, requireUser } from "../../../lib/auth";
 import CourseWorkspace from "../../../components/course-workspace";
 import type { CourseModule, Exercise, ExerciseAttempt, Lesson, Submission, SubmissionReview } from "../../../lib/types";
 
 export default async function CoursePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const { supabase, user } = await requireUser();
-  const { data: course } = await supabase.from("courses").select("id, title, description").eq("slug", slug).single();
+  const { data: course, error: courseError } = await supabase.from("courses").select("id, title, description").eq("slug", slug).single();
+  if (courseError && courseError.code !== "PGRST116") throw new Error("Kurs konnte nicht geladen werden.");
   if (!course) notFound();
-  const { data: membership } = await supabase.from("course_memberships").select("id").eq("course_id", course.id).eq("user_id", user.id).maybeSingle();
-  if (!membership) notFound();
+  const profile = await getCurrentProfile(supabase, user);
+  const isStaff = profile.role === "admin" || profile.role === "teacher";
+  if (!isStaff) {
+    const { data: membership, error: membershipError } = await supabase.from("course_memberships").select("course_id").eq("course_id", course.id).eq("user_id", user.id).maybeSingle();
+    if (membershipError) throw new Error("Kurszuweisung konnte nicht geprüft werden.");
+    if (!membership) notFound();
+  }
   const { data: modulesData } = await supabase.from("course_modules").select("id, title, position").eq("course_id", course.id).order("position");
   const modules = (modulesData ?? []) as CourseModule[];
   const moduleIds = modules.map((module) => module.id);

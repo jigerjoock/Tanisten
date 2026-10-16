@@ -1,0 +1,7 @@
+"use server";
+import { revalidatePath } from "next/cache";
+import { requireRole } from "../../../lib/auth";
+import { closedLmsReady } from "../../../lib/closed-lms";
+async function adminReady() { const context = await requireRole(["admin"]); if (!await closedLmsReady(context.supabase)) throw new Error("Lehrkräfteverwaltung wartet auf Migration 005."); return context; }
+export async function assignTeacherCourse(formData: FormData) { const { supabase } = await adminReady(); const teacherId = String(formData.get("teacherId")); const courseId = String(formData.get("courseId")); const { data: teacher } = await supabase.from("profiles").select("role,account_status").eq("id", teacherId).maybeSingle(); if (!teacher || teacher.role !== "teacher" || teacher.account_status !== "active") throw new Error("Nur aktive Lehrkräfte können zugewiesen werden."); const { error } = await supabase.from("course_teachers").upsert({ teacher_id: teacherId, course_id: courseId, grants_course_wide_access: true }, { onConflict: "course_id,teacher_id" }); if (error) throw new Error(error.message); revalidatePath("/admin/teachers"); }
+export async function revokeTeacherCourse(formData: FormData) { const { supabase } = await adminReady(); const teacherId = String(formData.get("teacherId")); const courseId = String(formData.get("courseId")); const { error } = await supabase.from("course_teachers").delete().eq("teacher_id", teacherId).eq("course_id", courseId); if (error) throw new Error(error.message); revalidatePath("/admin/teachers"); }

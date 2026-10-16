@@ -1,0 +1,11 @@
+import { requireRole } from "../../../lib/auth";
+import { closedLmsReady } from "../../../lib/closed-lms";
+import { assignTeacherCourse, revokeTeacherCourse } from "./actions";
+
+export default async function TeachersPage() {
+  const { supabase } = await requireRole(["admin"]);
+  if (!await closedLmsReady(supabase)) return <section className="panel"><h1>Lehrkräfteverwaltung wartet auf Migration 005</h1><p className="muted">Es wurden keine Schreiboperationen ausgeführt.</p></section>;
+  const [{ data: teachers, error }, { data: courses }] = await Promise.all([supabase.from("profiles").select("id,email,full_name,account_status,course_teachers(course_id,course:courses(title)),group_teachers(group_id)").eq("role", "teacher").order("full_name"), supabase.from("courses").select("id,title").order("title")]);
+  if (error) throw new Error("Lehrkräfte konnten nicht geladen werden.");
+  return <section className="stack"><div className="pageheading"><div><div className="eyebrow">ADMINISTRATION</div><h1>Lehrkräfte</h1><p className="muted">Nur explizite Kurs- und Gruppenzuweisungen geben Zugriff auf Lernende.</p></div></div><div className="lesson-list">{teachers.map((teacher) => <article className="lesson stack" key={teacher.id}><div><strong>{teacher.full_name || teacher.email}</strong><p className="muted">{teacher.email} · {teacher.account_status} · {teacher.course_teachers.length} Kurse · {teacher.group_teachers.length} Gruppen</p></div>{teacher.course_teachers.map((assignment) => <form className="row" action={revokeTeacherCourse} key={assignment.course_id}><span>{assignment.course?.[0]?.title ?? assignment.course_id}</span><input type="hidden" name="teacherId" value={teacher.id}/><input type="hidden" name="courseId" value={assignment.course_id}/><button className="button secondary">Entziehen</button></form>)}<form className="row" action={assignTeacherCourse}><input type="hidden" name="teacherId" value={teacher.id}/><select className="input" name="courseId" defaultValue="" required><option value="" disabled>Kurs zuweisen</option>{(courses ?? []).map((course) => <option key={course.id} value={course.id}>{course.title}</option>)}</select><button className="button">Zuweisen</button></form></article>)}</div></section>;
+}

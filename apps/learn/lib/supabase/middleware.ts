@@ -25,6 +25,7 @@ export async function updateSession(request: NextRequest) {
     supabaseProjectRef: getConfiguredSupabaseProjectRef(),
     supabaseCookieCount: request.cookies.getAll().filter(({ name }) => name.startsWith("sb-")).length,
     authenticated: Boolean(user),
+    authUserId: user?.id ?? null,
     authErrorCode: error?.code ?? null
   });
   return response;

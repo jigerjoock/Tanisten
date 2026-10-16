@@ -10,13 +10,13 @@ values
   ('00000000-0000-0000-0000-000000000102', '00000000-0000-0000-0000-000000000001', 'authenticated', 'authenticated', 'course-teacher@example.test', '', now(), '{}', '{}', now(), now()),
   ('00000000-0000-0000-0000-000000000103', '00000000-0000-0000-0000-000000000001', 'authenticated', 'authenticated', 'group-teacher@example.test', '', now(), '{}', '{}', now(), now()),
   ('00000000-0000-0000-0000-000000000104', '00000000-0000-0000-0000-000000000001', 'authenticated', 'authenticated', 'admin@example.test', '', now(), '{}', '{}', now(), now());
-update public.profiles set role = case id
+update public.profiles set account_status = 'active', role = case id
   when '00000000-0000-0000-0000-000000000102'::uuid then 'teacher'::public.user_role
   when '00000000-0000-0000-0000-000000000103'::uuid then 'teacher'::public.user_role
   when '00000000-0000-0000-0000-000000000104'::uuid then 'admin'::public.user_role
   else 'student'::public.user_role end;
 
-insert into public.courses (id, slug, title, created_by) values ('00000000-0000-0000-0000-000000000201', 'rls-test', 'RLS Test Course', '00000000-0000-0000-0000-000000000104');
+insert into public.courses (id, slug, title, published, created_by) values ('00000000-0000-0000-0000-000000000201', 'rls-test', 'RLS Test Course', true, '00000000-0000-0000-0000-000000000104');
 insert into public.course_memberships (course_id, user_id) values
   ('00000000-0000-0000-0000-000000000201', '00000000-0000-0000-0000-000000000101'),
   ('00000000-0000-0000-0000-000000000201', '00000000-0000-0000-0000-000000000105');
