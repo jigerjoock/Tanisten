@@ -2,12 +2,14 @@
 import { useState } from "react";
 import type { Exercise, ExerciseAttempt, Submission, SubmissionReview } from "../lib/types";
 import PythonWorkspace from "./python-workspace";
+import ScratchWorkspace from "./scratch-workspace";
 
 const kindLabel = { text_response: "Textantwort", scratch_project: "Scratch-Projekt", python_code: "Python-Code", javascript_code: "JavaScript-Code" } as const;
 function textList(value: unknown): string[] { return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : []; }
 
 export default function ExerciseCard(props: { exercise: Exercise; submission?: Submission; attempts: ExerciseAttempt[]; reviews: SubmissionReview[] }) {
   if (props.exercise.kind === "python_code") return <PythonWorkspace {...props} />;
+  if (props.exercise.kind === "scratch_project") return <ScratchWorkspace {...props} />;
   return <OtherExerciseCard {...props} />;
 }
 

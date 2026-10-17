@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
+    "@scratch/scratch-gui": "15.2.0",
+    "@scratch/scratch-vm": "15.2.0",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.118.0",
     "monaco-editor": "^0.57.0",

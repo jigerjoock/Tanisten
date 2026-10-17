@@ -30,6 +30,9 @@ export default function PythonWorkspace({ exercise, submission, attempts, review
   const [sending, setSending] = useState(false);
   const [hintOpen, setHintOpen] = useState(false);
   const [taskOpen, setTaskOpen] = useState(true);
+  const [toolbarMessage, setToolbarMessage] = useState("");
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const workspaceRef = useRef<HTMLElement | null>(null);
   const worker = useRef<Worker | null>(null);
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const cancelled = useRef(false);
@@ -75,6 +78,12 @@ export default function PythonWorkspace({ exercise, submission, attempts, review
     }
     window.sessionStorage.setItem(draftKey, code);
   }, [code, draftKey]);
+
+  useEffect(() => {
+    const updateFullscreenState = () => setIsFullscreen(document.fullscreenElement === workspaceRef.current);
+    document.addEventListener("fullscreenchange", updateFullscreenState);
+    return () => document.removeEventListener("fullscreenchange", updateFullscreenState);
+  }, []);
 
   function run() {
     if (engineStatus !== "idle") return;
@@ -127,14 +136,43 @@ export default function PythonWorkspace({ exercise, submission, attempts, review
 
   const runBusy = engineStatus !== "idle";
   function resetCode() { setCode(exercise.starter_code || "# Schreibe dein Python-Programm hier\n"); setOutput(""); }
-  return <section className={`py-workspace ${taskOpen ? "" : "is-instructions-collapsed"}`} aria-label="Python-Arbeitsbereich">
+  async function copyCode() {
+    try {
+      await navigator.clipboard.writeText(code);
+      setToolbarMessage("Code kopiert.");
+    } catch {
+      setToolbarMessage("Code konnte nicht kopiert werden.");
+    }
+  }
+  function downloadCode() {
+    const url = URL.createObjectURL(new Blob([code], { type: "text/x-python;charset=utf-8" }));
+    const download = document.createElement("a");
+    download.href = url;
+    download.download = "main.py";
+    download.click();
+    URL.revokeObjectURL(url);
+    setToolbarMessage("main.py wurde heruntergeladen.");
+  }
+  async function toggleFullscreen() {
+    try {
+      if (document.fullscreenElement === workspaceRef.current) await document.exitFullscreen();
+      else await workspaceRef.current?.requestFullscreen();
+    } catch {
+      setToolbarMessage("Vollbild ist in diesem Browser nicht verfügbar.");
+    }
+  }
+  return <section ref={workspaceRef} className={`py-workspace ${taskOpen ? "" : "is-instructions-collapsed"}`} aria-label="Python-Arbeitsbereich">
     <div className="py-workspace-toolbar">
       <div className="py-workspace-file"><span aria-hidden="true">🐍</span> main.py</div>
       <div className="py-workspace-actions">
-        {runBusy ? <button className="py-secondary" onClick={() => stopRunner("Ausführung angehalten.")}>■ Stopp</button> : null}
-        <button className="py-run" disabled={runBusy} onClick={run}>{engineStatus === "loading" ? "Python lädt …" : engineStatus === "running" ? "Wird ausgeführt …" : "▶ Run"}</button>
+        {runBusy ? <button className="py-secondary" type="button" onClick={() => stopRunner("Ausführung angehalten.")}>■ Stopp</button> : null}
+        <button className="py-run" type="button" disabled={runBusy} onClick={run}>{engineStatus === "loading" ? "Python lädt …" : engineStatus === "running" ? "Wird ausgeführt …" : "▶ Run"}</button>
         <button className="py-secondary" type="button" onClick={() => setOutput("")}>Ausgabe löschen</button>
+        <button className="py-secondary" type="button" onClick={copyCode}>Code kopieren</button>
+        <button className="py-secondary" type="button" onClick={downloadCode}>.py herunterladen</button>
         <button className="py-secondary" type="button" onClick={resetCode} disabled={submissionStatus === "passed"}>Code zurücksetzen</button>
+        <button className="py-secondary" type="button" onClick={toggleFullscreen}>{isFullscreen ? "Vollbild beenden" : "Vollbild"}</button>
+        <span className="py-toolbar-status" role="status">{toolbarMessage}</span>
       </div>
     </div>
     <div className="py-workspace-columns">
@@ -142,7 +180,7 @@ export default function PythonWorkspace({ exercise, submission, attempts, review
         <label className="py-section-label" htmlFor={`python-code-${exercise.id}`}>DEIN CODE</label>
         <div className="py-code-editor" aria-label="Python-Code-Editor"><PythonEditor value={code} onChange={setCode} readOnly={submissionStatus === "passed"} /></div>
       </div>
-      <aside className="py-workspace-task">
+      <aside className="py-instructions-panel">
         <button className="py-edge-toggle" type="button" aria-expanded={taskOpen} aria-controls={`python-instructions-${exercise.id}`} onClick={() => setTaskOpen((open) => !open)}><span>{taskOpen ? "Anleitung schließen" : "Anleitung öffnen"}</span></button>
         <div id={`python-instructions-${exercise.id}`} className="py-instructions" hidden={!taskOpen}>
           <div className="py-task-head"><span>AUFGABE {exercise.position + 1} · PYTHON</span><span className={`status ${submissionStatus}`}>{submissionStatus === "passed" ? "Erledigt" : submissionStatus === "submitted" ? "In Prüfung" : submissionStatus === "rejected" ? "Überarbeiten" : "Offen"}</span></div>
@@ -157,8 +195,8 @@ export default function PythonWorkspace({ exercise, submission, attempts, review
           <button className="py-submit" onClick={submit} disabled={sending || submissionStatus === "submitted" || submissionStatus === "passed"}>{sending ? "Wird eingereicht …" : submissionStatus === "submitted" ? "Bereits eingereicht" : submissionStatus === "passed" ? "Abgeschlossen" : "Zur Prüfung einreichen"}</button>
           {attempts.length > 0 && <small>{attempts.length} bisherige Versuche gespeichert</small>}
         </div>
-        <section className="py-output-assistant" aria-label="Python-Ausgabe"><div className="py-output-header"><strong>Konsole / Ausgabe</strong><span>{engineStatus === "running" ? "läuft" : engineStatus === "loading" ? "lädt" : "bereit"}</span></div><pre className="py-output" aria-live="polite">{output || "Klicke auf Run, um deinen Code auszuführen.\n"}</pre></section>
       </aside>
+      <aside className="py-output-panel" aria-label="Python-Ausgabe"><div className="py-output-header"><strong>Konsole / Ausgabe</strong><span>{engineStatus === "running" ? "läuft" : engineStatus === "loading" ? "lädt" : "bereit"}</span></div><pre className="py-output" aria-live="polite">{output || "Klicke auf Run, um deinen Code auszuführen.\n"}</pre></aside>
     </div>
   </section>;
 }

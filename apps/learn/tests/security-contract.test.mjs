@@ -26,6 +26,11 @@ const courseLayout = await readFile(new URL("../app/courses/[slug]/layout.tsx", 
 const exerciseFocus = await readFile(new URL("../components/exercise-focus-workspace.tsx", import.meta.url), "utf8");
 const pythonWorkspace = await readFile(new URL("../components/python-workspace.tsx", import.meta.url), "utf8");
 const pythonEditor = await readFile(new URL("../components/python-editor.tsx", import.meta.url), "utf8");
+const scratchWorkspace = await readFile(new URL("../components/scratch-workspace.tsx", import.meta.url), "utf8");
+const scratchBridge = await readFile(new URL("../components/scratch-editor-bridge.tsx", import.meta.url), "utf8");
+const scratchMigration = await readFile(new URL("../supabase/migrations/202610180006_scratch_projects.sql", import.meta.url), "utf8");
+const scratchApi = await readFile(new URL("../app/api/scratch/projects/route.ts", import.meta.url), "utf8");
+const scratchValidation = await readFile(new URL("../lib/scratch-project.ts", import.meta.url), "utf8");
 
 test("submission writes use trusted RPC transitions", () => {
   assert.match(exerciseRoute, /rpc\(procedure/);
@@ -121,8 +126,11 @@ test("student learning routes use a sidebar-free course shell and lazy Monaco wo
   assert.match(pythonWorkspace, /PythonEditor/);
   assert.match(pythonWorkspace, /aria-expanded=\{taskOpen\}/);
   assert.match(pythonWorkspace, /py-edge-toggle/);
-  assert.match(pythonWorkspace, /py-output-assistant/);
+  assert.match(pythonWorkspace, /py-output-panel/);
   assert.match(pythonWorkspace, /sessionStorage/);
+  assert.match(pythonWorkspace, /navigator\.clipboard\.writeText/);
+  assert.match(pythonWorkspace, /URL\.createObjectURL/);
+  assert.match(pythonWorkspace, /requestFullscreen/);
   assert.match(pythonEditor, /dynamic\(\(\) => import\("@monaco-editor\/react"\)/);
   assert.match(pythonEditor, /defaultLanguage="python"/);
 });
@@ -175,4 +183,32 @@ test("closed-LMS admin pages require the complete migration 005 schema contract"
   assert.match(closedLms, /student_records.*profile_id.*account_status/s);
   assert.match(closedLms, /profiles.*account_status.*first_name.*last_name.*archived_at/s);
   assert.match(closedLms, /migration_005_contract_unavailable/);
+});
+
+test("Scratch uses a client-only upstream bridge with same-origin project transfer", () => {
+  assert.match(scratchWorkspace, /scratch-editor\/bridge/);
+  assert.match(scratchWorkspace, /window\.location\.origin/);
+  assert.match(scratchWorkspace, /12_000/);
+  assert.match(scratchWorkspace, /Zur Prüfung einreichen/);
+  assert.match(scratchBridge, /@scratch\/scratch-gui/);
+  assert.match(scratchBridge, /@scratch\/scratch-vm/);
+  assert.match(scratchBridge, /ssr: false/);
+  assert.match(scratchBridge, /event\.origin !== window\.location\.origin/);
+  assert.match(scratchBridge, /saveProjectSb3/);
+});
+
+test("Scratch persistence is private, append-only, and checks server-validated archives", () => {
+  assert.match(scratchMigration, /'scratch-projects', 'scratch-projects', false/);
+  assert.match(scratchMigration, /scratch_project_versions/);
+  assert.match(scratchMigration, /is_current_draft/);
+  assert.match(scratchMigration, /Submitted Scratch work cannot be overwritten/);
+  assert.match(scratchMigration, /can_upload_scratch_storage_object/);
+  assert.match(scratchMigration, /can_teach_student_in_course/);
+  assert.match(scratchMigration, /Scratch structural validation has no valid criteria/);
+  assert.match(scratchApi, /validateScratchProjectArchive/);
+  assert.match(scratchApi, /save_scratch_project_draft/);
+  assert.match(scratchApi, /submit_scratch_project_snapshot/);
+  assert.match(scratchValidation, /MAX_FILE_BYTES/);
+  assert.match(scratchValidation, /project\.json/);
+  assert.match(scratchValidation, /createHash\("sha256"\)/);
 });

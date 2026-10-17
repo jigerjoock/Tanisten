@@ -1,4 +1,4 @@
-.py-workspace { overflow: hidden; min-width: 0; background: #111116; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 48px #0000004d; }
+.py-workspace { --py-output-width: clamp(340px, 28vw, 430px); overflow: hidden; min-width: 0; background: #111116; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 48px #0000004d; }
 .py-workspace-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 16px; color: #f4f4f5; background: linear-gradient(90deg, #15151b, #211015); border-bottom: 1px solid #3a252a; }.py-workspace-file { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13px; font-weight: 750; }.py-workspace-actions { display: flex; align-items: center; gap: 8px; }
 .py-workspace-actions button, .py-submit { padding: 9px 13px; font-weight: 800; border: 1px solid transparent; border-radius: 8px; cursor: pointer; transition: transform .18s ease, filter .18s ease; }.py-workspace-actions button:active, .py-submit:active { transform: scale(.98); }.py-run, .py-submit { color: #fff; background: linear-gradient(135deg, var(--primary), #a90420); border-color: #ff6a803d; }.py-secondary { color: #e8e8ed; background: #ffffff0b; border-color: var(--border) !important; }.py-workspace-actions button:disabled, .py-submit:disabled { opacity: .55; cursor: default; }
 .py-workspace-columns { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(290px, 1fr); min-height: 600px; }.py-workspace-editor-column { display: flex; min-width: 0; flex-direction: column; background: #0d0d11; border-right: 1px solid var(--border); }.py-section-label { padding: 12px 17px; color: #85858f; font-size: 10px; font-weight: 850; letter-spacing: .14em; }
@@ -9,6 +9,49 @@
 @media (max-width: 1050px) { .py-workspace-columns { grid-template-columns: 1fr; }.py-workspace-editor-column { border-right: 0; border-bottom: 1px solid var(--border); }.py-workspace-task { max-height: none; } }
 @media (max-width: 520px) { .py-workspace-toolbar { align-items: flex-start; flex-direction: column; }.py-workspace-actions { width: 100%; }.py-workspace-actions button { flex: 1; } }
 
-.py-workspace-actions { flex-wrap: wrap; justify-content: flex-end; }.py-workspace-columns { transition: grid-template-columns .22s ease; }.py-workspace.is-instructions-collapsed .py-workspace-columns { grid-template-columns: minmax(0, 1fr) minmax(285px, .48fr); }.py-code-editor { overflow: hidden; padding: 0; resize: none; }.py-monaco { min-height: 340px; }.py-editor-loading { display: grid; min-height: 340px; place-items: center; color: var(--muted); font: 13px ui-monospace, SFMono-Regular, Consolas, monospace; }.py-output-header span { color: var(--muted); font-size: 11px; }
-.py-workspace-task { position: relative; display: flex; min-width: 0; flex-direction: column; transition: padding .22s ease, background .22s ease; }.py-instructions { overflow: auto; }.py-instructions[hidden] { display: none; }.py-output-assistant { min-height: 190px; margin-top: auto; border-top: 1px solid var(--border); }.py-output-assistant .py-output { min-height: 150px; max-height: 330px; }.py-edge-toggle { position: absolute; z-index: 2; top: 50%; left: -17px; display: grid; width: 34px; height: 156px; place-items: center; padding: 10px 7px; color: #ffc2ce; font-size: 10px; font-weight: 850; letter-spacing: .1em; background: linear-gradient(180deg, #460c18, #240d13); border: 1px solid #ff2d5566; border-radius: 11px 0 0 11px; box-shadow: -8px 0 20px #00000040; cursor: pointer; writing-mode: vertical-rl; transform: translateY(-50%); transition: color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease; }.py-edge-toggle:hover { color: #fff; background: linear-gradient(180deg, #810d23, #3d0b16); box-shadow: -10px 0 24px #d9042933; }.py-edge-toggle:active { transform: translateY(-50%) translateX(-2px) scale(.97); }.py-edge-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-@media (max-width: 1050px) { .py-workspace.is-instructions-collapsed .py-workspace-columns { grid-template-columns: 1fr; }.py-edge-toggle { top: 14px; left: auto; right: 14px; width: auto; height: 32px; padding: 8px 11px; border-radius: 8px; writing-mode: horizontal-tb; transform: none; }.py-edge-toggle:active { transform: scale(.97); }.py-output-assistant { margin-top: 14px; } }
+.py-workspace-toolbar { min-height: 66px; padding: 13px 18px; }
+.py-workspace-actions { flex-wrap: wrap; justify-content: flex-end; }
+.py-workspace-columns { position: relative; grid-template-columns: minmax(0, 1fr) var(--py-output-width); min-height: 640px; }
+.py-code-editor { overflow: hidden; padding: 0; resize: none; }
+.py-monaco { min-height: 340px; }
+.py-editor-loading { display: grid; min-height: 340px; place-items: center; color: var(--muted); font: 13px ui-monospace, SFMono-Regular, Consolas, monospace; }
+.py-output-header span { color: var(--muted); font-size: 11px; }
+
+.py-instructions-panel { position: absolute; z-index: 3; inset: 0 0 0 auto; width: var(--py-output-width); min-width: 0; overflow: hidden; color: #d7d7dd; background: #15151a; border-left: 1px solid var(--border); box-shadow: -16px 0 30px #00000038; transition: width .22s cubic-bezier(.2, .8, .2, 1), background .22s ease, box-shadow .22s ease; }
+.py-workspace.is-instructions-collapsed .py-instructions-panel { width: 40px; background: #1b1014; box-shadow: -7px 0 18px #d9042930; }
+.py-instructions { height: 100%; max-height: 830px; padding: 26px 26px 30px 62px; overflow: auto; font-size: 14px; line-height: 1.65; }
+.py-instructions h2 { margin: 15px 0; color: #fff; font-size: 23px; line-height: 1.25; letter-spacing: -.025em; }
+.py-instructions h3 { margin: 22px 0 6px; color: #fff; font-size: 14px; }
+.py-instructions li { margin-bottom: 7px; }
+.py-instructions[hidden] { display: none; }
+
+.py-output-panel { display: flex; grid-column: 2; grid-row: 1; min-width: 0; min-height: 640px; flex-direction: column; background: #101015; }
+.py-output-panel .py-output-header { min-height: 40px; padding: 11px 16px; margin-top: 0; border-top: 0; border-bottom: 1px solid var(--border); }
+.py-output-panel .py-output { flex: 1; min-height: 0; max-height: none; padding: 18px 16px; }
+
+.py-edge-toggle { position: absolute; z-index: 2; inset: 0 auto 0 0; display: grid; width: 40px; place-items: center; padding: 12px 8px; overflow: hidden; color: #fff; font-size: 10px; font-weight: 850; letter-spacing: .1em; white-space: nowrap; background: linear-gradient(180deg, #d90429, #a90420); border: 0; border-right: 1px solid #ff8aa0; box-shadow: 5px 0 18px #d9042933; cursor: pointer; writing-mode: vertical-rl; transition: width .18s ease, color .18s ease, filter .18s ease, box-shadow .18s ease; }
+.py-edge-toggle:hover { width: 62px; color: #fff; filter: brightness(1.12); box-shadow: 7px 0 24px #d9042955; }
+.py-edge-toggle:active { filter: brightness(.94); }
+.py-edge-toggle:focus-visible { outline: 2px solid #fff; outline-offset: -4px; }
+.py-workspace.is-instructions-collapsed .py-instructions-panel { background: #17131c; }
+.py-workspace.is-instructions-collapsed .py-instructions-panel { overflow: visible; }
+.py-workspace.is-instructions-collapsed .py-edge-toggle { inset: 0 0 0 auto; }
+.py-workspace.is-instructions-collapsed .py-edge-toggle span { opacity: 0; transition: opacity .15s ease; }
+.py-workspace.is-instructions-collapsed .py-edge-toggle:hover span, .py-edge-toggle:focus-visible span { opacity: 1; }
+.py-toolbar-status { min-width: 0; color: var(--muted); font-size: 12px; line-height: 1.25; }
+.py-workspace:fullscreen { width: 100%; height: 100%; border: 0; border-radius: 0; }
+.py-workspace:fullscreen .py-workspace-columns { min-height: calc(100vh - 66px); }
+.py-workspace:fullscreen .py-output-panel { min-height: calc(100vh - 66px); }
+
+@media (max-width: 1100px) {
+  .py-workspace { --py-output-width: 100%; }
+  .py-workspace-columns { grid-template-columns: 1fr; }
+  .py-instructions-panel { max-height: none; }
+  .py-instructions { max-height: none; padding: 56px 24px 24px 62px; }
+  .py-output-panel { grid-column: 1; grid-row: 2; min-height: 280px; }
+  .py-edge-toggle { inset: 0 0 auto; width: 100%; height: 38px; padding: 8px 12px; writing-mode: horizontal-tb; }
+  .py-edge-toggle:hover { width: 100%; }
+  .py-workspace.is-instructions-collapsed .py-instructions-panel { width: 100%; height: 38px; }
+  .py-workspace.is-instructions-collapsed .py-edge-toggle { inset: 0 0 auto; }
+  .py-toolbar-status { width: 100%; }
+}
