@@ -20,6 +20,12 @@ const coursePage = await readFile(new URL("../app/courses/[slug]/page.tsx", impo
 const pendingLink = await readFile(new URL("../components/pending-link.tsx", import.meta.url), "utf8");
 const dashboardLoading = await readFile(new URL("../app/dashboard/loading.tsx", import.meta.url), "utf8");
 const closedLms = await readFile(new URL("../lib/closed-lms.ts", import.meta.url), "utf8");
+const managementShell = await readFile(new URL("../components/management-shell.tsx", import.meta.url), "utf8");
+const studentShell = await readFile(new URL("../components/student-shell.tsx", import.meta.url), "utf8");
+const courseLayout = await readFile(new URL("../app/courses/[slug]/layout.tsx", import.meta.url), "utf8");
+const exerciseFocus = await readFile(new URL("../components/exercise-focus-workspace.tsx", import.meta.url), "utf8");
+const pythonWorkspace = await readFile(new URL("../components/python-workspace.tsx", import.meta.url), "utf8");
+const pythonEditor = await readFile(new URL("../components/python-editor.tsx", import.meta.url), "utf8");
 
 test("submission writes use trusted RPC transitions", () => {
   assert.match(exerciseRoute, /rpc\(procedure/);
@@ -76,31 +82,49 @@ test("staff can inspect RLS-authorized course content without a learner membersh
 test("sign-out clears the Supabase session and navigation stays role-aware", () => {
   assert.match(signOutAction, /supabase\.auth\.signOut\(\)/);
   assert.match(signOutAction, /redirect\("\/login"\)/);
-  assert.match(layout, /role === "admin"/);
-  assert.match(layout, /role === "teacher"/);
-  assert.match(layout, /action=\{signOut\}/);
-  assert.match(layout, /Profilzugriff fehlgeschlagen/);
-  assert.match(layout, /role === "student" \? "ST" : "!"/);
+  assert.match(managementShell, /role === "admin"/);
+  assert.match(managementShell, /role === "teacher"/);
+  assert.match(managementShell, /action=\{signOut\}/);
+  assert.match(studentShell, /action=\{signOut\}/);
+  assert.match(studentShell, /<details className="user-menu">/);
 });
 
 test("top-level navigation provides immediate pending feedback", () => {
   assert.match(pendingLink, /useState\(false\)/);
   assert.match(pendingLink, /setPending\(true\)/);
   assert.match(pendingLink, /aria-busy=\{pending\}/);
-  assert.match(layout, /PendingLink className="nav" href="\/dashboard"/);
+  assert.match(managementShell, /PendingLink className="nav" href="\/dashboard"/);
   assert.match(dashboardLoading, /Meine Kurse werden geladen/);
   assert.match(auth, /getServerAuthContext = cache/);
 });
 
-test("only the root layout mounts the document and main landmark", () => {
+test("only the root layout mounts the document and each shell owns one main landmark", () => {
   assert.match(rootLayout, /<html lang="de">/);
   assert.match(rootLayout, /<body>/);
-  assert.match(rootLayout, /<main className="lms-main">/);
-  for (const nestedLayout of [dashboardLayout, loginLayout]) {
+  assert.doesNotMatch(rootLayout, /<main\b/);
+  assert.match(managementShell, /<main className="lms-main">/);
+  assert.match(studentShell, /<main className=\{`student-main/);
+  for (const nestedLayout of [dashboardLayout, loginLayout, courseLayout]) {
     assert.doesNotMatch(nestedLayout, /<\/?html\b/);
     assert.doesNotMatch(nestedLayout, /<\/?body\b/);
     assert.doesNotMatch(nestedLayout, /<\/?main\b/);
   }
+});
+
+test("student learning routes use a sidebar-free course shell and lazy Monaco workspace", () => {
+  assert.doesNotMatch(courseLayout, /ManagementShell/);
+  assert.match(courseLayout, /StudentShell/);
+  assert.match(courseLayout, /!course\.published/);
+  assert.match(courseLayout, /course_memberships/);
+  assert.match(exerciseFocus, /exercise-navigator/);
+  assert.match(exerciseFocus, /Nächste Aufgabe/);
+  assert.match(pythonWorkspace, /PythonEditor/);
+  assert.match(pythonWorkspace, /aria-expanded=\{taskOpen\}/);
+  assert.match(pythonWorkspace, /py-edge-toggle/);
+  assert.match(pythonWorkspace, /py-output-assistant/);
+  assert.match(pythonWorkspace, /sessionStorage/);
+  assert.match(pythonEditor, /dynamic\(\(\) => import\("@monaco-editor\/react"\)/);
+  assert.match(pythonEditor, /defaultLanguage="python"/);
 });
 
 test("closed LMS gates learner access by active account, assignment, and publication", () => {
@@ -122,9 +146,11 @@ test("migration 005 revokes inactive staff access and binds pending activation",
   assert.match(closedLmsMigration, /activate_student_record/);
   assert.match(closedLmsMigration, /grant_student_course_access/);
   assert.match(closedLmsMigration, /revoke_student_course_access/);
+  assert.match(closedLmsMigration, /set_student_account_status/);
+  assert.match(closedLmsMigration, /duplicate student emails exist after normalization/);
   assert.match(closedLmsMigration, /delete from public\.course_memberships/);
   assert.match(closedLmsMigration, /active scoped submission select/);
-  assert.match(closedLmsRlsTests, /select plan\(21\)/);
+  assert.match(closedLmsRlsTests, /select plan\(26\)/);
   assert.match(closedLmsRlsTests, /disabled teacher cannot review directly by RPC/);
   assert.match(closedLmsRlsTests, /email-only access cannot claim a pending student record/);
   assert.match(closedLmsRlsTests, /revocation preserves submissions/);
@@ -136,6 +162,9 @@ test("administrative writes require admin role and fail safely before migration 
   assert.match(studentActions, /requireServiceRoleClient/);
   assert.match(studentActions, /grant_student_course_access/);
   assert.match(studentActions, /tanisten_student_record_id/);
+  assert.match(studentActions, /set_student_account_status/);
+  assert.match(studentActions, /deleteUser\(data\.user\.id\)/);
+  assert.doesNotMatch(studentActions, /from\("profiles"\)\.update/);
   assert.doesNotMatch(studentActions, /from\("course_memberships"\)\.upsert/);
   assert.match(teacherActions, /requireRole\(\["admin"\]\)/);
   assert.match(teacherActions, /closedLmsReady/);

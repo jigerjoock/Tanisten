@@ -1,17 +1,18 @@
 import { notFound } from "next/navigation";
 import { getCurrentProfile, requireUser } from "../../../lib/auth";
 import CourseWorkspace from "../../../components/course-workspace";
-import type { CourseModule, Exercise, ExerciseAttempt, Lesson, Submission, SubmissionReview } from "../../../lib/types";
+import type { CourseModule, Exercise, Lesson, Submission } from "../../../lib/types";
 
 export default async function CoursePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const { supabase, user } = await requireUser();
-  const { data: course, error: courseError } = await supabase.from("courses").select("id, title, description").eq("slug", slug).single();
+  const { data: course, error: courseError } = await supabase.from("courses").select("id, title, description, published").eq("slug", slug).single();
   if (courseError && courseError.code !== "PGRST116") throw new Error("Kurs konnte nicht geladen werden.");
   if (!course) notFound();
   const profile = await getCurrentProfile(supabase, user);
   const isStaff = profile.role === "admin" || profile.role === "teacher";
   if (!isStaff) {
+    if (!course.published) notFound();
     const { data: membership, error: membershipError } = await supabase.from("course_memberships").select("course_id").eq("course_id", course.id).eq("user_id", user.id).maybeSingle();
     if (membershipError) throw new Error("Kurszuweisung konnte nicht geprüft werden.");
     if (!membership) notFound();
@@ -25,9 +26,5 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
   const exercises = (exercisesData ?? []) as Exercise[];
   const exerciseIds = exercises.map((exercise) => exercise.id);
   const { data: submissions } = exerciseIds.length ? await supabase.from("submissions").select("id, exercise_id, status, answer, feedback, checked_at, created_at, updated_at").eq("student_id", user.id).in("exercise_id", exerciseIds) : { data: [] };
-  const submissionIds = (submissions ?? []).map((submission) => submission.id);
-  const { data: attempts } = exerciseIds.length ? await supabase.from("exercise_attempts").select("id, exercise_id, outcome, message, created_at").eq("student_id", user.id).in("exercise_id", exerciseIds).order("created_at", { ascending: false }) : { data: [] };
-  const { data: reviews } = submissionIds.length ? await supabase.from("submission_reviews").select("id, submission_id, decision, feedback, reviewed_at").in("submission_id", submissionIds).order("reviewed_at", { ascending: false }) : { data: [] };
-  const automatic = exercises.filter((exercise) => exercise.check_mode === "automatic").length;
-  return <section className="stack"><div className="pageheading"><div><div className="eyebrow">KURS / AUFGABEN</div><h1>{course.title}</h1><p className="muted">{course.description}</p></div><span className="pill">{exercises.length} Aufgaben</span></div><div className="grid"><div className="card"><strong>{automatic}</strong><p className="muted">automatische Checks</p></div><div className="card"><strong>{exercises.length - automatic}</strong><p className="muted">Teacher Reviews</p></div></div><CourseWorkspace courseTitle={course.title} modules={modules} lessons={lessons} exercises={exercises} submissions={(submissions ?? []) as Submission[]} attempts={(attempts ?? []) as ExerciseAttempt[]} reviews={(reviews ?? []) as SubmissionReview[]} /></section>;
+  return <section className="stack course-overview"><div className="pageheading"><div><div className="eyebrow">KURS / LERNPFAD</div><h1>{course.title}</h1><p className="muted">{course.description}</p></div><span className="pill">{exercises.length} Aufgaben</span></div><CourseWorkspace courseTitle={course.title} courseSlug={slug} modules={modules} lessons={lessons} exercises={exercises} submissions={(submissions ?? []) as Submission[]} /></section>;
 }

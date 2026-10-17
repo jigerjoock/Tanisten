@@ -1,31 +1,28 @@
 import PendingLink from "../../components/pending-link";
-import { requireUser } from "../../lib/auth";
+import { getCurrentProfile, requireUser } from "../../lib/auth";
+
+type CourseSummary = { id: string; slug: string; title: string; description: string; published: boolean };
 
 export default async function DashboardPage() {
   const { supabase, user } = await requireUser();
-  const { data: memberships, error: membershipsError } = await supabase
-    .from("course_memberships")
-    .select("course:courses(id, slug, title, description)")
-    .eq("user_id", user.id);
+  const profile = await getCurrentProfile(supabase, user);
+  let courses: CourseSummary[] = [];
 
-  console.log("[dashboard-debug]", {
-    authUserId: user.id,
-    membershipsCount: memberships?.length ?? 0,
-    membershipsErrorCode: membershipsError?.code ?? null,
-    membershipsErrorMessage: membershipsError?.message ?? null,
-    memberships: memberships?.map((membership) => ({
-      hasCourse: Boolean(membership.course),
-    })),
-  });
-
-  if (membershipsError) {
-    throw new Error(`Kurse konnten nicht geladen werden: ${membershipsError.message}`);
+  if (profile.role === "student") {
+    const { data: memberships, error } = await supabase
+      .from("course_memberships")
+      .select("course:courses(id, slug, title, description, published)")
+      .eq("user_id", user.id);
+    if (error) throw new Error(`Kurse konnten nicht geladen werden: ${error.message}`);
+    courses = (memberships ?? []).flatMap((membership) => {
+      const course = membership.course;
+      return course ? (Array.isArray(course) ? course : [course]) : [];
+    }).filter((course): course is CourseSummary => course.published);
+  } else {
+    const { data, error } = await supabase.from("courses").select("id, slug, title, description, published").order("title");
+    if (error) throw new Error(`Kurse konnten nicht geladen werden: ${error.message}`);
+    courses = (data ?? []) as CourseSummary[];
   }
-
-  const courses = (memberships ?? []).flatMap((membership) => {
-    const course = membership.course;
-    return course ? (Array.isArray(course) ? course : [course]) : [];
-  });
   const courseIds = courses.map((course) => course.id);
   const { data: exercises } = courseIds.length
     ? await supabase
@@ -55,13 +52,13 @@ export default async function DashboardPage() {
     <section>
       <section className="hero">
         <div>
-          <div className="eyebrow">DEIN LERNBEREICH</div>
-          <h1>Weiter so! ✨</h1>
+          <div className="eyebrow">{profile.role === "student" ? "DEIN LERNBEREICH" : "KURSÜBERSICHT"}</div>
+          <h1>{profile.role === "student" ? "Weiter so! ✨" : "Deine Kurse"}</h1>
           <p>
             Entdecke neue Ideen. Programmiere. Lerne in deinem Tempo oder mit
             deiner Lehrkraft.
           </p>
-          <span className="pill">{passed} Aufgaben abgeschlossen</span>
+          <span className="pill">{profile.role === "student" ? `${passed} Aufgaben abgeschlossen` : `${courses.length} Kurse verwalten`}</span>
         </div>
         <div className="heroart">
           &lt;/&gt;<span>Scratch · Python · JS</span>
@@ -75,7 +72,7 @@ export default async function DashboardPage() {
       </div>
 
       <div className="heading">
-        <h2>Meine Kurse</h2>
+        <h2>{profile.role === "student" ? "Meine Kurse" : "Kurse"}</h2>
         <span className="muted">Kurs wählen</span>
       </div>
       {courses.length ? (
@@ -98,7 +95,7 @@ export default async function DashboardPage() {
                   <h2>{course.title}</h2>
                   <p className="muted">{course.description}</p>
                 </span>
-                <span className="muted">{completed}/{courseExercises.length}</span>
+                <span className="muted">{profile.role === "student" ? `${completed}/${courseExercises.length}` : course.published ? "Veröffentlicht" : "Entwurf"}</span>
                 <span className="progress"><span style={{ width: `${progress}%` }} /></span>
               </PendingLink>
             );

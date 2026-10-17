@@ -16,8 +16,10 @@
     "plan:curriculum-import": "node scripts/plan-curriculum-import.mjs --summary"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.118.0",
+    "monaco-editor": "^0.57.0",
     "next": "15.5.28",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

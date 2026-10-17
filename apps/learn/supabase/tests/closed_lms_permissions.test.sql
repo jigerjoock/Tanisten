@@ -1,12 +1,13 @@
 begin;
 create extension if not exists pgtap with schema extensions;
 set local search_path to extensions, public, auth;
-select plan(21);
+select plan(26);
 
 -- These fixtures are created after migration 005, so the Auth trigger must
 -- leave every account pending until an administrator-approved activation.
 insert into public.student_records (id, email, first_name, last_name) values
-  ('00000000-0000-0000-0000-000000005901', 'activation@example.test', 'Aktiv', 'Test');
+  ('00000000-0000-0000-0000-000000005901', 'activation@example.test', 'Aktiv', 'Test'),
+  ('00000000-0000-0000-0000-000000005902', 'unlinked@example.test', 'Ausstehend', 'Test');
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
 values
   ('00000000-0000-0000-0000-000000005101', '00000000-0000-0000-0000-000000000001', 'authenticated', 'authenticated', 'active-student@example.test', '', now(), '{}', '{}', now(), now()),
@@ -93,6 +94,34 @@ select results_eq($$select count(*) from public.course_memberships where user_id
 select results_eq($$select count(*) from public.submissions where id = '00000000-0000-0000-0000-000000005601'$$, array[1::bigint], 'revocation preserves submissions');
 select results_eq($$select count(*) from public.exercise_attempts where student_id = '00000000-0000-0000-0000-000000005105'$$, array[1::bigint], 'revocation preserves attempts');
 select results_eq($$select count(*) from public.submission_reviews where submission_id = '00000000-0000-0000-0000-000000005601'$$, array[1::bigint], 'revocation preserves reviews');
+
+select results_eq(
+  $$with attempted_write as (
+      update public.profiles set role = 'admin' where id = '00000000-0000-0000-0000-000000005105' returning id
+    ) select count(*) from attempted_write$$,
+  array[0::bigint],
+  'active admin cannot change a student role through a direct profiles write'
+);
+select throws_ok(
+  $$select public.set_student_account_status('00000000-0000-0000-0000-000000005902', 'active'::public.account_status)$$,
+  'P0001',
+  'A pending student must activate their invitation before becoming active',
+  'unlinked student records cannot be activated by an admin'
+);
+select lives_ok(
+  $$select public.set_student_account_status((select id from public.student_records where profile_id = '00000000-0000-0000-0000-000000005105'), 'disabled'::public.account_status)$$,
+  'active admin can disable a linked student only through the restricted RPC'
+);
+select is(
+  (select account_status::text from public.profiles where id = '00000000-0000-0000-0000-000000005105'),
+  'disabled',
+  'status RPC disables the linked profile'
+);
+select is(
+  (select account_status::text from public.student_records where profile_id = '00000000-0000-0000-0000-000000005105'),
+  'disabled',
+  'status RPC synchronizes the student record'
+);
 
 select * from finish();
 rollback;

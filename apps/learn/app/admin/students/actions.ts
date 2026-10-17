@@ -50,7 +50,8 @@ export async function setStudentStatus(formData: FormData) {
   const studentId = String(formData.get("studentId") ?? "");
   const status = String(formData.get("status") ?? "");
   if (!["active", "disabled", "archived"].includes(status)) throw new Error("Ungültiger Status.");
-  const { error } = await supabase.from("profiles").update({ account_status: status, archived_at: status === "archived" ? new Date().toISOString() : null }).eq("id", studentId).eq("role", "student");
+  const recordId = await studentRecordIdForProfile(studentId, supabase);
+  const { error } = await supabase.rpc("set_student_account_status", { p_student_record_id: recordId, p_status: status });
   if (error) throw new Error(error.message);
   revalidatePath("/admin/students"); revalidatePath(`/admin/students/${studentId}`);
 }
@@ -64,7 +65,11 @@ export async function inviteStudent(formData: FormData) {
   const { data, error: inviteError } = await admin.auth.admin.inviteUserByEmail(record.email, { data: { full_name: `${record.first_name} ${record.last_name}` } });
   if (inviteError || !data.user) throw new Error(inviteError?.message ?? "Einladung konnte nicht erstellt werden.");
   const { error: metadataError } = await admin.auth.admin.updateUserById(data.user.id, { app_metadata: { tanisten_student_record_id: record.id } });
-  if (metadataError) throw new Error("Einladung wurde nicht sicher an den Schülerdatensatz gebunden.");
+  if (metadataError) {
+    const { error: cleanupError } = await admin.auth.admin.deleteUser(data.user.id);
+    if (cleanupError) throw new Error("Einladung wurde nicht sicher an den Schülerdatensatz gebunden. Das ungebundene Konto muss von einem Administrator entfernt werden.");
+    throw new Error("Einladung wurde nicht sicher an den Schülerdatensatz gebunden und das ungebundene Konto wurde entfernt.");
+  }
   // The record remains pending; only activate_student_record() links it.
   revalidatePath("/admin/students");
 }

@@ -11,6 +11,24 @@ alter table public.profiles
   add column phone text,
   add column archived_at timestamptz;
 
+-- `profiles.email` predates this migration and is not unique.  A normalized
+-- duplicate would make the one-record-per-student backfill ambiguous, so
+-- stop before creating any closed-LMS records rather than silently skipping
+-- one of the affected learners.
+do $$
+begin
+  if exists (
+    select 1
+    from public.profiles
+    where role = 'student'
+    group by lower(email)
+    having count(*) > 1
+  ) then
+    raise exception 'Cannot backfill student records: duplicate student emails exist after normalization';
+  end if;
+end;
+$$;
+
 create table public.student_records (
   id uuid primary key default gen_random_uuid(),
   profile_id uuid unique references public.profiles(id) on delete set null,
@@ -207,6 +225,41 @@ begin
 end;
 $$;
 
+-- Status changes must not use a broad profiles UPDATE policy.  This keeps
+-- direct PostgREST writes from changing roles or staff/admin account status,
+-- and synchronizes the profile and its pending-record lifecycle.
+create or replace function public.set_student_account_status(p_student_record_id uuid, p_status public.account_status) returns void language plpgsql security definer set search_path = public, pg_temp as $$
+declare v_record public.student_records%rowtype; v_role public.user_role;
+begin
+  if not public.is_admin() then raise exception 'Active administrator access is required'; end if;
+  if p_status not in ('active', 'disabled', 'archived') then raise exception 'Invalid student account status'; end if;
+
+  select * into v_record from public.student_records where id = p_student_record_id for update;
+  if not found then raise exception 'Student record not found'; end if;
+
+  if v_record.profile_id is null then
+    if p_status = 'active' then raise exception 'A pending student must activate their invitation before becoming active'; end if;
+    update public.student_records
+      set account_status = p_status,
+          archived_at = case when p_status = 'archived' then coalesce(archived_at, now()) else null end
+      where id = v_record.id;
+    return;
+  end if;
+
+  select role into v_role from public.profiles where id = v_record.profile_id for update;
+  if not found or v_role <> 'student' then raise exception 'Linked profile is not a student'; end if;
+
+  update public.profiles
+    set account_status = p_status,
+        archived_at = case when p_status = 'archived' then coalesce(archived_at, now()) else null end
+    where id = v_record.profile_id;
+  update public.student_records
+    set account_status = p_status,
+        archived_at = case when p_status = 'archived' then coalesce(archived_at, now()) else null end
+    where id = v_record.id;
+end;
+$$;
+
 alter table public.student_records enable row level security;
 alter table public.student_course_assignments enable row level security;
 create policy "active admins manage student records" on public.student_records for all to authenticated using (public.is_admin()) with check (public.is_admin());
@@ -243,7 +296,25 @@ create policy "active scoped review select" on public.submission_reviews for sel
 revoke all on function public.activate_student_record(uuid) from public;
 revoke all on function public.grant_student_course_access(uuid, uuid) from public;
 revoke all on function public.revoke_student_course_access(uuid, uuid) from public;
+revoke all on function public.set_student_account_status(uuid, public.account_status) from public;
 revoke all on function public.is_course_member(uuid) from public, anon, authenticated;
+revoke all on function public.is_active_user() from public, anon;
+revoke all on function public.is_active_teacher() from public, anon;
+revoke all on function public.is_admin() from public, anon;
+revoke all on function public.is_staff() from public, anon;
+revoke all on function public.is_course_teacher(uuid) from public, anon;
+revoke all on function public.can_teach_student_in_course(uuid, uuid) from public, anon;
+revoke all on function public.can_view_profile(uuid) from public, anon;
+revoke all on function public.is_enrolled(uuid) from public, anon;
 grant execute on function public.activate_student_record(uuid) to authenticated;
 grant execute on function public.grant_student_course_access(uuid, uuid) to authenticated;
 grant execute on function public.revoke_student_course_access(uuid, uuid) to authenticated;
+grant execute on function public.set_student_account_status(uuid, public.account_status) to authenticated;
+grant execute on function public.is_active_user() to authenticated;
+grant execute on function public.is_active_teacher() to authenticated;
+grant execute on function public.is_admin() to authenticated;
+grant execute on function public.is_staff() to authenticated;
+grant execute on function public.is_course_teacher(uuid) to authenticated;
+grant execute on function public.can_teach_student_in_course(uuid, uuid) to authenticated;
+grant execute on function public.can_view_profile(uuid) to authenticated;
+grant execute on function public.is_enrolled(uuid) to authenticated;

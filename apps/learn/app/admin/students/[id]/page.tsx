@@ -8,7 +8,7 @@ export default async function StudentDetailPage({ params }: { params: Promise<{ 
   const { supabase } = await requireRole(["admin"]);
   if (!await closedLmsReady(supabase)) return <section className="panel"><h1>Migration 005 ausstehend</h1><p className="muted">Schülerdetails sind erst nach einem getesteten Schema-Rollout verfügbar.</p></section>;
   const [{ data: student }, { data: courses }, { data: memberships }, { data: submissions }] = await Promise.all([
-    supabase.from("profiles").select("id,email,full_name,first_name,last_name,phone,admin_note,account_status,created_at").eq("id", id).eq("role", "student").maybeSingle(),
+    supabase.from("profiles").select("id,email,full_name,first_name,last_name,phone,account_status,created_at").eq("id", id).eq("role", "student").maybeSingle(),
     supabase.from("courses").select("id,title,published").order("title"),
     supabase.from("course_memberships").select("course_id,course:courses(title)").eq("user_id", id),
     supabase.from("submissions").select("status").eq("student_id", id)
