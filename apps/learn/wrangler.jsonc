@@ -3,8 +3,24 @@
   "name": "tanisten-learn",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-10-15",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "tanisten-learn"
+    }
+  ],
   "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "learn.tanisten.com",
+      "custom_domain": true
+    }
+  ],
   "vars": {
     "NEXT_PUBLIC_APP_URL": "https://learn.tanisten.com"
   }
