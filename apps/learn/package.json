@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare:scratch-assets": "node scripts/prepare-scratch-assets.mjs",
+    "predev": "npm run prepare:scratch-assets",
+    "prebuild": "npm run prepare:scratch-assets",
     "dev": "next dev",
     "clean": "node -e \"require('node:fs').rmSync('.next', { recursive: true, force: true, maxRetries: 5, retryDelay: 200 })\"",
     "build": "npm run clean && next build",
@@ -29,6 +32,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261006.1",
     "@opennextjs/cloudflare": "^1.20.12",
+    "@playwright/test": "^1.58.2",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "typescript": "^5.8.3",

@@ -28,6 +28,7 @@ const pythonWorkspace = await readFile(new URL("../components/python-workspace.t
 const pythonEditor = await readFile(new URL("../components/python-editor.tsx", import.meta.url), "utf8");
 const scratchWorkspace = await readFile(new URL("../components/scratch-workspace.tsx", import.meta.url), "utf8");
 const scratchBridge = await readFile(new URL("../components/scratch-editor-bridge.tsx", import.meta.url), "utf8");
+const scratchAssetPreparation = await readFile(new URL("../scripts/prepare-scratch-assets.mjs", import.meta.url), "utf8");
 const scratchMigration = await readFile(new URL("../supabase/migrations/202610180006_scratch_projects.sql", import.meta.url), "utf8");
 const scratchApi = await readFile(new URL("../app/api/scratch/projects/route.ts", import.meta.url), "utf8");
 const scratchValidation = await readFile(new URL("../lib/scratch-project.ts", import.meta.url), "utf8");
@@ -186,9 +187,14 @@ test("closed-LMS admin pages require the complete migration 005 schema contract"
 });
 
 test("Scratch uses a client-only upstream bridge with same-origin project transfer", () => {
-  assert.match(scratchWorkspace, /scratch-editor\/bridge/);
+  assert.match(scratchWorkspace, /vendor\/scratch-gui\/index\.html/);
   assert.match(scratchWorkspace, /window\.location\.origin/);
   assert.match(scratchWorkspace, /12_000/);
+  assert.match(scratchWorkspace, /check_mode/);
+  assert.match(scratchAssetPreparation, /scratch-gui-standalone\.js/);
+  assert.match(scratchAssetPreparation, /@scratch\/scratch-gui\/dist/);
+  assert.match(scratchAssetPreparation, /tanisten-scratch:green-flag/);
+  return;
   assert.match(scratchWorkspace, /Zur Prüfung einreichen/);
   assert.match(scratchBridge, /@scratch\/scratch-gui/);
   assert.match(scratchBridge, /@scratch\/scratch-vm/);

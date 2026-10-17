@@ -7,3 +7,6 @@ node_modules
 supabase/.temp/
 .private/
 tsconfig.tsbuildinfo
+public/vendor/scratch-gui/
+public/chunks/
+public/static/

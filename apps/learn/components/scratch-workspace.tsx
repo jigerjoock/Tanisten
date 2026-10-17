@@ -14,6 +14,15 @@ function textList(value: unknown): string[] {
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
 }
 
+function toolboxConfig(checkConfig: Record<string, unknown>) {
+  const candidate = checkConfig.scratch_toolbox ?? checkConfig.toolbox;
+  if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) return null;
+  const config = candidate as Record<string, unknown>;
+  const allowedCategories = textList(config.allowedCategories);
+  const allowedBlockTypes = textList(config.allowedBlockTypes);
+  return allowedCategories.length > 0 || allowedBlockTypes.length > 0 ? { allowedCategories, allowedBlockTypes } : null;
+}
+
 export default function ScratchWorkspace({ exercise, submission, reviews }: {
   exercise: Exercise;
   submission?: Submission;
@@ -33,6 +42,7 @@ export default function ScratchWorkspace({ exercise, submission, reviews }: {
   const instructions = textList(exercise.content.instructions);
   const criteria = textList(exercise.content.success_criteria);
   const hints = textList(exercise.content.hints);
+  const configuredToolbox = toolboxConfig(exercise.check_config);
   const latestReview = reviews[0];
 
   const sendToBridge = useCallback((message: Record<string, unknown>, transfer?: Transferable[]) => {
@@ -85,6 +95,7 @@ export default function ScratchWorkspace({ exercise, submission, reviews }: {
       if (data.type === "tanisten-scratch:ready") {
         setEditorReady(true);
         setMessage("Scratch-Editor bereit.");
+        if (configuredToolbox) sendToBridge({ type: "tanisten-scratch:configure-toolbox", config: configuredToolbox });
         restoreDraft().catch(() => {
           setSaveState("error");
           setMessage("Scratch-Entwurf konnte nicht wiederhergestellt werden.");
@@ -129,7 +140,7 @@ export default function ScratchWorkspace({ exercise, submission, reviews }: {
       window.removeEventListener("message", onMessage);
       if (autosaveTimer.current) clearTimeout(autosaveTimer.current);
     };
-  }, [persistProject, requestProject, restoreDraft]);
+  }, [configuredToolbox, persistProject, requestProject, restoreDraft, sendToBridge]);
 
   function importProject(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -158,7 +169,7 @@ export default function ScratchWorkspace({ exercise, submission, reviews }: {
       </div>
     </header>
     <div className="scratch-body">
-      <iframe ref={frame} className="scratch-editor-frame" title="Scratch 3 Editor" src="/scratch-editor/bridge" sandbox="allow-scripts allow-same-origin allow-downloads" />
+      <iframe ref={frame} className="scratch-editor-frame" title="Scratch 3 Editor" src="/vendor/scratch-gui/index.html" sandbox="allow-scripts allow-same-origin allow-downloads" />
       <aside className="scratch-guide" aria-label="Aufgabenanleitung">
         <button type="button" className="scratch-guide-toggle" aria-expanded={taskOpen} aria-controls={`scratch-guide-${exercise.id}`} onClick={() => setTaskOpen((open) => !open)}><span>{taskOpen ? "Anleitung schließen" : "Anleitung öffnen"}</span></button>
         <div id={`scratch-guide-${exercise.id}`} className="scratch-guide-content" hidden={!taskOpen}>
