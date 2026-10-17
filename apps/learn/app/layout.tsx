@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import PendingLink from "../components/pending-link";
 import { signOut } from "./logout/actions";
-import { getAuthenticatedUser, getCurrentProfile } from "../lib/auth";
-import { createClient } from "../lib/supabase/server";
+import { getCurrentProfile, getServerAuthContext } from "../lib/auth";
 import type { UserRole } from "../lib/types";
 import "./globals.css";
 
@@ -14,9 +14,9 @@ function Navigation({ authenticated, role, profileError }: { authenticated: bool
   return <aside className="sidebar">
     <Link className="brand" href="/"><span className="logo">&lt;/&gt;</span><span>CodeLab <em>LMS</em></span></Link>
     {profileError ? <><p className="error">Profilzugriff fehlgeschlagen</p><p className="muted">{profileError}</p><form action={signOut}><button className="nav" type="submit">Abmelden</button></form></> : authenticated ? <>
-      <p className="mini">LERNEN</p><Link className="nav" href="/dashboard">Lernbereich</Link><Link className="nav" href="/dashboard">Meine Kurse</Link>
-      {isStaff && <><p className="mini spacing">LEHRKRAFT</p><Link className="nav" href="/teacher">Einreichungen</Link></>}
-      {isAdmin && <><p className="mini spacing">ADMINISTRATION</p><Link className="nav" href="/admin/students">Schülerverwaltung</Link><Link className="nav" href="/admin/teachers">Lehrerverwaltung</Link><Link className="nav" href="/admin/courses">Kursverwaltung</Link></>}
+      <p className="mini">LERNEN</p><PendingLink className="nav" href="/dashboard">Lernbereich</PendingLink><PendingLink className="nav" href="/dashboard">Meine Kurse</PendingLink>
+      {isStaff && <><p className="mini spacing">LEHRKRAFT</p><PendingLink className="nav" href="/teacher">Einreichungen</PendingLink></>}
+      {isAdmin && <><p className="mini spacing">ADMINISTRATION</p><PendingLink className="nav" href="/admin/students">Schülerverwaltung</PendingLink><PendingLink className="nav" href="/admin/teachers">Lehrerverwaltung</PendingLink><PendingLink className="nav" href="/admin/courses">Kursverwaltung</PendingLink></>}
       <form action={signOut}><button className="nav" type="submit">Abmelden</button></form>
     </> : <><p className="mini">LERNEN</p><Link className="nav" href="/login">Anmelden</Link></>}
     <div className="sidefoot">CodeLab LMS v0.2<br /><small>Tanisten Learn · Supabase</small></div>
@@ -24,8 +24,7 @@ function Navigation({ authenticated, role, profileError }: { authenticated: bool
 }
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const supabase = await createClient();
-  const user = await getAuthenticatedUser(supabase);
+  const { supabase, user } = await getServerAuthContext();
   let role: UserRole | null = null;
   let profileError: string | null = null;
 

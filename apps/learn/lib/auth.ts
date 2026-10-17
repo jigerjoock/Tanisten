@@ -1,5 +1,6 @@
 import type { SupabaseClient, User } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 import { getConfiguredSupabaseProjectRef, logAuthDiagnostic } from "./auth-diagnostics";
 import { createClient } from "./supabase/server";
 import type { UserRole } from "./types";
@@ -37,7 +38,7 @@ export async function getAuthenticatedUser(supabase: SupabaseClient) {
 // The role query intentionally uses only migration-001 columns.  In the
 // current production schema account_status does not exist yet; selecting it
 // together with role makes PostgREST return no profile at all.
-export async function getCurrentProfile(supabase: SupabaseClient, user: User): Promise<CurrentProfile> {
+async function loadCurrentProfile(supabase: SupabaseClient, user: User): Promise<CurrentProfile> {
   const { data: profile, error } = await supabase.from("profiles").select("id,role").eq("id", user.id).maybeSingle();
   const profileRecord = profile as { id?: string; role?: string } | null;
   logAuthDiagnostic("profile_lookup", {
@@ -89,9 +90,16 @@ export async function getCurrentProfile(supabase: SupabaseClient, user: User): P
   };
 }
 
-export async function requireUser() {
+export const getCurrentProfile = cache(loadCurrentProfile);
+
+export const getServerAuthContext = cache(async () => {
   const supabase = await createClient();
   const user = await getAuthenticatedUser(supabase);
+  return { supabase, user };
+});
+
+export async function requireUser() {
+  const { supabase, user } = await getServerAuthContext();
   if (!user) redirect("/login");
   return { supabase, user };
 }

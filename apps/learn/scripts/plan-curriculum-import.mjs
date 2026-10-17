@@ -1,4 +1,6 @@
 import { createHash } from "node:crypto";
+import { writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { curriculum } from "../content/curriculum.seed.mjs";
 
 const sql = (value) => `'${String(value).replaceAll("'", "''")}'`;
@@ -8,4 +10,16 @@ for (const course of curriculum.courses) for (const module of course.modules) fo
 if (process.argv.includes("--summary")) { console.log(JSON.stringify({ courses: curriculum.courses.length, modules: 10, lessons: 100, exercises: rows.length, mode: "plan-only", remote_database_touched: false }, null, 2)); process.exit(0); }
 const checks = rows.map(({ course, module, lesson, exercise, courseId, moduleId, lessonId, exerciseId }) => `  if exists (select 1 from public.courses where slug = ${sql(course.slug)} and id <> ${sql(courseId)}::uuid) then raise exception 'course slug collision: %', ${sql(course.slug)}; end if;\n  if exists (select 1 from public.course_modules where course_id = ${sql(courseId)}::uuid and position = ${module.position} and id <> ${sql(moduleId)}::uuid) then raise exception 'module position collision: %/%', ${sql(course.slug)}, ${module.position}; end if;\n  if exists (select 1 from public.lessons where module_id = ${sql(moduleId)}::uuid and position = ${lesson.position} and id <> ${sql(lessonId)}::uuid) then raise exception 'lesson position collision: %/%/%', ${sql(course.slug)}, ${module.position}, ${lesson.position}; end if;\n  if exists (select 1 from public.exercises where lesson_id = ${sql(lessonId)}::uuid and position = ${exercise.position} and id <> ${sql(exerciseId)}::uuid) then raise exception 'exercise position collision: %/%/%/%', ${sql(course.slug)}, ${module.position}, ${lesson.position}, ${exercise.position}; end if;`).join("\n");
 const inserts = []; for (const course of curriculum.courses) { const courseId = uuid(`course:${course.slug}`); inserts.push(`insert into public.courses (id, slug, title, description, published) values (${sql(courseId)}::uuid, ${sql(course.slug)}, ${sql(course.title)}, ${sql(course.description)}, false) on conflict (id) do nothing;`); for (const module of course.modules) { const moduleId = uuid(`module:${course.slug}:${module.position}`); inserts.push(`insert into public.course_modules (id, course_id, title, position) values (${sql(moduleId)}::uuid, ${sql(courseId)}::uuid, ${sql(module.title)}, ${module.position}) on conflict (id) do nothing;`); for (const lesson of module.lessons) { const lessonId = uuid(`lesson:${course.slug}:${module.position}:${lesson.position}`); inserts.push(`insert into public.lessons (id, module_id, title, description, position) values (${sql(lessonId)}::uuid, ${sql(moduleId)}::uuid, ${sql(lesson.title)}, ${sql(lesson.description)}, ${lesson.position}) on conflict (id) do nothing;`); for (const exercise of lesson.exercises) { const exerciseId = uuid(`exercise:${course.slug}:${module.position}:${lesson.position}:${exercise.position}`); inserts.push(`insert into public.exercises (id, course_id, lesson_id, title, description, check_mode, check_config, position, kind, content, starter_code) values (${sql(exerciseId)}::uuid, ${sql(courseId)}::uuid, ${sql(lessonId)}::uuid, ${sql(exercise.title)}, ${sql(exercise.description)}, 'teacher', '{}'::jsonb, ${exercise.position}, ${sql(exercise.kind)}::public.exercise_kind, ${sql(JSON.stringify(exercise.content))}::jsonb, ${sql(exercise.starter_code)}) on conflict (id) do nothing;`); } } } }
-console.log(`-- Generated locally; no database connection is made. ${rows.length} immutable exercise IDs.\nbegin;\ndo $$ begin\n${checks}end $$;\n${inserts.join("\n")}\nrollback;\n-- Replace only the final rollback with commit after explicit approval and a reviewed dry run.`);
+const plan = `-- Generated locally; no database connection is made. ${rows.length} immutable exercise IDs.
+begin;
+do $$ begin
+${checks}end $$;
+${inserts.join("\n")}
+rollback;
+-- Replace only the final rollback with commit after explicit approval and a reviewed dry run.`;
+const outputIndex = process.argv.indexOf("--output");
+if (outputIndex !== -1 && process.argv[outputIndex + 1]) {
+  writeFileSync(resolve(process.argv[outputIndex + 1]), plan, { encoding: "utf8" });
+} else {
+  process.stdout.write(plan);
+}

@@ -17,6 +17,8 @@ const rootLayout = await readFile(new URL("../app/layout.tsx", import.meta.url),
 const dashboardLayout = await readFile(new URL("../app/dashboard/layout.tsx", import.meta.url), "utf8");
 const loginLayout = await readFile(new URL("../app/login/layout.tsx", import.meta.url), "utf8");
 const coursePage = await readFile(new URL("../app/courses/[slug]/page.tsx", import.meta.url), "utf8");
+const pendingLink = await readFile(new URL("../components/pending-link.tsx", import.meta.url), "utf8");
+const dashboardLoading = await readFile(new URL("../app/dashboard/loading.tsx", import.meta.url), "utf8");
 
 test("submission writes use trusted RPC transitions", () => {
   assert.match(exerciseRoute, /rpc\(procedure/);
@@ -78,6 +80,15 @@ test("sign-out clears the Supabase session and navigation stays role-aware", () 
   assert.match(layout, /action=\{signOut\}/);
   assert.match(layout, /Profilzugriff fehlgeschlagen/);
   assert.match(layout, /role === "student" \? "ST" : "!"/);
+});
+
+test("top-level navigation provides immediate pending feedback", () => {
+  assert.match(pendingLink, /useState\(false\)/);
+  assert.match(pendingLink, /setPending\(true\)/);
+  assert.match(pendingLink, /aria-busy=\{pending\}/);
+  assert.match(layout, /PendingLink className="nav" href="\/dashboard"/);
+  assert.match(dashboardLoading, /Meine Kurse werden geladen/);
+  assert.match(auth, /getServerAuthContext = cache/);
 });
 
 test("only the root layout mounts the document and main landmark", () => {
