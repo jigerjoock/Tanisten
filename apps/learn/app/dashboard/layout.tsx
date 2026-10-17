@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Lernbereich | Tanisten Learn",
-  description: "Dein Lernbereich in Tanisten Learn"
+  title: "Lernbereich | Tanisten Edu",
+  description: "Dein Lernbereich in Tanisten Edu"
 };
 
 export default function DashboardLayout({

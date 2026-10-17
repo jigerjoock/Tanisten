@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Anmelden | Tanisten Learn",
-  description: "Anmeldung für Tanisten Learn"
+  title: "Anmelden | Tanisten Edu",
+  description: "Anmeldung für Tanisten Edu"
 };
 
 export default function LoginLayout({

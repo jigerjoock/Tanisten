@@ -3,8 +3,19 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@supabase/supabase-js";
 
 export async function closedLmsReady(supabase: SupabaseClient) {
-  const { error } = await supabase.from("student_records").select("id", { head: true, count: "exact" }).limit(1);
-  return !error;
+  const [records, profiles] = await Promise.all([
+    supabase.from("student_records").select("id,profile_id,account_status", { head: true }).limit(1),
+    supabase.from("profiles").select("id,account_status,first_name,last_name,phone,archived_at", { head: true }).limit(1),
+  ]);
+  const ready = !records.error && !profiles.error;
+  if (!ready && process.env.LEARN_AUTH_DEBUG === "true") {
+    console.warn("[learn-closed-lms]", {
+      event: "migration_005_contract_unavailable",
+      studentRecordsErrorCode: records.error?.code ?? null,
+      profilesErrorCode: profiles.error?.code ?? null,
+    });
+  }
+  return ready;
 }
 
 export function requireServiceRoleClient() {

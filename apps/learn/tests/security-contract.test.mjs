@@ -19,6 +19,7 @@ const loginLayout = await readFile(new URL("../app/login/layout.tsx", import.met
 const coursePage = await readFile(new URL("../app/courses/[slug]/page.tsx", import.meta.url), "utf8");
 const pendingLink = await readFile(new URL("../components/pending-link.tsx", import.meta.url), "utf8");
 const dashboardLoading = await readFile(new URL("../app/dashboard/loading.tsx", import.meta.url), "utf8");
+const closedLms = await readFile(new URL("../lib/closed-lms.ts", import.meta.url), "utf8");
 
 test("submission writes use trusted RPC transitions", () => {
   assert.match(exerciseRoute, /rpc\(procedure/);
@@ -139,4 +140,10 @@ test("administrative writes require admin role and fail safely before migration 
   assert.match(teacherActions, /requireRole\(\["admin"\]\)/);
   assert.match(teacherActions, /closedLmsReady/);
   assert.doesNotMatch(teacherActions, /requireRole\(\["teacher"\]\)/);
+});
+
+test("closed-LMS admin pages require the complete migration 005 schema contract", () => {
+  assert.match(closedLms, /student_records.*profile_id.*account_status/s);
+  assert.match(closedLms, /profiles.*account_status.*first_name.*last_name.*archived_at/s);
+  assert.match(closedLms, /migration_005_contract_unavailable/);
 });

@@ -15,7 +15,8 @@ export default function PendingLink({ children, className, href }: { children: R
     setPending(true);
   }
 
-  return <Link href={href} className={`${className ?? ""}${pending ? " is-pending" : ""}`} aria-busy={pending} onClick={handleClick}>
+  const isActive = href === "/" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
+  return <Link href={href} className={`${className ?? ""}${isActive ? " active" : ""}${pending ? " is-pending" : ""}`} aria-busy={pending} aria-current={isActive ? "page" : undefined} onClick={handleClick}>
     {children}{pending && <span className="link-spinner" aria-label="Wird geladen" />}
   </Link>;
 }
